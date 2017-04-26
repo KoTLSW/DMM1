@@ -69,12 +69,20 @@
 //***************** stop CountDown *********************
 -(void)stopCountDownTimer
 {
+    if(!mk_timer)
+    {
+        return;
+    }
     dispatch_suspend(mk_timer);
 }
 
 //***************** continue CountDown *********************
 -(void)continueCountDownTimer
 {
+    if(!mk_timer)
+    {
+        return;
+    }
     dispatch_resume(mk_timer);
 }
 
