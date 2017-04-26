@@ -1,0 +1,19 @@
+//
+//  MK_Table.pch
+//  MK_TestingModel_Sample
+//
+//  Created by Michael on 16/11/14.
+//  Copyright © 2016年 Michael. All rights reserved.
+//
+
+#import "Item.h"
+#import "Plist.h"
+#import "Table.h"
+
+#ifndef MK_Table_pch
+#define MK_Table_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* MK_Table_pch */

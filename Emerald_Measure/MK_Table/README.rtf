@@ -1,0 +1,495 @@
+{\rtf1\ansi\ansicpg936\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset134 PingFangSC-Regular;\f2\fnil\fcharset0 AppleColorEmoji;
+}
+{\colortbl;\red255\green255\blue255;\red4\green255\blue253;\red0\green116\blue0;\red100\green56\blue32;
+\red196\green26\blue22;\red170\green13\blue145;\red63\green110\blue116;\red92\green38\blue153;\red46\green13\blue110;
+\red28\green0\blue207;\red38\green71\blue75;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+
+\f0\fs144 \cf2 \CocoaLigature0 code sample:
+\fs22 \cf3 \
+//\cf0 \
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+\cf3 //  ViewController.m\cf0 \
+\cf3 //  MKPlist_Sample\cf0 \
+\cf3 //\cf0 \
+\cf3 //  Created by Michael on 16/11/5.\cf0 \
+\cf3 //  Copyright \'a9 2016
+\f1 \'c4\'ea
+\f0  Michael. All rights reserved.\cf0 \
+\cf3 //\cf0 \
+\
+\cf4 #import \cf5 "ViewController.h"\cf4 \
+#import \cf5 "Table.h"\cf4 \
+#import \cf5 "Plist.h"\cf4 \
+#import \cf5 "Item.h"\cf4 \
+\cf0 \
+\cf6 @implementation\cf0  ViewController\
+\{\
+    \cf7 Table\cf0  *table;                           \cf3 // Table 
+\f1 \'c0\'e0
+\f0 \cf0 \
+    \cf7 Plist\cf0  *plist;                           \cf3 // Plist 
+\f1 \'c0\'e0
+\f0 \cf0 \
+    \cf6 __weak\cf0  \cf6 IBOutlet\cf0  \cf8 NSView\cf0  *outline_Tab;    \cf3 // storyboard 
+\f1 \'b9\'d8\'c1\'aa\'b5\'c4
+\f0  outline_Tab\cf0 \
+    \
+    \cf8 NSMutableArray\cf0   *itemArr;               \cf3 // plist 
+\f1 \'ce\'c4\'bc\'fe\'b2\'e2\'ca\'d4\'cf\'ee\'ca\'fd\'d7\'e9
+\f0 \cf0 \
+    \cf6 int\cf0  item_index;                         \cf3 // 
+\f1 \'b2\'e2\'ca\'d4\'cf\'ee\'cf\'c2\'b1\'ea
+\f0 \cf0 \
+    \cf6 int\cf0  row_index;                          \cf3 // table 
+\f1 \'c3\'bf\'d0\'d0\'cf\'c2\'b1\'ea
+\f0 \cf0 \
+    \
+    \cf8 NSThread\cf0  *myThread;                     \cf3 // 
+\f1 \'d7\'d4\'b6\'a8\'d2\'e5\'cf\'df\'b3\'cc
+\f0 \cf0 \
+\}\
+\
+- (\cf6 void\cf0 )viewDidLoad \{\
+    [\cf6 super\cf0  \cf9 viewDidLoad\cf0 ];\
+\
+    \cf3 // Do any additional setup after loading the view.\cf0 \
+    \
+    \cf3 //
+\f1 \'b3\'f5\'ca\'bc\'bb\'af\'b6\'d4\'cf\'f3
+\f0 \cf0 \
+    \cf7 plist\cf0   = [[\cf7 Plist\cf0  \cf9 alloc\cf0 ] \cf9 init\cf0 ];\
+    \cf7 item_index\cf0  = \cf10 0\cf0 ;\
+    \cf7 row_index\cf0  = \cf10 0\cf0 ;\
+    \
+    \cf3 //
+\f1 \'b6\'c1\'c8\'a1
+\f0  plist 
+\f1 \'ce\'c4\'bc\'fe
+\f0 ,
+\f1 \'b7\'b5\'bb\'d8\'d2\'bb\'b8\'f6\'ca\'fd\'d7\'e9
+\f0 \cf0 \
+    \cf7 itemArr\cf0  = [\cf7 plist\cf0  \cf11 PlistRead\cf0 :\cf5 @"TestItem"\cf0  \cf11 Key\cf0 :\cf5 @"AllItems"\cf0 ];\
+    \
+    \cf3 //
+\f1 \'b4\'b4\'bd\'a8
+\f0  tableView 
+\f1 \'b2\'a2\'cf\'d4\'ca\'be
+\f0  plist 
+\f1 \'ca\'fd\'d7\'e9\'ca\'fd\'be\'dd
+\f0 (
+\f1 \'b9\'cc\'b6\'a8\'d6\'b5
+\f0 )\cf0 \
+    \cf7 table\cf0  = [[\cf7 Table\cf0  \cf9 alloc\cf0 ] \cf11 init\cf0 :\cf7 outline_Tab\cf0  \cf11 DisplayData\cf0 :\cf7 itemArr\cf0 ];\
+    \
+    \cf3 //
+\f1 \'c6\'f4\'b6\'af\'cf\'df\'b3\'cc
+\f0 ,
+\f1 \'bd\'f8\'c8\'eb\'b2\'e2\'ca\'d4\'c1\'f7\'b3\'cc
+\f0 \cf0 \
+    \cf7 myThread\cf0  = [[\cf8 NSThread\cf0  \cf9 alloc\cf0 ] \cf9 initWithTarget\cf0 :\cf6 self\cf0  \cf9 selector\cf0 :\cf6 @selector\cf0 (Working) \cf9 object\cf0 :\cf6 nil\cf0 ];\
+    [\cf7 myThread\cf0  \cf9 start\cf0 ];\
+\}\
+\
+\cf3 //================================================\cf0 \
+\cf3 //
+\f1 \'b2\'e2\'ca\'d4\'b6\'af\'d7\'f7\'c1\'f7\'b3\'cc
+\f0 \cf0 \
+\cf3 //================================================\cf0 \
+-(\cf6 void\cf0 )Working\
+\{\
+    \
+    \cf3 //
+\f1 \'b3\'f5\'ca\'bc\'bb\'af
+\f0  item\cf0 \
+    \cf7 Item\cf0  *testitem = [[\cf7 Item\cf0  \cf9 alloc\cf0 ] \cf9 init\cf0 ];\
+    \
+    \cf6 while\cf0  ([[\cf8 NSThread\cf0  \cf9 currentThread\cf0 ] \cf9 isCancelled\cf0 ] == \cf6 NO\cf0 )\
+    \{\
+        \cf3 //
+\f1 \'c3\'bf\'b8\'f6\'b2\'e2\'ca\'d4\'cf\'ee\'b6\'d4\'d3\'a6\'b5\'c4\'b2\'e2\'ca\'d4\'ca\'fd\'d7\'e9\'cf\'c2\'b1\'ea
+\f0 \cf0 \
+        testitem = \cf7 itemArr\cf0 [\cf7 item_index\cf0 ];\
+        \cf9 NSLog\cf0 (\cf5 @"%@=====%@=======%@"\cf0 ,testitem.\cf7 name\cf0 ,testitem.\cf7 age\cf0 ,\cf7 itemArr\cf0 [\cf7 item_index\cf0 ]);\
+        \
+        \cf3 //
+\f1 \'bc\'d3\'d4\'d8\'b2\'e2\'ca\'d4\'cf\'ee
+\f0 \cf0 \
+        [\cf6 self\cf0  \cf11 TestItem\cf0 :testitem];\
+\
+        \cf9 NSLog\cf0 (\cf5 @"%@"\cf0 ,testitem);\
+        \
+        \cf3 //table 
+\f1 \'cc\'f8\'b5\'bd\'d6\'b8\'b6\'a8\'d0\'d0
+\f0 \cf0 \
+        [\cf7 table\cf0  \cf11 SelectRow\cf0 :\cf7 row_index\cf0 ];\
+        \
+        \cf3 //table 
+\f1 \'d4\'d8\'c8\'eb\'b2\'a2\'cb\'a2\'d0\'c2\'d7\'ee\'d0\'c2\'ca\'fd\'be\'dd
+\f0 \cf0 \
+        [\cf7 table\cf0  \cf11 flushTableRow\cf0 :testitem \cf11 RowIndex\cf0 :\cf7 row_index\cf0 ];\
+        \
+        \cf3 //
+\f1 \'d1\'ad\'bb\'b5\'b2\'e2\'ca\'d4
+\f0 \cf0 \
+        \cf7 row_index\cf0  ++;\
+        \cf7 item_index\cf0  ++;\
+        \
+        \cf3 //
+\f1 \'d1\'ad\'bb\'b5\'b2\'e2\'ca\'d4
+\f0 \cf0 \
+        \cf6 if\cf0  (\cf7 item_index\cf0  >= \cf7 itemArr\cf0 .\cf8 count\cf0 )\
+        \{\
+            \cf9 sleep\cf0 (\cf10 1\cf0 );\
+            \cf7 row_index\cf0  = \cf10 0\cf0 ;\
+            \cf7 item_index\cf0  = \cf10 0\cf0 ;\
+            [\cf7 table\cf0  \cf11 ClearTable\cf0 ];\
+        \}\
+        \
+    \}\
+    \
+\cf3 //    [myThread cancel];\cf0 \
+    \
+\}\
+\
+\cf3 //================================================\cf0 \
+\cf3 //
+\f1 \'b2\'e2\'ca\'d4\'cf\'ee\'d6\'b8\'c1\'ee\'bd\'e2\'ce\'f6
+\f0 \cf0 \
+\cf3 //================================================\cf0 \
+-(\cf6 BOOL\cf0 )TestItem:(\cf7 Item\cf0 *)testitem\
+\{\
+    \cf9 sleep\cf0 (\cf10 1\cf0 );\
+    \cf6 BOOL\cf0  ispass=\cf6 NO\cf0 ;\
+    \cf3 //-----------0-------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f1 \cf5 \'d2\'bb
+\f2 \uc0\u55357 \u56374 
+\f0 \cf5 "\cf0 ])\
+    \{\
+       \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_1"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+        \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+                \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //------------1------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f1 \cf5 \'b6\'fe
+\f2 \uc0\u55357 \u56328 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_2"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-------------2-------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f1 \cf5 \'c8\'fd
+\f2 \uc0\u55357 \u56379 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_3"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------3---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f1 \cf5 \'cb\'c4
+\f2 \uc0\u55357 \u56650 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_4"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //------------4--------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55356 \u56858 \u65039 6\u65039 \u8419 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_5"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //------------5--------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55356 \u57178 \u55357 \u56349 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_6"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------6---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55357 \u56339 \u55356 \u57103 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_7"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------7---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55357 \u56445 \u55357 \u56367 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_8"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------8---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55358 \u56599 
+\f1 \'c1\'d4
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_9"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-------------9-------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55357 \u56833 
+\f1 \'c1\'b3
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_10"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //------------10--------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55357 \u56406 \u55357 \u56866 \u55356 \u56722 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_11"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------11---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u10024 \u55357 \u56384 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_12"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------12---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55357 \u56538 \u55357 \u56983 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_13"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //-----------13---------------\cf0 \
+    \cf3 //------------------------\cf0 \
+    \cf6 else\cf0  \cf6 if\cf0 ([testitem.\cf7 name\cf0  \cf9 isEqualToString\cf0 :\cf5 @"
+\f2 \cf5 \uc0\u55356 \u57184 \u55356 \u57210 \u55356 \u57280 \u55356 \u57142 
+\f0 \cf5 "\cf0 ])\
+    \{\
+        \
+        \cf6 if\cf0 ([testitem.\cf7 age\cf0  \cf9 length\cf0 ]!=\cf10 0\cf0 )\
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"michael_14"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"PASS"\cf0 ;\
+            \
+            ispass = \cf6 YES\cf0 ;\
+        \}\
+        \cf6 else\cf0 \
+        \{\
+            testitem.\cf7 value\cf0   = \cf5 @"NULL"\cf0 ;\
+            testitem.\cf7 result\cf0  = \cf5 @"FAIL"\cf0 ;\
+            \
+            ispass = \cf6 NO\cf0 ;\
+        \}\
+    \}\
+    \cf3 //--------------------------\cf0 \
+    \cf3 //--------------------------\cf0 \
+    \
+    \
+    \cf6 return\cf0  ispass;\
+\}\
+\
+- (\cf6 void\cf0 )setRepresentedObject:(\cf6 id\cf0 )representedObject \{\
+    [\cf6 super\cf0  \cf9 setRepresentedObject\cf0 :representedObject];\
+\
+    \cf3 // Update the view, if already loaded.\cf0 \
+\}\
+\
+\cf6 @end\cf0 \
+}

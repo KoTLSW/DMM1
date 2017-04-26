@@ -1,14 +1,14 @@
 //
 //  ViewController.h
-//  Emerald_Measure
+//  MK_TestingModel_Sample
 //
-//  Created by Michael on 2017/4/24.
-//  Copyright © 2017年 michael. All rights reserved.
+//  Created by Michael on 16/11/10.
+//  Copyright © 2016年 Michael. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController
+@interface ViewController : NSViewController <NSTextViewDelegate>
 
 
 @end

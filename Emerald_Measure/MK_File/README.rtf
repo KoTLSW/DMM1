@@ -1,0 +1,166 @@
+{\rtf1\ansi\ansicpg936\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset134 PingFangSC-Regular;}
+{\colortbl;\red255\green255\blue255;\red4\green255\blue253;\red255\green43\blue54;\red0\green116\blue0;
+\red100\green56\blue32;\red196\green26\blue22;\red170\green13\blue145;\red46\green13\blue110;\red28\green0\blue207;
+\red92\green38\blue153;\red63\green110\blue116;\red38\green71\blue75;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+
+\f0\fs144 \cf2 \CocoaLigature0 code sample:
+\fs22 \cf3 \
+\cf4 \
+//\cf0 \
+\cf4 //  ViewController.m\cf0 \
+\cf4 //  MKFile_Sample\cf0 \
+\cf4 //\cf0 \
+\cf4 //  Created by Michael on 16/11/15.\cf0 \
+\cf4 //  Copyright \'a9 2016
+\f1 \'c4\'ea
+\f0  Michael. All rights reserved.\cf0 \
+\cf4 //\cf0 \
+\
+\cf5 #import \cf6 "ViewController.h"\cf5 \
+#import \cf6 "MK_File.pch"\cf5 \
+#import \cf6 "MK_Timer.pch"\cf5 \
+\cf0 \
+\cf7 @implementation\cf0  ViewController\
+\
+- (\cf7 void\cf0 )viewDidLoad\
+\{\
+    [\cf7 super\cf0  \cf8 viewDidLoad\cf0 ];\
+    \
+    \cf4 //uart 
+\f1 \'bb\'d8\'b4\'ab\'b5\'c4\'d7\'d6\'b7\'fb\'d0\'c5\'cf\'a2
+\f0 ,
+\f1 \'cd\'a8\'b9\'fd
+\f0  uart 
+\f1 \'d6\'b8\'c1\'ee\'bb\'f1\'c8\'a1
+\f0 \cf0 \
+     \cf7 int\cf0  testNum = \cf9 0\cf0 ;\
+    \cf7 while\cf0  (\cf9 1\cf0 )\
+    \{\
+        \cf8 sleep\cf0 (\cf9 1\cf0 );\
+        \
+         testNum++; \cf4 //
+\f1 \'b2\'e2\'ca\'d4
+\f0 \cf0 \
+                \
+                \cf4 //
+\f1 \'ce\'c4\'bc\'fe\'bc\'d0\'c2\'b7\'be\'b6
+\f0 \cf0 \
+                \cf10 NSString\cf0  *currentPath=\cf6 @"/Users/michael/Desktop/"\cf0 ;\
+        \
+                \cf4 //
+\f1 \'b2\'e2\'ca\'d4\'bd\'e1\'ca\'f8\'b2\'a2\'b4\'b4\'bd\'a8\'ce\'c4\'bc\'fe\'b5\'c4\'ca\'b1\'bc\'e4
+\f0 \cf0 \
+                \cf11 end_time\cf0  = [[\cf11 GetTimeDay\cf0  \cf12 shareInstance\cf0 ] \cf12 GetCurrentTime\cf0 ];\
+        \
+                \cf4 //
+\f1 \'b2\'fa\'c6\'b7
+\f0  sn __
+\f1 \'b4\'cb\'b4\'a6\'d0\'e8\'d2\'aa\'b7\'a2\'d6\'b8\'c1\'ee\'cd\'a8\'b9\'fd
+\f0  uart 
+\f1 \'bb\'f1\'c8\'a1
+\f0 \cf0 \
+                \cf10 NSString\cf0  *currentSN = [\cf10 NSString\cf0  \cf8 stringWithFormat\cf0 :\cf6 @"00223344%d"\cf0 ,testNum];\
+\
+                \cf4 //uart 
+\f1 \'bb\'d8\'b4\'ab\'b5\'c4\'d7\'d6\'b7\'fb\'d0\'c5\'cf\'a2
+\f0 ,
+\f1 \'cd\'a8\'b9\'fd
+\f0  uart 
+\f1 \'d6\'b8\'c1\'ee\'bb\'f1\'c8\'a1
+\f0 \cf0 \
+                \
+    \
+                \cf4 //
+\f1 \'b2\'e2\'ca\'d4\'cf\'ee\'c4\'da\'c8\'dd
+\f0 ,
+\f1 \'b0\'d1\'c3\'bf\'d2\'bb\'cf\'ee\'b2\'e2\'ca\'d4\'b5\'c4\'c4\'da\'c8\'dd\'d6\'d8\'d0\'c2\'c6\'b4\'bd\'d3
+\f0 ,
+\f1 \'b2\'a2\'d0\'b4\'c8\'eb
+\f0 csv/txt
+\f1 \'ce\'c4\'bc\'fe\'d6\'d0
+\f0 \cf0 \
+                \cf10 NSString\cf0  *testContent = [\cf10 NSString\cf0  \cf8 stringWithFormat\cf0 :\cf6 @"array ,array ,array =================== %d"\cf0 ,testNum];\
+                \
+                \cf4 //
+\f1 \'b4\'b4\'bd\'a8\'ce\'c4\'bc\'fe\'bc\'d0
+\f0 \cf0 \
+                [[\cf11 MK_FileFolder\cf0  \cf12 shareInstance\cf0 ] \cf12 createOrFlowFolderWithCurrentPath\cf0 :currentPath \cf12 SubjectName\cf0 :\cf6 @"MK_logFile"\cf0 ];\
+\
+				\cf4 //csv
+\f1 \'ce\'c4\'bc\'fe\'c1\'d0\'b1\'ed\'cd\'b7
+\f0 \cf0 \
+                \cf10 NSString\cf0  *csvTitle = \cf6 @"sn,testResult,testItemStartTime,testItemEndTime,testItemContent"\cf0 ;\
+                \
+                \cf4 //
+\f1 \'b4\'b4\'bd\'a8
+\f0  csv 
+\f1 \'ce\'c4\'bc\'fe
+\f0 \cf0 \
+                 [[\cf11 MK_FileCSV\cf0  \cf12 shareInstance\cf0 ] \cf12 createOrFlowCSVFileWithFolderPath\cf0 :[\cf11 MK_FileFolder\cf0  \cf12 shareInstance\cf0 ].\cf11 folderPath\cf0  \cf12 Sn\cf0 :currentSN \cf12 TestItemStartTime\cf0 :\cf11 start_time\cf0  \cf12 TestItemEndTime\cf0 :\cf11 end_time\cf0  \cf12 TestItemContent\cf0 :testContent \cf12 TestItemTitle\cf0 :csvTitle \cf12 TestResult\cf0 :\cf11 testResult\cf0 .\cf10 stringValue\cf0 ];\
+                \
+                \cf4 //
+\f1 \'b4\'b4\'bd\'a8
+\f0  txt 
+\f1 \'ce\'c4\'bc\'fe
+\f0 \cf0 \
+                [[MK_FileTXT shareInstance] createOrFlowTXTFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:testContent TestResult:testResult.stringValue];\
+        \
+        \cf7 if\cf0  (testNum>\cf9 10\cf0 )\
+        \{\
+            \cf8 NSLog\cf0 (\cf6 @"all test finish !!"\cf0 );\
+            \cf7 break\cf0 ;\
+        \}\
+    \}\
+    \
+\}\
+\
+\cf4 /**\
+ *  
+\f1 \'b1\'d8\'d0\'eb\'d2\'aa\'c7\'e5\'b3\'fd\'b1\'be\'b5\'d8\'b5\'c4\'b4\'e6\'b4\'a2\'ca\'fd\'be\'dd
+\f0 ,
+\f1 \'b7\'f1\'d4\'f2\'b5\'bc\'d6\'c2\'ce\'c4\'bc\'fe\'b4\'b4\'bd\'a8\'ca\'a7\'b0\'dc
+\f0 \
+ */\cf0 \
+\
+-(\cf7 void\cf0 )viewWillDisappear\
+\{\
+    \cf4 //
+\f1 \'c7\'e5\'b3\'fd\'cb\'f9\'d3\'d0\'b5\'c4\'b1\'be\'b5\'d8\'b5\'c4\'b4\'e6\'b4\'a2\'ca\'fd\'be\'dd
+\f0 \cf0 \
+    \cf10 NSDictionary\cf0  *dic = [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 dictionaryRepresentation\cf0 ];\
+    \
+    \cf7 for\cf0  (\cf7 id\cf0  key \cf7 in\cf0  dic)\
+    \{\
+        [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 removeObjectForKey\cf0 :key];\
+    \}\
+    [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 synchronize\cf0 ];\
+\}\
+\
+-(\cf7 void\cf0 )viewDidDisappear\
+\{\
+    \cf4 //
+\f1 \'c7\'e5\'b3\'fd\'cb\'f9\'d3\'d0\'b5\'c4\'b1\'be\'b5\'d8\'b5\'c4\'b4\'e6\'b4\'a2\'ca\'fd\'be\'dd
+\f0 \cf0 \
+    \cf10 NSDictionary\cf0  *dic = [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 dictionaryRepresentation\cf0 ];\
+    \
+    \cf7 for\cf0  (\cf7 id\cf0  key \cf7 in\cf0  dic)\
+    \{\
+        [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 removeObjectForKey\cf0 :key];\
+    \}\
+    [[\cf10 NSUserDefaults\cf0  \cf8 standardUserDefaults\cf0 ] \cf8 synchronize\cf0 ];\
+\}\
+\
+\
+\
+- (\cf7 void\cf0 )setRepresentedObject:(\cf7 id\cf0 )representedObject \{\
+    [\cf7 super\cf0  \cf8 setRepresentedObject\cf0 :representedObject];\
+\
+    \cf4 // Update the view, if already loaded.\cf0 \
+\}\
+\
+\cf7 @end\cf0 \
+}
