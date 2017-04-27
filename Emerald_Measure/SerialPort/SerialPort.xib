@@ -98,7 +98,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Lqk-MI-e1N">
-                                        <rect key="frame" x="1" y="1" width="15" height="0.0"/>
+                                        <rect key="frame" x="439" y="1" width="15" height="296"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                 </scrollView>
@@ -112,7 +112,7 @@
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="WzL-S7-dFL">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" red="1" green="0.20391751769999999" blue="0.168529124" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="1" green="0.20391751769999999" blue="0.168529124" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JhS-oX-Kbc">
@@ -136,12 +136,12 @@
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" drawsBackground="YES" id="cE0-PT-5bH">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField focusRingType="exterior" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hbd-zT-GIN">
                         <rect key="frame" x="142" y="407" width="444" height="62"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" focusRingType="exterior" alignment="center" title="SerialPort Debug Tools" id="9GO-65-dLu">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" focusRingType="exterior" alignment="center" title="SerialPort Debug Tool" id="9GO-65-dLu">
                             <font key="font" size="40" name="Times-Bold"/>
                             <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

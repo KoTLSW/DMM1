@@ -34,16 +34,16 @@
         <window identifier="PACSocketWin" title="PACSocketWin" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="595" height="477"/>
+            <rect key="contentRect" x="196" y="240" width="610" height="551"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="595" height="477"/>
+                <rect key="frame" x="0.0" y="0.0" width="610" height="551"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Config Setting" boxType="oldStyle" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="3">
-                        <rect key="frame" x="5" y="363" width="570" height="111"/>
+                        <rect key="frame" x="20" y="363" width="570" height="114"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="568" height="95"/>
+                            <rect key="frame" x="1" y="1" width="568" height="98"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="15">
@@ -113,11 +113,11 @@
                                 </button>
                             </subviews>
                         </view>
-                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="borderColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                        <color key="fillColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
                     </box>
                     <box autoresizesSubviews="NO" fixedFrame="YES" title="Debug" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="P8m-Ha-MKM">
-                        <rect key="frame" x="2" y="38" width="576" height="325"/>
+                        <rect key="frame" x="17" y="38" width="576" height="325"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="574" height="309"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -276,7 +276,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="PIq-sv-bb8">
-                                        <rect key="frame" x="1" y="1" width="15" height="0.0"/>
+                                        <rect key="frame" x="537" y="1" width="15" height="168"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                 </scrollView>
@@ -286,15 +286,32 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8UV-9H-I1C">
-                        <rect key="frame" x="4" y="5" width="570" height="29"/>
+                        <rect key="frame" x="19" y="5" width="570" height="29"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Disconnect" drawsBackground="YES" id="5NJ-8U-Hwy">
                             <font key="font" size="12" name="Verdana"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9zB-q4-7QA">
+                        <rect key="frame" x="0.0" y="478" width="610" height="73"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" drawsBackground="YES" id="OfT-z3-3nx">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="keyboardFocusIndicatorColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NXb-bK-QT6">
+                        <rect key="frame" x="132" y="494" width="346" height="41"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Socket Debug Tool" id="EQj-VO-Uwb">
+                            <font key="font" metaFont="system" size="34"/>
+                            <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="132" y="110.5"/>
         </window>
     </objects>
 </document>
