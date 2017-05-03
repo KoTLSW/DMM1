@@ -22,7 +22,6 @@
     
     self = [super init];
     
-    
     _index=0;
     
     if (self)
@@ -117,7 +116,9 @@
                 [dic setValue:item.min?       item.min:      @"" forKey:TABLE_COLUMN_MIN];
                 [dic setValue:item.typ?       item.typ:      @"" forKey:TABLE_COLUMN_TYP];
                 [dic setValue:item.max?       item.max:      @"" forKey:TABLE_COLUMN_MAX];
+                
                 [dic setValue:item.value ?    item.value:    @"" forKey:TABLE_COLUMN_VALUE];
+                
                 [dic setValue:item.result ?   item.result:   @"" forKey:TABLE_COLUMN_RESULT];
                 
                 [_arrayDataSource addObject:dic];
@@ -125,10 +126,8 @@
             }
         }
         
-        
         [self.table reloadData];
         [self.table needsDisplay];
-    
 }
 //=============================================
 -(void)SelectRow:(int)rowindex
@@ -152,10 +151,12 @@
     NSLog(@"================%@",item.result);
     
     
-    NSDictionary* color = [NSDictionary dictionaryWithObjectsAndKeys:ispass?[NSColor greenColor]:[NSColor redColor],NSForegroundColorAttributeName, nil];
+    NSDictionary* redColor = [NSDictionary dictionaryWithObjectsAndKeys:ispass?[NSColor greenColor]:[NSColor redColor],NSForegroundColorAttributeName, nil];
+     NSDictionary* blueColor = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor blueColor],NSForegroundColorAttributeName, nil];
     
-    NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"    PASS":@"     FAIL" attributes:color];
+    NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"    PASS":@"     FAIL" attributes:redColor];
     
+    NSAttributedString* itemValue = [[NSAttributedString alloc] initWithString:item.value attributes:blueColor];
     
     
     //给模型对应的 key 值赋值
@@ -164,7 +165,7 @@
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.min    forKey:TABLE_COLUMN_MIN];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.max forKey:TABLE_COLUMN_MAX];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:result      forKey:TABLE_COLUMN_RESULT];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.value  forKey:TABLE_COLUMN_VALUE];
+    [[_arrayDataSource objectAtIndex:rowIndex] setValue:itemValue  forKey:TABLE_COLUMN_VALUE];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -194,6 +195,7 @@
 //=============================================
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
+     _tableColumnArr = tableView.tableColumns;
     return [_arrayDataSource count];
 }
 //=============================================

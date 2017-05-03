@@ -24,7 +24,7 @@
 		</dict>
 		<dict>
 			<key>testItems</key>
-			<string>RF-1b</string>
+			<string>RF-1a</string>
 			<key>units</key>
 			<string>V</string>
 			<key>min</key>
@@ -42,7 +42,7 @@
 		</dict>
 		<dict>
 			<key>testItems</key>
-			<string>RF-1c</string>
+			<string>RF-1a</string>
 			<key>units</key>
 			<string>V</string>
 			<key>min</key>
@@ -60,7 +60,7 @@
 		</dict>
 		<dict>
 			<key>testItems</key>
-			<string>RF-2a</string>
+			<string>RF-1a</string>
 			<key>units</key>
 			<string>V</string>
 			<key>min</key>
@@ -78,43 +78,7 @@
 		</dict>
 		<dict>
 			<key>testItems</key>
-			<string>RF-2b</string>
-			<key>units</key>
-			<string>V</string>
-			<key>min</key>
-			<string>1.485</string>
-			<key>typ</key>
-			<string>1.515</string>
-			<key>max</key>
-			<string>1.515</string>
-			<key>value</key>
-			<string>--</string>
-			<key>result</key>
-			<string>--</string>
-			<key>isTest</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>testItems</key>
-			<string>RF-3a</string>
-			<key>units</key>
-			<string>V</string>
-			<key>min</key>
-			<string>1.485</string>
-			<key>typ</key>
-			<string>1.515</string>
-			<key>max</key>
-			<string>1.515</string>
-			<key>value</key>
-			<string>--</string>
-			<key>result</key>
-			<string>--</string>
-			<key>isTest</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>testItems</key>
-			<string>RF-3b</string>
+			<string>RF-1a</string>
 			<key>units</key>
 			<string>V</string>
 			<key>min</key>

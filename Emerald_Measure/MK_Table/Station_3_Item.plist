@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllItems</key>
+	<array>
+		<dict>
+			<key>testItems</key>
+			<string>RF-1a</string>
+			<key>units</key>
+			<string>V</string>
+			<key>min</key>
+			<string>1.485</string>
+			<key>typ</key>
+			<string>1.515</string>
+			<key>max</key>
+			<string>1.515</string>
+			<key>value</key>
+			<string>--</string>
+			<key>result</key>
+			<string>--</string>
+			<key>isTest</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>testItems</key>
+			<string>RF-1a</string>
+			<key>units</key>
+			<string>V</string>
+			<key>min</key>
+			<string>1.485</string>
+			<key>typ</key>
+			<string>1.515</string>
+			<key>max</key>
+			<string>1.515</string>
+			<key>value</key>
+			<string>--</string>
+			<key>result</key>
+			<string>--</string>
+			<key>isTest</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>

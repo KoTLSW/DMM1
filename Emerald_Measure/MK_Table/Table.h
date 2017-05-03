@@ -18,6 +18,7 @@
 
 @property (weak) IBOutlet NSScrollView *scrollview;
 @property (weak) IBOutlet NSTableView *table;
+@property (nonatomic,copy) NSArray *tableColumnArr;
 //=============================================
 - (id)init:(NSView*)parent DisplayData:(NSArray*)arrayData;
 

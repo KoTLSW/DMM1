@@ -16,7 +16,7 @@
 
 @implementation ViewController
 {
-    Table *table;                       // table类
+    Table *mk_table;                       // table类
     Plist *plist;                       // plist类
     
     NSMutableArray *itemArr;            // plist文件测试项数组
@@ -72,10 +72,10 @@
     passNum = 0;
     
     //读取 plist 文件
-    itemArr = [plist PlistRead:@"TestItem" Key:@"AllItems"];
+    itemArr = [plist PlistRead:@"CurrentStation" Key:@"AllItems"];
     
     //通过 table 类自定义方法来创建 tableView
-    table = [[Table alloc] init:tab_View DisplayData:itemArr];
+    mk_table = [[Table alloc] init:tab_View DisplayData:itemArr];
     
     //启动线程,进入测试流程
     myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
@@ -237,7 +237,7 @@
                 }
                 
                 //cycle_test,开始测试前清空tableView
-                [table ClearTable];
+                [mk_table ClearTable];
                 ct_cnt = 0;
             });
         }
@@ -293,7 +293,7 @@
             //把测试结果加入到可变数组中
             [testResultArr addObject:itemResult];
             
-            [table flushTableRow:testitem RowIndex:row_index];
+            [mk_table flushTableRow:testitem RowIndex:row_index];
             
             row_index++;
             item_index++;
@@ -363,7 +363,7 @@
                 NSString *testContent = [NSString stringWithFormat:@"array ,array ,array =================== %d",testNum];
                 
                 //创建文件夹
-                [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:currentPath SubjectName:@"Emerald_TestLog"];
+                [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:currentPath SubjectName:@"Emerald_Log"];
                 
                 //csv文件列表头
                 NSString *csvTitle = @"sn,testResult,testItemStartTime,testItemEndTime,testItemContent";
@@ -429,14 +429,21 @@
     {
         //第一项测试项的时候清空 logView 界面
         [logView_Info setString:@""];
-        
-        if([testitem.testItems length]!=0)
+
+        if ([mk_table.table columnWithIdentifier:@"value_0"])
         {
-            testitem.value  = @"michael_1";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
+            testitem.value = @"kkkkkkkkkkkkkkk";
+            testitem.result = @"pass";
+            [mk_table.table reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:0] columnIndexes:[NSIndexSet indexSetWithIndex:1]];
         }
+        
+//        if([testitem.testItems length]!=0)
+//        {
+//            testitem.value  = @"michael_1";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
         else
         {
             testitem.value  = @"NULL";
