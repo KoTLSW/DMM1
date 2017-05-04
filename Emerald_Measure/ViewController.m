@@ -72,7 +72,7 @@
     passNum = 0;
     
     //读取 plist 文件
-    itemArr = [plist PlistRead:@"CurrentStation" Key:@"AllItems"];
+    itemArr = [plist PlistRead:@"TestItems" Key:@"AllItems"];
     
     //通过 table 类自定义方法来创建 tableView
     mk_table = [[Table alloc] init:tab_View DisplayData:itemArr];
@@ -406,7 +406,6 @@
                 importSN.stringValue = @"";
             });
             
-            
             index = 0;
         }
     }
@@ -430,20 +429,13 @@
         //第一项测试项的时候清空 logView 界面
         [logView_Info setString:@""];
 
-        if ([mk_table.table columnWithIdentifier:@"value_0"])
+        if([testitem.testItems length]!=0)
         {
-            testitem.value = @"kkkkkkkkkkkkkkk";
-            testitem.result = @"pass";
-            [mk_table.table reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:0] columnIndexes:[NSIndexSet indexSetWithIndex:1]];
+            testitem.value  = @"michael_1";
+            testitem.result = @"PASS";
+            
+            ispass = YES;
         }
-        
-//        if([testitem.testItems length]!=0)
-//        {
-//            testitem.value  = @"michael_1";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
         else
         {
             testitem.value  = @"NULL";

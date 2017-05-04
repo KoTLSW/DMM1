@@ -20,7 +20,7 @@
 #define TABLE_COLUMN_TYP            @"typ"
 #define TABLE_COLUMN_MAX            @"max"
 #define TABLE_COLUMN_RESULT         @"result"
-#define TABLE_COLUMN_VALUE          @"value_0"
+#define TABLE_COLUMN_VALUE          @"value"
 #define TABLE_COLUMN_ISTEST         @"isTest"
 //=============================================
 

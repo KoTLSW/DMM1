@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllItems</key>
+	<array>
+		<dict>
+			<key>Command</key>
+			<string></string>
+			<key>TimeOut</key>
+			<integer>500</integer>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Device</key>
+			<string>Fixture</string>
+			<key>TestName</key>
+			<string>RF-1a</string>
+			<key>Units</key>
+			<string>V</string>
+			<key>Min</key>
+			<string>1.485</string>
+			<key>Max</key>
+			<string>1.515</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+		</dict>
+	</array>
+</dict>
+</plist>
