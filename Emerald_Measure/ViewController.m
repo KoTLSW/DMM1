@@ -72,7 +72,7 @@
     passNum = 0;
     
     //读取 plist 文件
-    itemArr = [plist PlistRead:@"TestItems" Key:@"AllItems"];
+    itemArr = [plist PlistRead:@"TestItems" Key:nil];
     
     //通过 table 类自定义方法来创建 tableView
     mk_table = [[Table alloc] init:tab_View DisplayData:itemArr];

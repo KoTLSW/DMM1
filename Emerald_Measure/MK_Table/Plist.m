@@ -8,22 +8,72 @@
 
 #import "Plist.h"
 
+@interface Plist()
+{
+    NSMutableArray *testItems;
+    NSString *plistPath;
+    NSArray *allItemsArr;
+    NSArray *arrayData;
+    NSMutableArray *allPlistArr;
+    NSArray *currentStationArr;
+    int currentStationIndex;
+}
+@end
+
 @implementation Plist
 
 -(NSMutableArray *)PlistRead:(NSString *)fileName Key:(NSString *)key
 {
-    NSMutableArray *testItems = [[NSMutableArray alloc] init];
+    currentStationIndex =(int)[[NSUserDefaults standardUserDefaults] objectForKey:@"currentStationIndex"];
+    
+    if (!testItems)
+    {
+        testItems = [[NSMutableArray alloc] init];
+    }
     
     //首先读取plist中的数据
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
-    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    if (!plistPath)
+    {
+        plistPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
+    }
+    
+//    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    
+    if (!allItemsArr)
+    {
+        allItemsArr = [NSArray arrayWithContentsOfFile:plistPath];
+    }
     
     //根据传入的关键字找到对应节点
-    NSArray *arrayData = [dictionary objectForKey:key];
-    
-    if (arrayData != nil && ![arrayData isEqual:@""])
+//    NSArray *arrayData = [dictionary objectForKey:key];
+    if (!arrayData)
     {
-        for (NSDictionary *dic in arrayData)
+        arrayData = [[NSArray alloc] init];
+    }
+   
+    if (!allPlistArr)
+    {
+        allPlistArr = [[NSMutableArray alloc] init];
+    }
+    
+    for (int i=0; i< allItemsArr.count; i++)
+    {
+       arrayData = [allItemsArr objectAtIndex:i];
+        [allPlistArr addObject:arrayData];
+    }
+    
+    if (!currentStationArr)
+    {
+        currentStationArr  = [[NSArray alloc] init];
+    }
+    
+    //判断当前的数组属于哪个测试工站
+    currentStationArr = [allPlistArr objectAtIndex:currentStationIndex];
+    
+    
+    if (currentStationArr != nil && ![currentStationArr isEqual:@""])
+    {
+        for (NSDictionary *dic in currentStationArr)
         {
             //读取 plist 文件中的固定数据
             Item *item = [[Item alloc] init];
