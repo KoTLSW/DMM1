@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C217B201EBB622E00113037 /* CurrentStationWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C217B1E1EBB622E00113037 /* CurrentStationWindow.m */; };
-		4C217B211EBB622E00113037 /* CurrentStationWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C217B1F1EBB622E00113037 /* CurrentStationWindow.xib */; };
 		4C82EE2D1EB04D4B00BAA7A3 /* SerialPort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C82EE261EB04D4B00BAA7A3 /* SerialPort.m */; };
 		4C82EE2E1EB04D4B00BAA7A3 /* SerialPort.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C82EE271EB04D4B00BAA7A3 /* SerialPort.xib */; };
 		4C82EE2F1EB04D4B00BAA7A3 /* SerialPortDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C82EE291EB04D4B00BAA7A3 /* SerialPortDelegate.m */; };
@@ -70,9 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C217B1D1EBB622E00113037 /* CurrentStationWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentStationWindow.h; sourceTree = "<group>"; };
-		4C217B1E1EBB622E00113037 /* CurrentStationWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentStationWindow.m; sourceTree = "<group>"; };
-		4C217B1F1EBB622E00113037 /* CurrentStationWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CurrentStationWindow.xib; sourceTree = "<group>"; };
+		4C6F3F911EBC0D5D002C747E /* SerialPortPCH.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortPCH.pch; sourceTree = "<group>"; };
 		4C82EE251EB04D4B00BAA7A3 /* SerialPort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerialPort.h; sourceTree = "<group>"; };
 		4C82EE261EB04D4B00BAA7A3 /* SerialPort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerialPort.m; sourceTree = "<group>"; };
 		4C82EE271EB04D4B00BAA7A3 /* SerialPort.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SerialPort.xib; sourceTree = "<group>"; };
@@ -184,19 +180,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4C217B171EBB578500113037 /* CurrentStation */ = {
-			isa = PBXGroup;
-			children = (
-				4C217B1D1EBB622E00113037 /* CurrentStationWindow.h */,
-				4C217B1E1EBB622E00113037 /* CurrentStationWindow.m */,
-				4C217B1F1EBB622E00113037 /* CurrentStationWindow.xib */,
-			);
-			path = CurrentStation;
-			sourceTree = "<group>";
-		};
 		4C82EE221EB04D4B00BAA7A3 /* SerialPort */ = {
 			isa = PBXGroup;
 			children = (
+				4C6F3F911EBC0D5D002C747E /* SerialPortPCH.pch */,
 				4C82EE251EB04D4B00BAA7A3 /* SerialPort.h */,
 				4C82EE261EB04D4B00BAA7A3 /* SerialPort.m */,
 				4C82EE271EB04D4B00BAA7A3 /* SerialPort.xib */,
@@ -257,7 +244,6 @@
 		4C9EE7B51EADE57000B9089E /* Emerald_Measure */ = {
 			isa = PBXGroup;
 			children = (
-				4C217B171EBB578500113037 /* CurrentStation */,
 				4C82EE401EB04E4E00BAA7A3 /* Global */,
 				4C82EE311EB04D5A00BAA7A3 /* PACSocket */,
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
@@ -510,7 +496,6 @@
 				4C82EE2E1EB04D4B00BAA7A3 /* SerialPort.xib in Resources */,
 				4C9EE81D1EADE69400B9089E /* README.rtf in Resources */,
 				4C9EE8211EADE69400B9089E /* README.rtf in Resources */,
-				4C217B211EBB622E00113037 /* CurrentStationWindow.xib in Resources */,
 				4C9EE82D1EADE69400B9089E /* README.rtf in Resources */,
 				4C82EE3D1EB04D5A00BAA7A3 /* PACSocketDebug.xib in Resources */,
 				4C9EE8251EADE69400B9089E /* README.rtf in Resources */,
@@ -545,7 +530,6 @@
 				4C82EE3B1EB04D5A00BAA7A3 /* CPACSocket.mm in Sources */,
 				4C82EE441EB04E4E00BAA7A3 /* TestContext.mm in Sources */,
 				4C9EE8481EADEE4A00B9089E /* ViewController.m in Sources */,
-				4C217B201EBB622E00113037 /* CurrentStationWindow.m in Sources */,
 				4C9EE8201EADE69400B9089E /* MK_FileTXT.m in Sources */,
 				4C9EE82A1EADE69400B9089E /* HiperTimer.m in Sources */,
 				4C9EE82C1EADE69400B9089E /* MKTimer.m in Sources */,

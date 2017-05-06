@@ -98,7 +98,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Lqk-MI-e1N">
-                                        <rect key="frame" x="439" y="1" width="15" height="296"/>
+                                        <rect key="frame" x="1" y="1" width="15" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                 </scrollView>
@@ -181,7 +181,7 @@
                                 </button>
                                 <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P2D-5V-GLq">
                                     <rect key="frame" x="84" y="301" width="232" height="26"/>
-                                    <popUpButtonCell key="cell" type="push" title="230400" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="szx-Uf-e9S" id="MFP-JV-bFv">
+                                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="MFP-JV-bFv">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="menu"/>
                                         <menu key="menu" id="6KI-tS-J8X">
@@ -203,7 +203,7 @@
                                                 <menuItem title="38400" id="blU-Ao-4Uk"/>
                                                 <menuItem title="57600" id="fac-Ey-SQA"/>
                                                 <menuItem title="115200" id="QOh-Te-5Du"/>
-                                                <menuItem title="230400" state="on" id="szx-Uf-e9S"/>
+                                                <menuItem title="230400" id="szx-Uf-e9S"/>
                                             </items>
                                         </menu>
                                     </popUpButtonCell>

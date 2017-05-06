@@ -9,13 +9,11 @@
 #import "AppDelegate.h"
 #import "PACSocketDebugWinDelegate.h"
 #import "SerialPortDelegate.h"
-#import "CurrentStationWindow.h"
 
 @interface AppDelegate ()
 {
     PACSocketDebugWinDelegate *pacSocketDelegate;
     SerialPortDelegate *serialPortDelegate;
-    CurrentStationWindow *currentStationsWin;
 }
 @end
 
@@ -50,15 +48,7 @@
     [serialPortDelegate showWindow:self];
 }
 
-- (IBAction)CurrentStations:(id)sender
-{
-    if (!currentStationsWin)
-    {
-        currentStationsWin = [[CurrentStationWindow alloc] init];
-    }
-    
-    [currentStationsWin showWindow:self];
-}
+
 
 
 @end

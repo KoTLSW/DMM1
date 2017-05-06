@@ -72,12 +72,6 @@
                                                 <action selector="SerialPort_Tool:" target="Voe-Tx-rLC" id="uoU-2A-4K8"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="CurrentStations" id="gVQ-OW-Vyx">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="CurrentStations:" target="Voe-Tx-rLC" id="0q9-4S-VuW"/>
-                                            </connections>
-                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
