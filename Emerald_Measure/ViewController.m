@@ -62,59 +62,69 @@
     serialPort = [[SerialPort alloc] init];
     mkTimer = [[MKTimer alloc] init];
     plist = [[Plist alloc] init];
-    if (!mk_table)
-    {
-        mk_table = [[Table alloc] init];
-    }
+    mk_table = [[Table alloc] init];
+    
     item_index = 0;
     row_index = 0;
     pressBtn.enabled = NO;
     logView_Info.editable = NO;
     testNum = 0;
     passNum = 0;
+    itemArr = [NSMutableArray array];
     
-    //读取 plist 文件
-    itemArr = [plist PlistRead:@"TestItems" Key:nil];
-    
-    //通过 table 类自定义方法来创建 tableView
-    mk_table = [[Table alloc] init:tab_View DisplayData:itemArr];
-    
-    //启动线程,进入测试流程
-    myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-    [myThrad start];
+    //进来就判断读取哪个配置文件
+    [self selectStationNoti:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectStationNoti:) name:@"changePlistFileNotification" object:nil];
 }
 
 -(void)selectStationNoti:(NSNotification *)noti
 {
-    //读取 plist 文件
-    itemArr = [plist PlistRead:@"TestItems" Key:nil];
+    if (plist == nil)
+    {
+         plist = [[Plist alloc] init];
+    }
+    if (mk_table == nil)
+    {
+        mk_table = [[Table alloc] init];
+    }
     
-    if ([noti.object isEqualToString:@"Station_0"])
+    if ([noti.object isEqualToString:@"Station_0"] || [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_0"])
     {
         NSLog(@"进入 Station_0 工站");
-        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:0]];
+        //读取 plist 文件
+        itemArr = [plist PlistRead:@"Station_0" Key:@"AllItems"];
+        mk_table = [mk_table init:tab_View DisplayData:itemArr];
     }
-    if ([noti.object isEqualToString:@"Station_1"])
+    if ([noti.object isEqualToString:@"Station_1"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_1"])
     {
         NSLog(@"进入 Station_1 工站");
-        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:1]];
+        //读取 plist 文件
+        itemArr = [plist PlistRead:@"Station_1" Key:@"AllItems"];
+        mk_table = [mk_table init:tab_View DisplayData:itemArr];
     }
-    if ([noti.object isEqualToString:@"Station_2"])
+    if ([noti.object isEqualToString:@"Station_2"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_2"])
     {
         NSLog(@"进入 Station_2 工站");
-        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:2]];
+        //读取 plist 文件
+        itemArr = [plist PlistRead:@"Station_2" Key:@"AllItems"];
+        mk_table = [mk_table init:tab_View DisplayData:itemArr];
     }
-    if ([noti.object isEqualToString:@"Station_3"])
+    if ([noti.object isEqualToString:@"Station_3"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_3"])
     {
         NSLog(@"进入 Station_3 工站");
-        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:3]];
+        //读取 plist 文件
+        itemArr = [plist PlistRead:@"Station_3" Key:@"AllItems"];
+        mk_table = [mk_table init:tab_View DisplayData:itemArr];
     }
     
-//    //启动线程,进入测试流程
-//    myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-//    [myThrad start];
+    if (myThrad != nil)
+    {
+        return;
+    }
+    //启动线程,进入测试流程
+    myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+    [myThrad start];
 }
 
 
@@ -654,6 +664,9 @@
         [myThrad cancel];
          myThrad = nil;
         [mkTimer endTimer];
+        index = 0;
+        item_index = 0;
+        row_index = 0;
         [NSMenu setMenuBarVisible:YES];
         return;
     }
@@ -662,9 +675,6 @@
         [sender setTitle:@"Stop"];
         //启动线程,进入测试流程
         myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-        index = 0;
-        item_index = 0;
-        row_index = 0;
         [myThrad start];
         return;
     }

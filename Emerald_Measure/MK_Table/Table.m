@@ -22,6 +22,7 @@
     
     self = [super init];
     
+    
     _index=0;
     
     if (self)
@@ -92,13 +93,15 @@
     NSTableView* aTableView = aNotification.object;
     NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0,aTableView.numberOfRows)];
     [aTableView noteHeightOfRowsWithIndexesChanged:indexes];
+    
+    NSLog(@"aaa");
 }
 //=============================================
 -(void)InitTableView:(NSArray*)arrayData
 {
     _arrayDataSource =[[NSMutableArray alloc] init];
  
-        int countDisplay=0;
+        int countDisplay=1;
         
         for (int i=0; i<[arrayData count]; i++)
         {
@@ -111,22 +114,22 @@
                 
                 //赋值,在tableView 上显示的数据(固定值)
                 [dic setValue:[NSString stringWithFormat:@"%d",countDisplay] forKey:TABLE_COLUMN_ID];
-                [dic setValue:item.testName? item.testName:@"" forKey:TABLE_COLUMN_TESTNAME];
-                [dic setValue:item.units?     item.units:    @"" forKey:TABLE_COLUMN_UNITS];
-                [dic setValue:item.min?       item.min:      @"" forKey:TABLE_COLUMN_MIN];
-                [dic setValue:item.max?       item.max:      @"" forKey:TABLE_COLUMN_MAX];
-                
-                [dic setValue:item.value ?    item.value:    @"" forKey:TABLE_COLUMN_VALUE];
-                
-                [dic setValue:item.result ?   item.result:   @"" forKey:TABLE_COLUMN_RESULT];
+                [dic setValue:item.testName?    item.testName:   @""    forKey:TABLE_COLUMN_TESTNAME];
+                [dic setValue:item.units?     item.units:    @""    forKey:TABLE_COLUMN_UNITS];
+                [dic setValue:item.min?     item.min:    @""    forKey:TABLE_COLUMN_MIN];
+                [dic setValue:item.max?  item.max: @""    forKey:TABLE_COLUMN_MAX];
+                [dic setValue:item.value ?  item.value:  @""    forKey:TABLE_COLUMN_VALUE];
+                [dic setValue:item.result ? item.result: @""    forKey:TABLE_COLUMN_RESULT];
                 
                 [_arrayDataSource addObject:dic];
                 countDisplay++;
             }
         }
         
+        
         [self.table reloadData];
         [self.table needsDisplay];
+    
 }
 //=============================================
 -(void)SelectRow:(int)rowindex
@@ -150,16 +153,12 @@
     NSLog(@"================%@",item.result);
     
     
-    NSDictionary* redColor = [NSDictionary dictionaryWithObjectsAndKeys:ispass?[NSColor greenColor]:[NSColor redColor],NSForegroundColorAttributeName, nil];
-    NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"           PASS":@"           FAIL" attributes:redColor];
+    NSDictionary* color = [NSDictionary dictionaryWithObjectsAndKeys:ispass?[NSColor greenColor]:[NSColor redColor],NSForegroundColorAttributeName, nil];
     
-    
-//    NSDictionary* blueColor = [NSDictionary dictionaryWithObjectsAndKeys:[NSColor blueColor],NSForegroundColorAttributeName, nil];
-//    
-//    NSAttributedString* itemValue = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"        %@",item.value] attributes:blueColor];
-    
+    NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"          PASS":@"          FAIL" attributes:color];
     
     //给模型对应的 key 值赋值
+    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.id     forKey:TABLE_COLUMN_ID];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.testName   forKey:TABLE_COLUMN_TESTNAME];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.units    forKey:TABLE_COLUMN_UNITS];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.min    forKey:TABLE_COLUMN_MIN];
@@ -195,7 +194,6 @@
 //=============================================
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-     _tableColumnArr = tableView.tableColumns;
     return [_arrayDataSource count];
 }
 //=============================================
