@@ -111,10 +111,9 @@
                 
                 //赋值,在tableView 上显示的数据(固定值)
                 [dic setValue:[NSString stringWithFormat:@"%d",countDisplay] forKey:TABLE_COLUMN_ID];
-                [dic setValue:item.testItems? item.testItems:@"" forKey:TABLE_COLUMN_TESTITEMS];
+                [dic setValue:item.testName? item.testName:@"" forKey:TABLE_COLUMN_TESTNAME];
                 [dic setValue:item.units?     item.units:    @"" forKey:TABLE_COLUMN_UNITS];
                 [dic setValue:item.min?       item.min:      @"" forKey:TABLE_COLUMN_MIN];
-                [dic setValue:item.typ?       item.typ:      @"" forKey:TABLE_COLUMN_TYP];
                 [dic setValue:item.max?       item.max:      @"" forKey:TABLE_COLUMN_MAX];
                 
                 [dic setValue:item.value ?    item.value:    @"" forKey:TABLE_COLUMN_VALUE];
@@ -161,7 +160,7 @@
     
     
     //给模型对应的 key 值赋值
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.testItems   forKey:TABLE_COLUMN_TESTITEMS];
+    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.testName   forKey:TABLE_COLUMN_TESTNAME];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.units    forKey:TABLE_COLUMN_UNITS];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.min    forKey:TABLE_COLUMN_MIN];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.max forKey:TABLE_COLUMN_MAX];

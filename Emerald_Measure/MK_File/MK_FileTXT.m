@@ -147,6 +147,7 @@
 -(void)cleanUserDefault
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"TXTsecondFolderPathKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

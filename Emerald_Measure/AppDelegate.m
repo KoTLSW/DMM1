@@ -9,11 +9,13 @@
 #import "AppDelegate.h"
 #import "PACSocketDebugWinDelegate.h"
 #import "SerialPortDelegate.h"
+#import "StationControlWindow.h"
 
 @interface AppDelegate ()
 {
     PACSocketDebugWinDelegate *pacSocketDelegate;
     SerialPortDelegate *serialPortDelegate;
+    StationControlWindow *selectStation;
 }
 @end
 
@@ -48,6 +50,17 @@
     [serialPortDelegate showWindow:self];
 }
 
+- (IBAction)StationControl_Tool:(id)sender
+{
+    if (!selectStation)
+    {
+        selectStation = [[StationControlWindow alloc] init];
+    }
+    
+    [selectStation showWindow:self];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"disableToSelectStationNoti" object:nil];
+}
 
 
 

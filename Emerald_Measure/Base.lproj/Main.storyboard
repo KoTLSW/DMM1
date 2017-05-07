@@ -72,6 +72,12 @@
                                                 <action selector="SerialPort_Tool:" target="Voe-Tx-rLC" id="uoU-2A-4K8"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="StationControl" id="JHb-CJ-W0U">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="StationControl_Tool:" target="Voe-Tx-rLC" id="hNV-aH-IjA"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -866,28 +872,28 @@
                                                 <subviews>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E77-dp-fpg">
                                                         <rect key="frame" x="14" y="38" width="81" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6LP-8p-Ahh">
+                                                        <buttonCell key="cell" type="push" title="dut_0" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6LP-8p-Ahh">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Smn-wf-h03">
                                                         <rect key="frame" x="173" y="38" width="81" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lYn-SB-oGX">
+                                                        <buttonCell key="cell" type="push" title="dut_1" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lYn-SB-oGX">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UvG-7i-6VT">
                                                         <rect key="frame" x="14" y="5" width="81" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LdW-82-2Gb">
+                                                        <buttonCell key="cell" type="push" title="dut_2" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LdW-82-2Gb">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                     </button>
                                                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EGq-N2-rg1">
                                                         <rect key="frame" x="173" y="5" width="81" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6p-CC-w72">
+                                                        <buttonCell key="cell" type="push" title="dut_3" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C6p-CC-w72">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -925,29 +931,29 @@
                                             </textFieldCell>
                                         </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xSu-H4-gjG">
-                                            <rect key="frame" x="180" y="425" width="111" height="25"/>
-                                            <buttonCell key="cell" type="squareTextured" title="Pause" bezelStyle="texturedSquare" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="xGJ-dw-VNf">
+                                            <rect key="frame" x="196" y="425" width="95" height="30"/>
+                                            <buttonCell key="cell" type="squareTextured" title="Stop" bezelStyle="texturedSquare" imagePosition="left" alignment="center" borderStyle="border" inset="2" id="xGJ-dw-VNf">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                             <connections>
-                                                <action selector="pressButtonToControlThread:" target="XfG-lQ-9wD" id="fwJ-E0-EDr"/>
+                                                <action selector="clickToStop_ReStart:" target="XfG-lQ-9wD" id="Pgw-yS-RT0"/>
                                             </connections>
                                         </button>
                                         <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQH-hg-2y0">
-                                            <rect key="frame" x="26" y="457" width="261" height="81"/>
+                                            <rect key="frame" x="26" y="471" width="261" height="67"/>
                                             <clipView key="contentView" ambiguous="YES" id="1SK-am-ukT">
-                                                <rect key="frame" x="1" y="1" width="244" height="79"/>
+                                                <rect key="frame" x="1" y="1" width="244" height="65"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textView ambiguous="YES" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="HWP-gp-mwH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="79"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="244" height="65"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <size key="minSize" width="244" height="79"/>
+                                                        <size key="minSize" width="244" height="65"/>
                                                         <size key="maxSize" width="463" height="10000000"/>
                                                         <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <size key="minSize" width="244" height="79"/>
+                                                        <size key="minSize" width="244" height="65"/>
                                                         <size key="maxSize" width="463" height="10000000"/>
                                                     </textView>
                                                 </subviews>
@@ -958,7 +964,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="VCT-4N-thK">
-                                                <rect key="frame" x="245" y="1" width="15" height="79"/>
+                                                <rect key="frame" x="245" y="1" width="15" height="65"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -1037,7 +1043,7 @@
                         <outlet property="currentStateMsg" destination="m3F-uo-4z2" id="xdA-ha-lHM"/>
                         <outlet property="importSN" destination="Ehs-io-rRe" id="19x-W2-O1W"/>
                         <outlet property="logView_Info" destination="0ko-oV-mW4" id="P7F-ax-MaS"/>
-                        <outlet property="pressBtn" destination="xSu-H4-gjG" id="RxS-rB-5nS"/>
+                        <outlet property="stopBtn" destination="xSu-H4-gjG" id="OaN-yP-GNq"/>
                         <outlet property="tab_View" destination="wsL-ZA-5js" id="b6D-xR-GcE"/>
                         <outlet property="testCount" destination="VeH-cA-2CE" id="evT-78-WI3"/>
                         <outlet property="testFieldTimes" destination="eRv-Tp-YRn" id="sWD-5H-56a"/>

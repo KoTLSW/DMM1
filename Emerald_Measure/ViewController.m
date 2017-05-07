@@ -24,7 +24,6 @@
     int index;                          // 测试流程下标
     int item_index;                     // 测试项下标
     int row_index;                      // table 每一行下标
-    int pause;                          // 暂停下标
     
     NSString *start_time;               //启动测试的时间
     NSString *end_time;                 //结束测试的时间
@@ -63,7 +62,10 @@
     serialPort = [[SerialPort alloc] init];
     mkTimer = [[MKTimer alloc] init];
     plist = [[Plist alloc] init];
-    
+    if (!mk_table)
+    {
+        mk_table = [[Table alloc] init];
+    }
     item_index = 0;
     row_index = 0;
     pressBtn.enabled = NO;
@@ -80,30 +82,40 @@
     //启动线程,进入测试流程
     myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
     [myThrad start];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectStationNoti:) name:@"changePlistFileNotification" object:nil];
 }
 
-- (IBAction)pressButtonToControlThread:(id)sender
+-(void)selectStationNoti:(NSNotification *)noti
 {
-    if([pressBtn.title isEqualToString:@"Pause"])
+    //读取 plist 文件
+    itemArr = [plist PlistRead:@"TestItems" Key:nil];
+    
+    if ([noti.object isEqualToString:@"Station_0"])
     {
-        pause = index;  //记录当前的 index
-        index = 2000; //当前的index 跳出
-        
-        //定时器暂停
-        [mkTimer stopTimer];
-        [pressBtn setTitle:@"Continue"];
+        NSLog(@"进入 Station_0 工站");
+        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:0]];
     }
-    else
+    if ([noti.object isEqualToString:@"Station_1"])
     {
-        index = pause;
-        
-        //定时器继续
-        [mkTimer continueTimer];
-        [pressBtn setTitle:@"Pause"];
+        NSLog(@"进入 Station_1 工站");
+        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:1]];
     }
+    if ([noti.object isEqualToString:@"Station_2"])
+    {
+        NSLog(@"进入 Station_2 工站");
+        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:2]];
+    }
+    if ([noti.object isEqualToString:@"Station_3"])
+    {
+        NSLog(@"进入 Station_3 工站");
+        mk_table = [mk_table init:tab_View DisplayData:[itemArr objectAtIndex:3]];
+    }
+    
+//    //启动线程,进入测试流程
+//    myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+//    [myThrad start];
 }
-
-
 
 
 //sn = 123456
@@ -112,6 +124,8 @@
 //================================================
 -(void)Working
 {
+    [NSMenu setMenuBarVisible:NO];
+    
     pressBtn.enabled = YES;
     Item *testitem = [[Item alloc] init];
     NSMutableArray *testResultArr = [NSMutableArray arrayWithCapacity:0];
@@ -276,7 +290,7 @@
             }
             
             testitem = itemArr[item_index];
-            NSLog(@"%@=========%@========%@",testitem.testItems, testitem.value, itemArr[item_index]);
+            NSLog(@"%@=========%@========%@",testitem.testName, testitem.value, itemArr[item_index]);
             
             //加载测试项
             BOOL boolResult = [self TestItem:testitem];
@@ -424,12 +438,12 @@
     
     //-----------0-------------
     //------------------------
-    if([testitem.testItems isEqualToString:@"RF-1a"])
+    if([testitem.testName isEqualToString:@"RF-1a"])
     {
         //第一项测试项的时候清空 logView 界面
         [logView_Info setString:@""];
 
-        if([testitem.testItems length]!=0)
+        if([testitem.testName length]!=0)
         {
             testitem.value  = @"michael_1";
             testitem.result = @"PASS";
@@ -442,7 +456,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -450,15 +464,15 @@
                 [logView_Info setTextColor:[NSColor redColor]];
                 [[[logView_Info textStorage] mutableString] appendString:logViewText];
             });
+            
             ispass = NO;
         }
     }
-    //------------1------------
+    //------------1-----------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-1b"])
+    else if([testitem.testName isEqualToString:@"RF-1b"])
     {
-        
-        if([testitem.testItems length] !=0)
+        if([testitem.testName length] !=0)
         {
             testitem.value  = @"michael_2";
             testitem.result = @"PASS";
@@ -471,7 +485,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -484,9 +498,9 @@
     }
     //-------------2-------------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-1c"])
+    else if([testitem.testName isEqualToString:@"RF-1c"])
     {
-        if([testitem.testItems length]==0)
+        if([testitem.testName length]==0)
         {
             testitem.value  = @"michael_3";
             testitem.result = @"PASS";
@@ -499,7 +513,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -512,9 +526,9 @@
     }
     //-----------3---------------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-2a"])
+    else if([testitem.testName isEqualToString:@"RF-2a"])
     {
-        if([testitem.testItems length]==0)
+        if([testitem.testName length]==0)
         {
             testitem.value  = @"michael_4";
             testitem.result = @"PASS";
@@ -527,7 +541,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -540,10 +554,10 @@
     }
     //------------4--------------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-2b"])
+    else if([testitem.testName isEqualToString:@"RF-2b"])
     {
         
-        if([testitem.testItems length]!=0)
+        if([testitem.testName length]!=0)
         {
             testitem.value  = @"michael_5";
             testitem.result = @"PASS";
@@ -556,7 +570,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -569,9 +583,9 @@
     }
     //------------5--------------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-3a"])
+    else if([testitem.testName isEqualToString:@"RF-3a"])
     {
-        if([testitem.testItems length]!=0)
+        if([testitem.testName length]!=0)
         {
             testitem.value  = @"michael_6";
             testitem.result = @"PASS";
@@ -584,7 +598,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -597,9 +611,9 @@
     }
     //-----------6---------------
     //------------------------
-    else if([testitem.testItems isEqualToString:@"RF-3b"])
+    else if([testitem.testName isEqualToString:@"RF-3b"])
     {
-        if([testitem.testItems length]!=0)
+        if([testitem.testName length]!=0)
         {
             testitem.value  = @"michael_7";
             testitem.result = @"PASS";
@@ -612,7 +626,7 @@
             testitem.result = @"FAIL";
             
             //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testItems,testitem.value,testitem.result];
+            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
             //主线程刷新 log_View 的信息
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -631,6 +645,32 @@
     return ispass;
 }
 
+- (IBAction)clickToStop_ReStart:(NSButton *)sender
+{
+    if ([sender.title isEqualToString:@"Stop"])
+    {
+        [sender setTitle:@"Restart"];
+        
+        [myThrad cancel];
+         myThrad = nil;
+        [mkTimer endTimer];
+        [NSMenu setMenuBarVisible:YES];
+        return;
+    }
+    if ([sender.title isEqualToString:@"Restart"])
+    {
+        [sender setTitle:@"Stop"];
+        //启动线程,进入测试流程
+        myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+        index = 0;
+        item_index = 0;
+        row_index = 0;
+        [myThrad start];
+        return;
+    }
+}
+
+
 
 /**
  *  必须要清除本地的存储数据,否则可能导致文件创建失败
@@ -638,14 +678,14 @@
 //界面消失后取消线程
 -(void)viewWillDisappear
 {
-    //清除所有的本地的存储数据
-    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-    
-    for (id key in dic)
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    //清除所有的本地的存储数据
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+//    
+//    for (id key in dic)
+//    {
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+//    }
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //=================
     [myThrad cancel];
@@ -655,14 +695,14 @@
 //界面消失后取消线程
 -(void)viewDidDisappear
 {
-    //清除所有的本地的存储数据
-    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-    
-    for (id key in dic)
-    {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-    }
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    //清除所有的本地的存储数据
+//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
+//    
+//    for (id key in dic)
+//    {
+//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
+//    }
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //=================
     [myThrad cancel];

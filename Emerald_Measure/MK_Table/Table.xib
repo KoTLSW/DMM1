@@ -22,11 +22,11 @@
                 <scrollView appearanceType="aqua" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFJ-A7-vtS">
                     <rect key="frame" x="0.0" y="0.0" width="919" height="353"/>
                     <clipView key="contentView" ambiguous="YES" id="huR-LD-T1c">
-                        <rect key="frame" x="1" y="0.0" width="917" height="352"/>
+                        <rect key="frame" x="1.5" y="0.0" width="917" height="337"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="none" alternatingRowBackgroundColors="YES" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" headerView="yK2-zm-QEh" id="o52-ho-NvD">
-                                <rect key="frame" x="0.0" y="0.0" width="917" height="329"/>
+                                <rect key="frame" x="0.0" y="0.0" width="919.5" height="314"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -45,8 +45,8 @@
                                             <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </tableColumn>
-                                    <tableColumn identifier="testItems" editable="NO" width="140" minWidth="10" maxWidth="3.4028234663852886e+38" id="wht-Ti-wcH">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="TestItems">
+                                    <tableColumn identifier="testName" editable="NO" width="140" minWidth="10" maxWidth="3.4028234663852886e+38" id="wht-Ti-wcH">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="TestName">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -128,8 +128,8 @@
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="rvS-mu-0ak">
-                        <rect key="frame" x="-7" y="8" width="0.0" height="15"/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.20000000000000001" horizontal="YES" id="rvS-mu-0ak">
+                        <rect key="frame" x="1" y="337" width="917" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="9ri-tq-LN3">
@@ -137,7 +137,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="yK2-zm-QEh">
-                        <rect key="frame" x="0.0" y="0.0" width="917" height="23"/>
+                        <rect key="frame" x="0.0" y="0.0" width="919.5" height="23"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </tableHeaderView>
                 </scrollView>

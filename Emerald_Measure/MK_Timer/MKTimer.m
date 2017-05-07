@@ -70,6 +70,10 @@
 //************* end timer ****************
 -(void)endTimer
 {
+    if (mk_timer == nil)
+    {
+        return;
+    }
     [mythread cancel];
     dispatch_source_cancel(mk_timer);
     //定时器对象置空

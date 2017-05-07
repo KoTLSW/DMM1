@@ -164,6 +164,7 @@
 -(void)cleanUserDefault
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"CSVsecondFolderPathKey"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 //读取指定路径的 csv 文件内容

@@ -16,7 +16,7 @@
     NSArray *arrayData;
     NSMutableArray *allPlistArr;
     NSArray *currentStationArr;
-    int currentStationIndex;
+    NSNumber *currentStationIndex;
 }
 @end
 
@@ -24,7 +24,8 @@
 
 -(NSMutableArray *)PlistRead:(NSString *)fileName Key:(NSString *)key
 {
-    currentStationIndex =(int)[[NSUserDefaults standardUserDefaults] objectForKey:@"currentStationIndex"];
+    currentStationIndex =[[NSUserDefaults standardUserDefaults] objectForKey:@"currentStationIndex"];
+    
     
     if (!testItems)
     {
@@ -44,8 +45,6 @@
         allItemsArr = [NSArray arrayWithContentsOfFile:plistPath];
     }
     
-    //根据传入的关键字找到对应节点
-//    NSArray *arrayData = [dictionary objectForKey:key];
     if (!arrayData)
     {
         arrayData = [[NSArray alloc] init];
@@ -68,7 +67,7 @@
     }
     
     //判断当前的数组属于哪个测试工站
-    currentStationArr = [allPlistArr objectAtIndex:currentStationIndex];
+    currentStationArr = [allPlistArr objectAtIndex:[currentStationIndex intValue]];
     
     
     if (currentStationArr != nil && ![currentStationArr isEqual:@""])
@@ -78,14 +77,17 @@
             //读取 plist 文件中的固定数据
             Item *item = [[Item alloc] init];
             
-            item.testItems     = [dic objectForKey:@"testItems"];
-            item.units   = [dic objectForKey:@"units"];
-            item.min    = [dic objectForKey:@"min"];
-            item.typ    = [dic objectForKey:@"typ"];
-            item.max    = [dic objectForKey:@"max"];
-            item.result = [dic objectForKey:@"result"];
-            item.value  = [dic objectForKey:@"value"];
-            item.isTest = [[dic objectForKey:@"isTest"] boolValue];
+            item.command    = [dic objectForKey:@"Command"];
+            item.timeOut    = [dic objectForKey:@"TimeOut"];
+            item.retryTimes = [dic objectForKey:@"RetryTimes"];
+            item.device     = [dic objectForKey:@"Device"];
+            item.testName   = [dic objectForKey:@"TestName"];
+            item.units      = [dic objectForKey:@"Units"];
+            item.min        = [dic objectForKey:@"Min"];
+            item.max        = [dic objectForKey:@"Max"];
+            item.result     = [dic objectForKey:@"Result"];
+            item.value      = [dic objectForKey:@"Value"];
+            item.isTest     = [[dic objectForKey:@"IsTest"] boolValue];
             
             [testItems addObject:item];
         }
