@@ -13,13 +13,16 @@
 #import "MK_Timer.pch"
 #import "SerialPort.h"
 #import "AgilentDevice.h"
+#import "AppDelegate.h"
+#import "AlertWindowController.h"
 
 
 @implementation ViewController
 {
     Table *mk_table;                       // table类
     Plist *plist;                       // plist类
-    
+    AlertWindowController  * alertwindowController;
+
     
     NSMutableArray *itemArr;            // plist文件测试项数组
     Item *testItem ;
@@ -700,6 +703,48 @@
     }
 }
 
+
+#pragma mark-----------上传到PDCA
+- (IBAction)ClickUploadPDCAAction:(id)sender
+{
+    
+
+    
+}
+
+
+
+
+#pragma mark---------------上传到SFC
+- (IBAction)clickUpLoadSFCAction:(id)sender
+{
+    
+
+    
+}
+
+
+#pragma mark--------------传递button进来
+-(void)ChangeButtonStateWithButton:(id)sender
+{
+    AppDelegate *appDelegate = (AppDelegate *)[NSApplication sharedApplication].delegate;
+    appDelegate.mainWindowController = alertwindowController;
+    
+    [alertwindowController.window center];
+    // 3.设为KeyWindow并前置
+    [alertwindowController.window makeKeyAndOrderFront:self];
+    __weak  AlertWindowController * weakAlertwindowController=alertwindowController;
+    
+    weakAlertwindowController.backBlock=^(BOOL  isOK){
+        
+        NSButton  * button=sender;
+        if (!isOK) {
+            
+            button.state=!button.state;
+        }
+    };
+    
+}
 
 
 /**

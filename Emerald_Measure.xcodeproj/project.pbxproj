@@ -68,6 +68,10 @@
 		4CFEFB731EBF0C4900353ABF /* IACSFC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB721EBF0C4900353ABF /* IACSFC.m */; };
 		4CFEFB781EBF0E7100353ABF /* TestContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB771EBF0E7100353ABF /* TestContext.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4CFEFB7A1EBF151600353ABF /* GPIBDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFEFB791EBF151600353ABF /* GPIBDevice.framework */; };
+		4CFEFB841EBF1BEF00353ABF /* AlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB7E1EBF1BEF00353ABF /* AlertView.m */; };
+		4CFEFB851EBF1BEF00353ABF /* AlertWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB801EBF1BEF00353ABF /* AlertWindowController.m */; };
+		4CFEFB861EBF1BEF00353ABF /* AlertWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */; };
+		4CFEFB871EBF1BEF00353ABF /* AlertYongping.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,6 +207,13 @@
 		4CFEFB771EBF0E7100353ABF /* TestContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestContext.mm; sourceTree = "<group>"; };
 		4CFEFB791EBF151600353ABF /* GPIBDevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPIBDevice.framework; sourceTree = "<group>"; };
 		4CFEFB7B1EBF152700353ABF /* GPIBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPIBDevice.h; path = GPIBDevice.framework/Versions/A/Headers/GPIBDevice.h; sourceTree = "<group>"; };
+		4CFEFB7D1EBF1BEF00353ABF /* AlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertView.h; sourceTree = "<group>"; };
+		4CFEFB7E1EBF1BEF00353ABF /* AlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertView.m; sourceTree = "<group>"; };
+		4CFEFB7F1EBF1BEF00353ABF /* AlertWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertWindowController.h; sourceTree = "<group>"; };
+		4CFEFB801EBF1BEF00353ABF /* AlertWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertWindowController.m; sourceTree = "<group>"; };
+		4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertWindowController.xib; sourceTree = "<group>"; };
+		4CFEFB821EBF1BEF00353ABF /* AlertYongping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertYongping.h; sourceTree = "<group>"; };
+		4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertYongping.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -304,6 +315,7 @@
 		4C9EE7B51EADE57000B9089E /* Emerald_Measure */ = {
 			isa = PBXGroup;
 			children = (
+				4CFEFB7C1EBF1BEF00353ABF /* Alert */,
 				4CFEFB741EBF0E7100353ABF /* Global */,
 				4CFEFB6C1EBF0C4000353ABF /* TyperConverter */,
 				4C9EE8141EADE69400B9089E /* Visa */,
@@ -320,6 +332,8 @@
 				4C9EE8091EADE69400B9089E /* MK_Timer */,
 				4C9EE8461EADEE4A00B9089E /* ViewController.h */,
 				4C9EE8471EADEE4A00B9089E /* ViewController.m */,
+				4C9EE7B61EADE57000B9089E /* AppDelegate.h */,
+				4C9EE7B71EADE57000B9089E /* AppDelegate.m */,
 				4C9EE8431EADEE3C00B9089E /* Main.storyboard */,
 				4C9EE7E61EADE62F00B9089E /* Others */,
 				4C9EE7B91EADE57000B9089E /* Supporting Files */,
@@ -359,8 +373,6 @@
 				4C9EE84B1EAE020C00B9089E /* Logo.jpg */,
 				4C9EE7BF1EADE57100B9089E /* Assets.xcassets */,
 				4C9EE7C41EADE57100B9089E /* Info.plist */,
-				4C9EE7B61EADE57000B9089E /* AppDelegate.h */,
-				4C9EE7B71EADE57000B9089E /* AppDelegate.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -517,6 +529,20 @@
 			path = Global;
 			sourceTree = "<group>";
 		};
+		4CFEFB7C1EBF1BEF00353ABF /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB7D1EBF1BEF00353ABF /* AlertView.h */,
+				4CFEFB7E1EBF1BEF00353ABF /* AlertView.m */,
+				4CFEFB7F1EBF1BEF00353ABF /* AlertWindowController.h */,
+				4CFEFB801EBF1BEF00353ABF /* AlertWindowController.m */,
+				4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */,
+				4CFEFB821EBF1BEF00353ABF /* AlertYongping.h */,
+				4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -636,6 +662,7 @@
 				4C82EE3D1EB04D5A00BAA7A3 /* PACSocketDebug.xib in Resources */,
 				4C9EE8251EADE69400B9089E /* README.rtf in Resources */,
 				4C9EE8451EADEE3C00B9089E /* Main.storyboard in Resources */,
+				4CFEFB861EBF1BEF00353ABF /* AlertWindowController.xib in Resources */,
 				4C9EE8271EADE69400B9089E /* Table.xib in Resources */,
 				4C6F3F971EBD822B002C747E /* StationControlWindow.xib in Resources */,
 			);
@@ -681,6 +708,7 @@
 				4C6F3FB61EBDB417002C747E /* LoginWindow.m in Sources */,
 				4C9EE7BB1EADE57000B9089E /* main.m in Sources */,
 				4C82EE3F1EB04D5A00BAA7A3 /* TCPClient.mm in Sources */,
+				4CFEFB871EBF1BEF00353ABF /* AlertYongping.m in Sources */,
 				4C9EE82B1EADE69400B9089E /* MKCountDownTimer.m in Sources */,
 				4C9EE8261EADE69400B9089E /* Table.m in Sources */,
 				4C82EE3C1EB04D5A00BAA7A3 /* GCDAsyncSocket.m in Sources */,
@@ -688,6 +716,7 @@
 				4C9EE8291EADE69400B9089E /* GetTimeDay.m in Sources */,
 				4CFEFB621EBF0B0700353ABF /* FTDI_UART.c in Sources */,
 				4C82EE301EB04D4B00BAA7A3 /* SerialPortList.m in Sources */,
+				4CFEFB851EBF1BEF00353ABF /* AlertWindowController.m in Sources */,
 				4C82EE2D1EB04D4B00BAA7A3 /* SerialPort.m in Sources */,
 				4CFEFB731EBF0C4900353ABF /* IACSFC.m in Sources */,
 				4C9EE81C1EADE69400B9089E /* Alert.m in Sources */,
@@ -695,6 +724,7 @@
 				4C9EE8221EADE69400B9089E /* Item.m in Sources */,
 				4CFEFB661EBF0B0700353ABF /* main.c in Sources */,
 				4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */,
+				4CFEFB841EBF1BEF00353ABF /* AlertView.m in Sources */,
 				4C9EE7B81EADE57000B9089E /* AppDelegate.m in Sources */,
 				4C9EE81F1EADE69400B9089E /* MK_FileFolder.m in Sources */,
 			);

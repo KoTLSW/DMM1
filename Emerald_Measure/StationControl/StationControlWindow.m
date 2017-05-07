@@ -59,9 +59,16 @@
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(selectStationNoti:) name:@"SelectButtonlimit_Notification" object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disableToSelectStationNoti:) name:@"disableToSelectStationNoti" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeStationWindowNoti:) name:@"CloseStationControlWindow_Notificcation" object:nil];
 }
 
 //Notification
+-(void)closeStationWindowNoti:(NSNotification *)noti
+{
+    [self.window orderOut:self];
+}
+
 -(void)selectStationNoti:(NSNotification *)noti
 {
     stationBtn_0.enabled = YES;

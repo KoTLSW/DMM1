@@ -72,7 +72,7 @@
                                                 <action selector="SerialPort_Tool:" target="Voe-Tx-rLC" id="uoU-2A-4K8"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="StationControl" id="JHb-CJ-W0U">
+                                        <menuItem title="Access_Control" id="JHb-CJ-W0U">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="StationControl_Tool:" target="Voe-Tx-rLC" id="hNV-aH-IjA"/>
@@ -974,6 +974,9 @@
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system" size="14"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="clickUpLoadSFCAction:" target="XfG-lQ-9wD" id="KIO-nX-Dsn"/>
+                                            </connections>
                                         </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m3F-uo-4z2">
                                             <rect key="frame" x="20" y="353" width="271" height="36"/>
@@ -989,6 +992,9 @@
                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                 <font key="font" metaFont="system" size="14"/>
                                             </buttonCell>
+                                            <connections>
+                                                <action selector="ClickUploadPDCAAction:" target="XfG-lQ-9wD" id="gDy-NX-1oU"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>

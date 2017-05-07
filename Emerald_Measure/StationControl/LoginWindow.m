@@ -45,6 +45,9 @@
         
         //发送通知, 激活 PDCA 按钮功能
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PDCAButtonLimit_Notification" object:nil];
+        
+        //关闭StationControlWindow窗口的通知
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CloseStationControlWindow_Notificcation" object:nil];
     }
     
     if ([_userName.stringValue isEqualToString:@"admin"] && [_passWord.stringValue isEqualToString:@"michael"])

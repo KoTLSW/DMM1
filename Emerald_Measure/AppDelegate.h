@@ -10,5 +10,8 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+// 强引用窗口控制器
+@property (strong) NSWindowController *mainWindowController;
+
 @end
 
