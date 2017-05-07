@@ -21,7 +21,6 @@
 		4C82EE3D1EB04D5A00BAA7A3 /* PACSocketDebug.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C82EE361EB04D5A00BAA7A3 /* PACSocketDebug.xib */; };
 		4C82EE3E1EB04D5A00BAA7A3 /* PACSocketDebugWinDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C82EE381EB04D5A00BAA7A3 /* PACSocketDebugWinDelegate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C82EE3F1EB04D5A00BAA7A3 /* TCPClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C82EE3A1EB04D5A00BAA7A3 /* TCPClient.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4C82EE441EB04E4E00BAA7A3 /* TestContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4C82EE431EB04E4E00BAA7A3 /* TestContext.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4C9EE7B81EADE57000B9089E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9EE7B71EADE57000B9089E /* AppDelegate.m */; };
 		4C9EE7BB1EADE57000B9089E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9EE7BA1EADE57000B9089E /* main.m */; };
 		4C9EE7C01EADE57100B9089E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C9EE7BF1EADE57100B9089E /* Assets.xcassets */; };
@@ -56,6 +55,19 @@
 		4CFEFB461EBEE4E600353ABF /* Station_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB451EBEE4E600353ABF /* Station_1.plist */; };
 		4CFEFB481EBEE52700353ABF /* Station_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB471EBEE52700353ABF /* Station_2.plist */; };
 		4CFEFB4A1EBEE54100353ABF /* Station_3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB491EBEE54100353ABF /* Station_3.plist */; };
+		4CFEFB4E1EBF08ED00353ABF /* AgilentDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */; };
+		4CFEFB601EBF0B0700353ABF /* FTDI_COM.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB511EBF0B0700353ABF /* FTDI_COM.c */; };
+		4CFEFB611EBF0B0700353ABF /* FTDI_SPI.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB531EBF0B0700353ABF /* FTDI_SPI.c */; };
+		4CFEFB621EBF0B0700353ABF /* FTDI_UART.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB551EBF0B0700353ABF /* FTDI_UART.c */; };
+		4CFEFB631EBF0B0700353ABF /* FTSPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB581EBF0B0700353ABF /* FTSPI.m */; };
+		4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB5A1EBF0B0700353ABF /* FTUART.m */; };
+		4CFEFB651EBF0B0700353ABF /* libftd2xx.1.2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFEFB5B1EBF0B0700353ABF /* libftd2xx.1.2.2.dylib */; };
+		4CFEFB661EBF0B0700353ABF /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB5C1EBF0B0700353ABF /* main.c */; };
+		4CFEFB671EBF0B0700353ABF /* SPI_Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB5E1EBF0B0700353ABF /* SPI_Test.m */; };
+		4CFEFB6F1EBF0C4000353ABF /* TypeConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB6E1EBF0C4000353ABF /* TypeConverter.m */; };
+		4CFEFB731EBF0C4900353ABF /* IACSFC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB721EBF0C4900353ABF /* IACSFC.m */; };
+		4CFEFB781EBF0E7100353ABF /* TestContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB771EBF0E7100353ABF /* TestContext.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4CFEFB7A1EBF151600353ABF /* GPIBDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFEFB791EBF151600353ABF /* GPIBDevice.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,9 +112,6 @@
 		4C82EE381EB04D5A00BAA7A3 /* PACSocketDebugWinDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PACSocketDebugWinDelegate.mm; sourceTree = "<group>"; };
 		4C82EE391EB04D5A00BAA7A3 /* TCPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCPClient.h; sourceTree = "<group>"; };
 		4C82EE3A1EB04D5A00BAA7A3 /* TCPClient.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TCPClient.mm; sourceTree = "<group>"; };
-		4C82EE411EB04E4E00BAA7A3 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
-		4C82EE421EB04E4E00BAA7A3 /* TestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestContext.h; sourceTree = "<group>"; };
-		4C82EE431EB04E4E00BAA7A3 /* TestContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestContext.mm; sourceTree = "<group>"; };
 		4C9EE7B31EADE57000B9089E /* Emerald_Measure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Emerald_Measure.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C9EE7B61EADE57000B9089E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4C9EE7B71EADE57000B9089E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -167,6 +176,33 @@
 		4CFEFB451EBEE4E600353ABF /* Station_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_1.plist; sourceTree = "<group>"; };
 		4CFEFB471EBEE52700353ABF /* Station_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_2.plist; sourceTree = "<group>"; };
 		4CFEFB491EBEE54100353ABF /* Station_3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_3.plist; sourceTree = "<group>"; };
+		4CFEFB4C1EBF08ED00353ABF /* AgilentDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilentDevice.h; sourceTree = "<group>"; };
+		4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgilentDevice.m; sourceTree = "<group>"; };
+		4CFEFB501EBF0B0700353ABF /* ftd2xx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftd2xx.h; sourceTree = "<group>"; };
+		4CFEFB511EBF0B0700353ABF /* FTDI_COM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FTDI_COM.c; sourceTree = "<group>"; };
+		4CFEFB521EBF0B0700353ABF /* FTDI_COM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDI_COM.h; sourceTree = "<group>"; };
+		4CFEFB531EBF0B0700353ABF /* FTDI_SPI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FTDI_SPI.c; sourceTree = "<group>"; };
+		4CFEFB541EBF0B0700353ABF /* FTDI_SPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDI_SPI.h; sourceTree = "<group>"; };
+		4CFEFB551EBF0B0700353ABF /* FTDI_UART.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = FTDI_UART.c; sourceTree = "<group>"; };
+		4CFEFB561EBF0B0700353ABF /* FTDI_UART.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTDI_UART.h; sourceTree = "<group>"; };
+		4CFEFB571EBF0B0700353ABF /* FTSPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTSPI.h; sourceTree = "<group>"; };
+		4CFEFB581EBF0B0700353ABF /* FTSPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTSPI.m; sourceTree = "<group>"; };
+		4CFEFB591EBF0B0700353ABF /* FTUART.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTUART.h; sourceTree = "<group>"; };
+		4CFEFB5A1EBF0B0700353ABF /* FTUART.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTUART.m; sourceTree = "<group>"; };
+		4CFEFB5B1EBF0B0700353ABF /* libftd2xx.1.2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libftd2xx.1.2.2.dylib; sourceTree = "<group>"; };
+		4CFEFB5C1EBF0B0700353ABF /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		4CFEFB5D1EBF0B0700353ABF /* SPI_Test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPI_Test.h; sourceTree = "<group>"; };
+		4CFEFB5E1EBF0B0700353ABF /* SPI_Test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPI_Test.m; sourceTree = "<group>"; };
+		4CFEFB5F1EBF0B0700353ABF /* WinTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WinTypes.h; sourceTree = "<group>"; };
+		4CFEFB6D1EBF0C4000353ABF /* TypeConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeConverter.h; sourceTree = "<group>"; };
+		4CFEFB6E1EBF0C4000353ABF /* TypeConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TypeConverter.m; sourceTree = "<group>"; };
+		4CFEFB711EBF0C4900353ABF /* IACSFC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IACSFC.h; sourceTree = "<group>"; };
+		4CFEFB721EBF0C4900353ABF /* IACSFC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IACSFC.m; sourceTree = "<group>"; };
+		4CFEFB751EBF0E7100353ABF /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
+		4CFEFB761EBF0E7100353ABF /* TestContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestContext.h; sourceTree = "<group>"; };
+		4CFEFB771EBF0E7100353ABF /* TestContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TestContext.mm; sourceTree = "<group>"; };
+		4CFEFB791EBF151600353ABF /* GPIBDevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GPIBDevice.framework; sourceTree = "<group>"; };
+		4CFEFB7B1EBF152700353ABF /* GPIBDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GPIBDevice.h; path = GPIBDevice.framework/Versions/A/Headers/GPIBDevice.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +213,8 @@
 				4C9EE8391EADE79000B9089E /* libInstantPudding.dylib in Frameworks */,
 				4C9EE82E1EADE69400B9089E /* VISA.framework in Frameworks */,
 				4C9EE83A1EADE79000B9089E /* libIPSFCPost.dylib in Frameworks */,
+				4CFEFB651EBF0B0700353ABF /* libftd2xx.1.2.2.dylib in Frameworks */,
+				4CFEFB7A1EBF151600353ABF /* GPIBDevice.framework in Frameworks */,
 				4C9EE8381EADE79000B9089E /* libCBAuth.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,16 +281,6 @@
 			path = PACSocket;
 			sourceTree = "<group>";
 		};
-		4C82EE401EB04E4E00BAA7A3 /* Global */ = {
-			isa = PBXGroup;
-			children = (
-				4C82EE411EB04E4E00BAA7A3 /* Common.h */,
-				4C82EE421EB04E4E00BAA7A3 /* TestContext.h */,
-				4C82EE431EB04E4E00BAA7A3 /* TestContext.mm */,
-			);
-			path = Global;
-			sourceTree = "<group>";
-		};
 		4C9EE7AA1EADE57000B9089E = {
 			isa = PBXGroup;
 			children = (
@@ -276,11 +304,15 @@
 		4C9EE7B51EADE57000B9089E /* Emerald_Measure */ = {
 			isa = PBXGroup;
 			children = (
+				4CFEFB741EBF0E7100353ABF /* Global */,
+				4CFEFB6C1EBF0C4000353ABF /* TyperConverter */,
+				4C9EE8141EADE69400B9089E /* Visa */,
+				4CFEFB4F1EBF0B0700353ABF /* FTDI */,
+				4CFEFB4B1EBF08ED00353ABF /* Device */,
 				4C6F3F921EBD81DE002C747E /* StationControl */,
-				4C82EE401EB04E4E00BAA7A3 /* Global */,
 				4C82EE311EB04D5A00BAA7A3 /* PACSocket */,
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
-				4C9EE8141EADE69400B9089E /* Visa */,
+				4CFEFB701EBF0C4900353ABF /* SFC */,
 				4C9EE82F1EADE79000B9089E /* PDCA */,
 				4C9EE7EF1EADE69400B9089E /* MK_Alert */,
 				4C9EE7F41EADE69400B9089E /* MK_File */,
@@ -421,6 +453,68 @@
 				4C9EE8371EADE79000B9089E /* PDCA.m */,
 			);
 			path = PDCA;
+			sourceTree = "<group>";
+		};
+		4CFEFB4B1EBF08ED00353ABF /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB791EBF151600353ABF /* GPIBDevice.framework */,
+				4CFEFB7B1EBF152700353ABF /* GPIBDevice.h */,
+				4CFEFB4C1EBF08ED00353ABF /* AgilentDevice.h */,
+				4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */,
+			);
+			path = Device;
+			sourceTree = "<group>";
+		};
+		4CFEFB4F1EBF0B0700353ABF /* FTDI */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB501EBF0B0700353ABF /* ftd2xx.h */,
+				4CFEFB511EBF0B0700353ABF /* FTDI_COM.c */,
+				4CFEFB521EBF0B0700353ABF /* FTDI_COM.h */,
+				4CFEFB531EBF0B0700353ABF /* FTDI_SPI.c */,
+				4CFEFB541EBF0B0700353ABF /* FTDI_SPI.h */,
+				4CFEFB551EBF0B0700353ABF /* FTDI_UART.c */,
+				4CFEFB561EBF0B0700353ABF /* FTDI_UART.h */,
+				4CFEFB571EBF0B0700353ABF /* FTSPI.h */,
+				4CFEFB581EBF0B0700353ABF /* FTSPI.m */,
+				4CFEFB591EBF0B0700353ABF /* FTUART.h */,
+				4CFEFB5A1EBF0B0700353ABF /* FTUART.m */,
+				4CFEFB5B1EBF0B0700353ABF /* libftd2xx.1.2.2.dylib */,
+				4CFEFB5C1EBF0B0700353ABF /* main.c */,
+				4CFEFB5D1EBF0B0700353ABF /* SPI_Test.h */,
+				4CFEFB5E1EBF0B0700353ABF /* SPI_Test.m */,
+				4CFEFB5F1EBF0B0700353ABF /* WinTypes.h */,
+			);
+			path = FTDI;
+			sourceTree = "<group>";
+		};
+		4CFEFB6C1EBF0C4000353ABF /* TyperConverter */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB6D1EBF0C4000353ABF /* TypeConverter.h */,
+				4CFEFB6E1EBF0C4000353ABF /* TypeConverter.m */,
+			);
+			path = TyperConverter;
+			sourceTree = "<group>";
+		};
+		4CFEFB701EBF0C4900353ABF /* SFC */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB711EBF0C4900353ABF /* IACSFC.h */,
+				4CFEFB721EBF0C4900353ABF /* IACSFC.m */,
+			);
+			path = SFC;
+			sourceTree = "<group>";
+		};
+		4CFEFB741EBF0E7100353ABF /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB751EBF0E7100353ABF /* Common.h */,
+				4CFEFB761EBF0E7100353ABF /* TestContext.h */,
+				4CFEFB771EBF0E7100353ABF /* TestContext.mm */,
+			);
+			path = Global;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -570,14 +664,19 @@
 			files = (
 				4C82EE3E1EB04D5A00BAA7A3 /* PACSocketDebugWinDelegate.mm in Sources */,
 				4C82EE3B1EB04D5A00BAA7A3 /* CPACSocket.mm in Sources */,
-				4C82EE441EB04E4E00BAA7A3 /* TestContext.mm in Sources */,
 				4C9EE8481EADEE4A00B9089E /* ViewController.m in Sources */,
+				4CFEFB601EBF0B0700353ABF /* FTDI_COM.c in Sources */,
 				4C6F3F961EBD822B002C747E /* StationControlWindow.m in Sources */,
+				4CFEFB631EBF0B0700353ABF /* FTSPI.m in Sources */,
 				4C9EE8201EADE69400B9089E /* MK_FileTXT.m in Sources */,
 				4C9EE82A1EADE69400B9089E /* HiperTimer.m in Sources */,
+				4CFEFB4E1EBF08ED00353ABF /* AgilentDevice.m in Sources */,
+				4CFEFB611EBF0B0700353ABF /* FTDI_SPI.c in Sources */,
+				4CFEFB781EBF0E7100353ABF /* TestContext.mm in Sources */,
 				4C9EE82C1EADE69400B9089E /* MKTimer.m in Sources */,
 				4C9EE83B1EADE79000B9089E /* PDCA.m in Sources */,
 				4C9EE81E1EADE69400B9089E /* MK_FileCSV.m in Sources */,
+				4CFEFB671EBF0B0700353ABF /* SPI_Test.m in Sources */,
 				4C82EE2F1EB04D4B00BAA7A3 /* SerialPortDelegate.m in Sources */,
 				4C6F3FB61EBDB417002C747E /* LoginWindow.m in Sources */,
 				4C9EE7BB1EADE57000B9089E /* main.m in Sources */,
@@ -587,10 +686,15 @@
 				4C82EE3C1EB04D5A00BAA7A3 /* GCDAsyncSocket.m in Sources */,
 				4C9EE8241EADE69400B9089E /* Plist.m in Sources */,
 				4C9EE8291EADE69400B9089E /* GetTimeDay.m in Sources */,
+				4CFEFB621EBF0B0700353ABF /* FTDI_UART.c in Sources */,
 				4C82EE301EB04D4B00BAA7A3 /* SerialPortList.m in Sources */,
 				4C82EE2D1EB04D4B00BAA7A3 /* SerialPort.m in Sources */,
+				4CFEFB731EBF0C4900353ABF /* IACSFC.m in Sources */,
 				4C9EE81C1EADE69400B9089E /* Alert.m in Sources */,
+				4CFEFB6F1EBF0C4000353ABF /* TypeConverter.m in Sources */,
 				4C9EE8221EADE69400B9089E /* Item.m in Sources */,
+				4CFEFB661EBF0B0700353ABF /* main.c in Sources */,
+				4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */,
 				4C9EE7B81EADE57000B9089E /* AppDelegate.m in Sources */,
 				4C9EE81F1EADE69400B9089E /* MK_FileFolder.m in Sources */,
 			);
@@ -728,12 +832,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Emerald_Measure/Visa",
+					"$(PROJECT_DIR)/Emerald_Measure/Device",
 				);
 				INFOPLIST_FILE = Emerald_Measure/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Emerald_Measure/PDCA",
+					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "michael.Emerald-Measure";
@@ -749,12 +855,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Emerald_Measure/Visa",
+					"$(PROJECT_DIR)/Emerald_Measure/Device",
 				);
 				INFOPLIST_FILE = Emerald_Measure/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Emerald_Measure/PDCA",
+					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = "michael.Emerald-Measure";

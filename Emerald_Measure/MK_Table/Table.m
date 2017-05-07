@@ -158,7 +158,6 @@
     NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"          PASS":@"          FAIL" attributes:color];
     
     //给模型对应的 key 值赋值
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.id     forKey:TABLE_COLUMN_ID];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.testName   forKey:TABLE_COLUMN_TESTNAME];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.units    forKey:TABLE_COLUMN_UNITS];
     [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.min    forKey:TABLE_COLUMN_MIN];

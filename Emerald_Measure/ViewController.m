@@ -12,12 +12,14 @@
 #import "MK_Alert.pch"
 #import "MK_Timer.pch"
 #import "SerialPort.h"
+#import "AgilentDevice.h"
 
 
 @implementation ViewController
 {
     Table *mk_table;                       // table类
     Plist *plist;                       // plist类
+    
     
     NSMutableArray *itemArr;            // plist文件测试项数组
     Item *testItem ;
@@ -44,6 +46,9 @@
     
     __weak IBOutlet NSTextField *testFieldTimes;         //测试时间
     __weak IBOutlet NSTextField *testCount;         //测试次数
+    
+    __weak IBOutlet NSButton *PDCA_Btn;
+    __weak IBOutlet NSButton *SFC_Btn;
     
     __unsafe_unretained IBOutlet NSTextView *logView_Info; //log_View 中显示的信息
     
@@ -72,11 +77,20 @@
     testNum = 0;
     passNum = 0;
     itemArr = [NSMutableArray array];
+    PDCA_Btn.enabled = NO;
+    SFC_Btn.enabled = NO;
     
     //进来就判断读取哪个配置文件
     [self selectStationNoti:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectStationNoti:) name:@"changePlistFileNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectPDCA_SFC_LimitNoti:) name:@"PDCAButtonLimit_Notification" object:nil];
+}
+
+-(void)selectPDCA_SFC_LimitNoti:(NSNotification *)noti
+{
+    PDCA_Btn.enabled = YES;
+    SFC_Btn.enabled = YES;
 }
 
 -(void)selectStationNoti:(NSNotification *)noti
@@ -217,7 +231,7 @@
                 sleep(1);
                 NSLog(@"index=1,安捷伦已经连接");
                 
-                //设备连接完后,发送测试温度(热敏电阻)的指令
+//                设备连接完后,发送测试温度(热敏电阻)的指令
 //                [mk_agilent SetMessureMode:MODE_RES];
               
 //                 [mk_agilent SetMessureMode:MODE_TEMPERATURE];
@@ -659,6 +673,9 @@
 
 - (IBAction)clickToStop_ReStart:(NSButton *)sender
 {
+    PDCA_Btn.enabled = NO;
+    SFC_Btn.enabled = NO;
+    
     if ([sender.title isEqualToString:@"Stop"])
     {
         [sender setTitle:@"Restart"];

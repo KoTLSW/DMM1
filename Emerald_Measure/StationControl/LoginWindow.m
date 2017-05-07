@@ -43,9 +43,21 @@
         
         [self.window orderOut:self];
         
+        //发送通知, 激活 PDCA 按钮功能
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PDCAButtonLimit_Notification" object:nil];
+    }
+    
+    if ([_userName.stringValue isEqualToString:@"admin"] && [_passWord.stringValue isEqualToString:@"michael"])
+    {
+         [self.window orderOut:self];
+        
         //发送通知,激活按钮状态
         [[NSNotificationCenter defaultCenter] postNotificationName:@"SelectButtonlimit_Notification" object:nil];
+        
+        //发送通知, 激活 PDCA 按钮功能
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PDCAButtonLimit_Notification" object:nil];
     }
+    
     else
     {
         dispatch_async(dispatch_get_main_queue(), ^{
