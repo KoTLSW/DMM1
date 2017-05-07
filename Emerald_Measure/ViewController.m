@@ -707,8 +707,7 @@
 #pragma mark-----------上传到PDCA
 - (IBAction)ClickUploadPDCAAction:(id)sender
 {
-    
-
+    NSLog(@"点击上传 PDCA");
     
 }
 
@@ -718,8 +717,7 @@
 #pragma mark---------------上传到SFC
 - (IBAction)clickUpLoadSFCAction:(id)sender
 {
-    
-
+     NSLog(@"点击上传 SFC");
     
 }
 

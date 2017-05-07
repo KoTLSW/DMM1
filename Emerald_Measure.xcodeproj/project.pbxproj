@@ -72,6 +72,9 @@
 		4CFEFB851EBF1BEF00353ABF /* AlertWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB801EBF1BEF00353ABF /* AlertWindowController.m */; };
 		4CFEFB861EBF1BEF00353ABF /* AlertWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */; };
 		4CFEFB871EBF1BEF00353ABF /* AlertYongping.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */; };
+		4CFEFB8F1EBF44B400353ABF /* BYDSFCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB8A1EBF44B400353ABF /* BYDSFCManager.m */; };
+		4CFEFB901EBF44B400353ABF /* BYDSFCUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB8C1EBF44B400353ABF /* BYDSFCUnit.m */; };
+		4CFEFB911EBF44B400353ABF /* TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB8E1EBF44B400353ABF /* TestStep.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -214,6 +217,12 @@
 		4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertWindowController.xib; sourceTree = "<group>"; };
 		4CFEFB821EBF1BEF00353ABF /* AlertYongping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertYongping.h; sourceTree = "<group>"; };
 		4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertYongping.m; sourceTree = "<group>"; };
+		4CFEFB891EBF44B400353ABF /* BYDSFCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDSFCManager.h; sourceTree = "<group>"; };
+		4CFEFB8A1EBF44B400353ABF /* BYDSFCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCManager.m; sourceTree = "<group>"; };
+		4CFEFB8B1EBF44B400353ABF /* BYDSFCUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDSFCUnit.h; sourceTree = "<group>"; };
+		4CFEFB8C1EBF44B400353ABF /* BYDSFCUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCUnit.m; sourceTree = "<group>"; };
+		4CFEFB8D1EBF44B400353ABF /* TestStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStep.h; sourceTree = "<group>"; };
+		4CFEFB8E1EBF44B400353ABF /* TestStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStep.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +333,7 @@
 				4C6F3F921EBD81DE002C747E /* StationControl */,
 				4C82EE311EB04D5A00BAA7A3 /* PACSocket */,
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
+				4CFEFB881EBF44B400353ABF /* BYD_SFC */,
 				4CFEFB701EBF0C4900353ABF /* SFC */,
 				4C9EE82F1EADE79000B9089E /* PDCA */,
 				4C9EE7EF1EADE69400B9089E /* MK_Alert */,
@@ -543,6 +553,19 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		4CFEFB881EBF44B400353ABF /* BYD_SFC */ = {
+			isa = PBXGroup;
+			children = (
+				4CFEFB891EBF44B400353ABF /* BYDSFCManager.h */,
+				4CFEFB8A1EBF44B400353ABF /* BYDSFCManager.m */,
+				4CFEFB8B1EBF44B400353ABF /* BYDSFCUnit.h */,
+				4CFEFB8C1EBF44B400353ABF /* BYDSFCUnit.m */,
+				4CFEFB8D1EBF44B400353ABF /* TestStep.h */,
+				4CFEFB8E1EBF44B400353ABF /* TestStep.m */,
+			);
+			path = BYD_SFC;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -714,11 +737,14 @@
 				4C82EE3C1EB04D5A00BAA7A3 /* GCDAsyncSocket.m in Sources */,
 				4C9EE8241EADE69400B9089E /* Plist.m in Sources */,
 				4C9EE8291EADE69400B9089E /* GetTimeDay.m in Sources */,
+				4CFEFB8F1EBF44B400353ABF /* BYDSFCManager.m in Sources */,
+				4CFEFB901EBF44B400353ABF /* BYDSFCUnit.m in Sources */,
 				4CFEFB621EBF0B0700353ABF /* FTDI_UART.c in Sources */,
 				4C82EE301EB04D4B00BAA7A3 /* SerialPortList.m in Sources */,
 				4CFEFB851EBF1BEF00353ABF /* AlertWindowController.m in Sources */,
 				4C82EE2D1EB04D4B00BAA7A3 /* SerialPort.m in Sources */,
 				4CFEFB731EBF0C4900353ABF /* IACSFC.m in Sources */,
+				4CFEFB911EBF44B400353ABF /* TestStep.m in Sources */,
 				4C9EE81C1EADE69400B9089E /* Alert.m in Sources */,
 				4CFEFB6F1EBF0C4000353ABF /* TypeConverter.m in Sources */,
 				4C9EE8221EADE69400B9089E /* Item.m in Sources */,
