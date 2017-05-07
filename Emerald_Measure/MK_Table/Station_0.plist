@@ -8,17 +8,17 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_1a</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1a</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -36,23 +36,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_1b</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1b</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>1.485</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -64,23 +64,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_1c</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1c</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>6</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>15</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -92,23 +92,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_2a</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-2a</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>GΩ</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>20</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -120,23 +120,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_2b</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-2b</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>MΩ</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>8.2</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -148,23 +148,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_3a</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-3a</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>KΩ</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>54</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>70</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -176,23 +176,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_3b</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-3b</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>KΩ</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>54</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>70</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -204,23 +204,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_4a</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-4a</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>0.81</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>0.99</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -232,23 +232,23 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_4b</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-4b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>1.44</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>1.76</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>

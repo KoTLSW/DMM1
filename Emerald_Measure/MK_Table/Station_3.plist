@@ -10,19 +10,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -38,19 +38,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>

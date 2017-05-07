@@ -40,9 +40,9 @@
 //在这里设置 table delegate 方法里边的数据模型
 @property(readwrite,copy) NSString *id;
 @property(readwrite,copy) NSString *command;
-@property(readwrite,copy) NSString *timeOut;
-@property(readwrite,copy) NSString *timeDelay;
-@property(readwrite,copy) NSString *retryTimes;
+@property(readwrite,copy) NSNumber *timeOut;
+@property(readwrite,copy) NSNumber *timeDelay;
+@property(readwrite,copy) NSNumber *retryTimes;
 @property(readwrite,copy) NSString *device;
 @property(readwrite,copy) NSString *testName;
 @property(readwrite,copy) NSString *units;

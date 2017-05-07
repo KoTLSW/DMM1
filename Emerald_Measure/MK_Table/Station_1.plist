@@ -8,13 +8,13 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_RF_1a</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
@@ -36,21 +36,77 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_RF_1b</string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>RF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
+			<string>-1.515</string>
+			<key>Max</key>
 			<string>1.485</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>ID</key>
+			<string>--</string>
+			<key>Command</key>
+			<string>U_RF_2a</string>
+			<key>TimeOut</key>
+			<integer>500</integer>
+			<key>TimeDelay</key>
+			<integer>0</integer>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Device</key>
+			<string>Fixture</string>
+			<key>TestName</key>
+			<string>RF-2a</string>
+			<key>Units</key>
+			<string>GΩ</string>
+			<key>Min</key>
+			<string>20</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>ID</key>
+			<string>--</string>
+			<key>Command</key>
+			<string></string>
+			<key>TimeOut</key>
+			<integer>500</integer>
+			<key>TimeDelay</key>
+			<integer>0</integer>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Device</key>
+			<string>Fixture</string>
+			<key>TestName</key>
+			<string>SF-1b</string>
+			<key>Units</key>
+			<string>V</string>
+			<key>Min</key>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -66,19 +122,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -94,19 +150,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -122,19 +178,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -150,19 +206,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -178,19 +234,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -206,19 +262,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -234,19 +290,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>
@@ -262,75 +318,19 @@
 			<key>Command</key>
 			<string></string>
 			<key>TimeOut</key>
-			<string>500</string>
+			<integer>500</integer>
 			<key>TimeDelay</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>RetryTimes</key>
-			<string>0</string>
+			<integer>0</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>RF-1a</string>
+			<string>SF-1b</string>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
-			<key>Max</key>
-			<string>1.515</string>
-			<key>Value</key>
-			<string>--</string>
-			<key>Result</key>
-			<string>--</string>
-			<key>IsTest</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>Command</key>
-			<string></string>
-			<key>TimeOut</key>
-			<string>500</string>
-			<key>TimeDelay</key>
-			<string>0</string>
-			<key>RetryTimes</key>
-			<string>0</string>
-			<key>Device</key>
-			<string>Fixture</string>
-			<key>TestName</key>
-			<string>RF-1a</string>
-			<key>Units</key>
-			<string>V</string>
-			<key>Min</key>
-			<string>1.485</string>
-			<key>Max</key>
-			<string>1.515</string>
-			<key>Value</key>
-			<string>--</string>
-			<key>Result</key>
-			<string>--</string>
-			<key>IsTest</key>
-			<true/>
-		</dict>
-		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>Command</key>
-			<string></string>
-			<key>TimeOut</key>
-			<string>500</string>
-			<key>TimeDelay</key>
-			<string>0</string>
-			<key>RetryTimes</key>
-			<string>0</string>
-			<key>Device</key>
-			<string>Fixture</string>
-			<key>TestName</key>
-			<string>RF-1a</string>
-			<key>Units</key>
-			<string>V</string>
-			<key>Min</key>
-			<string>1.485</string>
+			<string>-1.515</string>
 			<key>Max</key>
 			<string>1.515</string>
 			<key>Value</key>

@@ -465,25 +465,33 @@
     BOOL ispass=NO;
     NSString *logViewText;//logView信息
     
-    //-----------0-------------
-    //------------------------
-    if([testitem.testName isEqualToString:@"RF-1a"])
+#pragma mark ---- SF-1a ----
+    if([testitem.testName isEqualToString:@"SF-1a"])
     {
-        //第一项测试项的时候清空 logView 界面
-        [logView_Info setString:@""];
-
-        if([testitem.testName length]!=0)
+        for (int i=0; i<=[testitem.retryTimes intValue]; i++)
         {
-            testitem.value  = @"michael_1";
-            testitem.result = @"PASS";
+            //第一项测试项的时候清空 logView 界面
+            [logView_Info setString:@""];
             
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
+            //给治具发送指令
             
+            //给安捷伦发送指令
+            
+            //取万用最终值
+            testitem.value = @"1.495";
+            [testitem.value doubleValue];
+            
+            //符合上下限值
+            if([testitem.value doubleValue]> [testitem.min doubleValue] && [testitem.value doubleValue]< [testitem.max doubleValue])
+            {
+                testitem.result = @"PASS";
+                ispass = YES;
+            }
+            else
+            {
+                testitem.result = @"FAIL";
+                ispass = NO;
+            }
             //信息汇总
             logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
             
@@ -493,8 +501,6 @@
                 [logView_Info setTextColor:[NSColor redColor]];
                 [[[logView_Info textStorage] mutableString] appendString:logViewText];
             });
-            
-            ispass = NO;
         }
     }
     //------------1-----------
