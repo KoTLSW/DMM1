@@ -51,10 +51,10 @@
 		4C9EE8451EADEE3C00B9089E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C9EE8431EADEE3C00B9089E /* Main.storyboard */; };
 		4C9EE8481EADEE4A00B9089E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9EE8471EADEE4A00B9089E /* ViewController.m */; };
 		4C9EE84C1EAE020C00B9089E /* Logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C9EE84B1EAE020C00B9089E /* Logo.jpg */; };
-		4CFEFB441EBEE46200353ABF /* Station_0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB431EBEE46200353ABF /* Station_0.plist */; };
-		4CFEFB461EBEE4E600353ABF /* Station_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB451EBEE4E600353ABF /* Station_1.plist */; };
-		4CFEFB481EBEE52700353ABF /* Station_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB471EBEE52700353ABF /* Station_2.plist */; };
-		4CFEFB4A1EBEE54100353ABF /* Station_3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB491EBEE54100353ABF /* Station_3.plist */; };
+		4CF7718D1EBF5DFF0065384C /* Station_0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF771891EBF5DFF0065384C /* Station_0.plist */; };
+		4CF7718E1EBF5DFF0065384C /* Station_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF7718A1EBF5DFF0065384C /* Station_1.plist */; };
+		4CF7718F1EBF5DFF0065384C /* Station_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF7718B1EBF5DFF0065384C /* Station_2.plist */; };
+		4CF771901EBF5DFF0065384C /* Station_3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF7718C1EBF5DFF0065384C /* Station_3.plist */; };
 		4CFEFB4E1EBF08ED00353ABF /* AgilentDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */; };
 		4CFEFB601EBF0B0700353ABF /* FTDI_COM.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB511EBF0B0700353ABF /* FTDI_COM.c */; };
 		4CFEFB611EBF0B0700353ABF /* FTDI_SPI.c in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB531EBF0B0700353ABF /* FTDI_SPI.c */; };
@@ -176,10 +176,10 @@
 		4C9EE8461EADEE4A00B9089E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		4C9EE8471EADEE4A00B9089E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4C9EE84B1EAE020C00B9089E /* Logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Logo.jpg; sourceTree = "<group>"; };
-		4CFEFB431EBEE46200353ABF /* Station_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_0.plist; sourceTree = "<group>"; };
-		4CFEFB451EBEE4E600353ABF /* Station_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_1.plist; sourceTree = "<group>"; };
-		4CFEFB471EBEE52700353ABF /* Station_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_2.plist; sourceTree = "<group>"; };
-		4CFEFB491EBEE54100353ABF /* Station_3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_3.plist; sourceTree = "<group>"; };
+		4CF771891EBF5DFF0065384C /* Station_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_0.plist; sourceTree = "<group>"; };
+		4CF7718A1EBF5DFF0065384C /* Station_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_1.plist; sourceTree = "<group>"; };
+		4CF7718B1EBF5DFF0065384C /* Station_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_2.plist; sourceTree = "<group>"; };
+		4CF7718C1EBF5DFF0065384C /* Station_3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Station_3.plist; sourceTree = "<group>"; };
 		4CFEFB4C1EBF08ED00353ABF /* AgilentDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgilentDevice.h; sourceTree = "<group>"; };
 		4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgilentDevice.m; sourceTree = "<group>"; };
 		4CFEFB501EBF0B0700353ABF /* ftd2xx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ftd2xx.h; sourceTree = "<group>"; };
@@ -416,10 +416,10 @@
 				4C9EE8051EADE69400B9089E /* Table.h */,
 				4C9EE8061EADE69400B9089E /* Table.m */,
 				4C9EE8071EADE69400B9089E /* Table.xib */,
-				4CFEFB431EBEE46200353ABF /* Station_0.plist */,
-				4CFEFB451EBEE4E600353ABF /* Station_1.plist */,
-				4CFEFB471EBEE52700353ABF /* Station_2.plist */,
-				4CFEFB491EBEE54100353ABF /* Station_3.plist */,
+				4CF771891EBF5DFF0065384C /* Station_0.plist */,
+				4CF7718A1EBF5DFF0065384C /* Station_1.plist */,
+				4CF7718B1EBF5DFF0065384C /* Station_2.plist */,
+				4CF7718C1EBF5DFF0065384C /* Station_3.plist */,
 			);
 			path = MK_Table;
 			sourceTree = "<group>";
@@ -649,17 +649,17 @@
 				4C9EE7C01EADE57100B9089E /* Assets.xcassets in Resources */,
 				4C6F3FB91EBDB63D002C747E /* UserLogin.plist in Resources */,
 				4C6F3FB71EBDB417002C747E /* LoginWindow.xib in Resources */,
-				4CFEFB461EBEE4E600353ABF /* Station_1.plist in Resources */,
+				4CF7718E1EBF5DFF0065384C /* Station_1.plist in Resources */,
 				4C9EE8231EADE69400B9089E /* Param.plist in Resources */,
 				4C9EE84C1EAE020C00B9089E /* Logo.jpg in Resources */,
-				4CFEFB4A1EBEE54100353ABF /* Station_3.plist in Resources */,
+				4CF771901EBF5DFF0065384C /* Station_3.plist in Resources */,
 				4C82EE2E1EB04D4B00BAA7A3 /* SerialPort.xib in Resources */,
 				4C9EE81D1EADE69400B9089E /* README.rtf in Resources */,
-				4CFEFB481EBEE52700353ABF /* Station_2.plist in Resources */,
-				4CFEFB441EBEE46200353ABF /* Station_0.plist in Resources */,
+				4CF7718F1EBF5DFF0065384C /* Station_2.plist in Resources */,
 				4C9EE8211EADE69400B9089E /* README.rtf in Resources */,
 				4C9EE82D1EADE69400B9089E /* README.rtf in Resources */,
 				4C82EE3D1EB04D5A00BAA7A3 /* PACSocketDebug.xib in Resources */,
+				4CF7718D1EBF5DFF0065384C /* Station_0.plist in Resources */,
 				4C9EE8251EADE69400B9089E /* README.rtf in Resources */,
 				4C9EE8451EADEE3C00B9089E /* Main.storyboard in Resources */,
 				4CFEFB861EBF1BEF00353ABF /* AlertWindowController.xib in Resources */,

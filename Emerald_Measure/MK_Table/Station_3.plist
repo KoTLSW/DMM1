@@ -8,7 +8,7 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_1a</string>
 			<key>TimeOut</key>
 			<integer>500</integer>
 			<key>TimeDelay</key>
@@ -18,13 +18,13 @@
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>SF-1b</string>
+			<string>SF_1a</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>GΩ</string>
 			<key>Min</key>
-			<string>-1.515</string>
+			<string>10</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string></string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -36,7 +36,7 @@
 			<key>ID</key>
 			<string>--</string>
 			<key>Command</key>
-			<string></string>
+			<string>U_SF_1b</string>
 			<key>TimeOut</key>
 			<integer>500</integer>
 			<key>TimeDelay</key>
@@ -46,13 +46,13 @@
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
-			<string>SF-1b</string>
+			<string>SF_1b</string>
 			<key>Units</key>
-			<string>V</string>
+			<string>MΩ</string>
 			<key>Min</key>
-			<string>-1.515</string>
+			<string>4.1</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>6</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
