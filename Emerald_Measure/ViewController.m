@@ -20,6 +20,9 @@
     Plist *plist;                       // plist类
     
     NSMutableArray *itemArr;            // plist文件测试项数组
+    Item *testItem ;
+    NSString *itemResult; //每一个测试项的结果
+    NSMutableArray *testResultArr; // 返回的结果数组
     
     int index;                          // 测试流程下标
     int item_index;                     // 测试项下标
@@ -41,7 +44,6 @@
     
     __weak IBOutlet NSTextField *testFieldTimes;         //测试时间
     __weak IBOutlet NSTextField *testCount;         //测试次数
-    __weak IBOutlet NSButton *pressBtn;             //按钮开关
     
     __unsafe_unretained IBOutlet NSTextView *logView_Info; //log_View 中显示的信息
     
@@ -66,7 +68,6 @@
     
     item_index = 0;
     row_index = 0;
-    pressBtn.enabled = NO;
     logView_Info.editable = NO;
     testNum = 0;
     passNum = 0;
@@ -122,9 +123,6 @@
     {
         return;
     }
-    //启动线程,进入测试流程
-    myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-    [myThrad start];
 }
 
 
@@ -135,11 +133,16 @@
 -(void)Working
 {
     [NSMenu setMenuBarVisible:NO];
-    
-    pressBtn.enabled = YES;
-    Item *testitem = [[Item alloc] init];
-    NSMutableArray *testResultArr = [NSMutableArray arrayWithCapacity:0];
-    NSString *itemResult; //每一个测试项的结果
+   
+    if (testItem == nil)
+    {
+        testItem  = [[Item alloc] init];
+    }
+   
+    if (testResultArr == nil)
+    {
+        testResultArr  = [NSMutableArray arrayWithCapacity:0];
+    }
     
     while ([[NSThread currentThread] isCancelled]==NO) //线程未结束一直处于循环状态
     {
@@ -299,11 +302,11 @@
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
             
-            testitem = itemArr[item_index];
-            NSLog(@"%@=========%@========%@",testitem.testName, testitem.value, itemArr[item_index]);
+            testItem = itemArr[item_index];
+            NSLog(@"%@=========%@========%@",testItem.testName, testItem.value, itemArr[item_index]);
             
             //加载测试项
-            BOOL boolResult = [self TestItem:testitem];
+            BOOL boolResult = [self TestItem:testItem];
             
             //测试结果转为字符串格式
             if (boolResult == YES)
@@ -317,7 +320,7 @@
             //把测试结果加入到可变数组中
             [testResultArr addObject:itemResult];
             
-            [mk_table flushTableRow:testitem RowIndex:row_index];
+            [mk_table flushTableRow:testItem RowIndex:row_index];
             
             row_index++;
             item_index++;
@@ -414,11 +417,10 @@
             });
             sleep(1);
             
-            testitem = nil;
+            testItem = nil;
             plist = nil;
             row_index=0;
             item_index=0;
-            pressBtn.enabled = YES;
             
             //每次结束测试都刷新主界面
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -662,6 +664,7 @@
         [sender setTitle:@"Restart"];
         
         [myThrad cancel];
+        sleep(0.5);
          myThrad = nil;
         [mkTimer endTimer];
         index = 0;

@@ -12,7 +12,6 @@
 @interface StationControlWindow ()
 {
     LoginWindow *loginWindow;
-    NSNumber *currentStationindex;
 }
 @end
 
@@ -48,10 +47,13 @@
         stationBtn_3.state = YES;
     }
     
-    if (stationBtn_0.state == NO && stationBtn_1.state == NO && stationBtn_2.state == NO && stationBtn_3.state == NO)
+    if (currentStationStr == nil || [currentStationStr  isEqual: @""])
     {
         stationBtn_0.state = YES;
+        [[NSUserDefaults standardUserDefaults] setObject:stationBtn_0.title forKey:@"CurrentStationStatus"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
     
     //添加选项按钮的通知监控
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(selectStationNoti:) name:@"SelectButtonlimit_Notification" object:nil];
@@ -91,7 +93,6 @@
 
 - (IBAction)clickStation_0:(NSButton *)sender
 {
-     currentStationindex = @0;
     
     if (sender.state == YES)
     {
@@ -100,7 +101,6 @@
         stationBtn_3.state = NO;
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:currentStationindex forKey:@"CurrentStationIndex"];
     [[NSUserDefaults standardUserDefaults] setObject:sender.title forKey:@"CurrentStationStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -109,16 +109,12 @@
 
 - (IBAction)clickStation_1:(NSButton *)sender
 {
-    currentStationindex = @1;
-    
     if (sender.state == YES)
     {
         stationBtn_0.state = NO;
         stationBtn_2.state = NO;
         stationBtn_3.state = NO;
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:currentStationindex forKey:@"CurrentStationIndex"];
     
     [[NSUserDefaults standardUserDefaults] setObject:sender.title forKey:@"CurrentStationStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -128,15 +124,12 @@
 
 - (IBAction)clickStation_2:(NSButton *)sender
 {
-    currentStationindex = @2;
-    
     if (sender.state == YES)
     {
         stationBtn_0.state = NO;
         stationBtn_1.state = NO;
         stationBtn_3.state = NO;
     }
-    [[NSUserDefaults standardUserDefaults] setObject:currentStationindex forKey:@"CurrentStationIndex"];
     [[NSUserDefaults standardUserDefaults] setObject:sender.title forKey:@"CurrentStationStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
@@ -145,8 +138,6 @@
 
 - (IBAction)clickStation_3:(NSButton *)sender
 {
-    currentStationindex = @3;
-    
     if (sender.state == YES)
     {
         stationBtn_0.state = NO;
@@ -154,7 +145,6 @@
         stationBtn_2.state = NO;
     }
     
-    [[NSUserDefaults standardUserDefaults] setObject:currentStationindex forKey:@"CurrentStationIndex"];
     [[NSUserDefaults standardUserDefaults] setObject:sender.title forKey:@"CurrentStationStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
