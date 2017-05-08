@@ -52,4 +52,6 @@
 @property(readwrite,copy) NSString *result;
 @property(readwrite)      BOOL     isTest;
 
+@property(readwrite,copy)NSArray  * testAllCommand;
+
 @end

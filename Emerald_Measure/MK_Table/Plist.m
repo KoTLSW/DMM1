@@ -41,6 +41,7 @@
             item.value      = [dic objectForKey:@"Value"];
             item.result     = [dic objectForKey:@"Result"];
             item.isTest     = [[dic objectForKey:@"IsTest"] boolValue];
+            item.testAllCommand =[dic objectForKey:@"AllNeedCommands"];
             
             [testItems addObject:item];
         }
@@ -69,5 +70,15 @@
     [data writeToFile:plistPath atomically:YES];
 }
 //=============================================
+
+-(NSDictionary *)PlistRead:(NSString *)fileName
+{
+    //首先读取plist中的数据
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
+    NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+   
+    return dictionary;
+}
+
 
 @end

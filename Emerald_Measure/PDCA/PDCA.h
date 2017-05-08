@@ -10,9 +10,12 @@
 #import "InstantPudding_API.h"
 #import "CBAuth_API.h"
 #import "IPSFCPost_API.h"
+#import "pudding.h"
 
-@interface PDCA : NSObject
+@interface PDCA :pudding
 //==========================================
++(PDCA*)Instance;
+
 -(void)PDCA_GetStartTime;
 -(void)PDCA_GetEndTime;
 -(void)PDCA_Init:(NSString*)sn SW_name:(NSString*)sw_name SW_ver:(NSString*)sw_ver;

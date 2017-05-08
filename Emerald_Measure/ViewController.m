@@ -15,10 +15,24 @@
 #import "AgilentDevice.h"
 #import "AppDelegate.h"
 #import "AlertWindowController.h"
+#import "KeithleyDevice.h"
+#import "BYDSFCManager.h"
+#import "TestStep.h"
 
 
 @implementation ViewController
 {
+    SerialPort          * fixtureSerial;//治具串口
+    
+    SerialPort          * humitureSerial; //温湿度串口
+    
+    KeithleyDevice      * keithleySerial; //泰克调试
+    
+    AgilentDevice       * agilent;//安捷伦万用表
+    
+    
+    
+    
     Table *mk_table;                       // table类
     Plist *plist;                       // plist类
     AlertWindowController  * alertwindowController;
@@ -70,12 +84,23 @@
     
     //初始化对象
     serialPort = [[SerialPort alloc] init];
+    
+    fixtureSerial=[[SerialPort alloc] init];
+    
+    keithleySerial=[[KeithleyDevice alloc] init];
+    
+    
+    
+    
+    
+    
     mkTimer = [[MKTimer alloc] init];
     plist = [[Plist alloc] init];
     mk_table = [[Table alloc] init];
     
     item_index = 0;
     row_index = 0;
+    index=3;
     logView_Info.editable = NO;
     testNum = 0;
     passNum = 0;
@@ -272,7 +297,24 @@
                 }
                 if ([importSN.stringValue isEqualToString:@"123456"])
                 {
-                    index = 3;
+                    //赋值SN
+                    [[BYDSFCManager Instance] setStrSN:importSN.stringValue];
+                    
+                    //根据SFC状态，检验SN是否过站
+//                    if (SFCState==1) {//上传SFC,检验SN的产品是否已经过站
+//                        if ([[TestStep Instance]StepSFC_CheckUploadSN:SFCState]) {
+//                            
+//                            NSLog(@"已经过站");
+//                        }
+//                        else
+//                        {
+//                            index = 3;
+//                            
+//                        }
+//                        
+//                    }
+//
+                    
                 }
                 else
                 {
@@ -428,6 +470,8 @@
 //------------------------------------------------------------
         if (index == 5)
         {
+            
+            
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=5 结束测试";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
@@ -450,6 +494,15 @@
             });
             
             index = 0;
+            
+            
+//            if ( ![[TestStep Instance]StepSFC_CheckUploadResult:SFCState=0?NO:YES andIsTestPass: [testResult.stringValue isEqualToString:@"FAIL"]?NO:YES  andFailMessage:nil]) {
+//                
+//                [self UpdateLableStatus:@"SFC上传失败" andColor:[NSColor redColor]];
+//                
+//                
+//            }
+
         }
     }
 }
@@ -465,224 +518,431 @@
     BOOL ispass=NO;
     NSString *logViewText;//logView信息
     
-#pragma mark ---- SF-1a ----
-    if([testitem.testName isEqualToString:@"SF-1a"])
-    {
-        for (int i=0; i<=[testitem.retryTimes intValue]; i++)
-        {
-            //第一项测试项的时候清空 logView 界面
-            [logView_Info setString:@""];
-            
-            //给治具发送指令
-            
-            
-            //治具返回值==> U_SF_1a  OK
-//             ReadTo:(NSString*)data TimeOut:(int)timeOut ReadInterval:(int)restTime;   //timeOut=>testitem.timeOut
-                                                                                        //restTime=>testitem.delayTime
-                        
-            //给安捷伦发送指令
-            
-            
-            //取万用最终值
-            testitem.value = @"1.495";
-            [testitem.value doubleValue];
-            
-            //符合上下限值
-            if([testitem.value doubleValue]> [testitem.min doubleValue] && [testitem.value doubleValue]< [testitem.max doubleValue])
-            {
-                testitem.result = @"PASS";
-                ispass = YES;
-            }
-            else
-            {
-                testitem.result = @"FAIL";
-                ispass = NO;
-            }
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-        }
-    }
-    //------------1-----------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-1b"])
-    {
-        if([testitem.testName length] !=0)
-        {
-            testitem.value  = @"michael_2";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //-------------2-------------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-1c"])
-    {
-        if([testitem.testName length]==0)
-        {
-            testitem.value  = @"michael_3";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //-----------3---------------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-2a"])
-    {
-        if([testitem.testName length]==0)
-        {
-            testitem.value  = @"michael_4";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //------------4--------------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-2b"])
-    {
-        
-        if([testitem.testName length]!=0)
-        {
-            testitem.value  = @"michael_5";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //------------5--------------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-3a"])
-    {
-        if([testitem.testName length]!=0)
-        {
-            testitem.value  = @"michael_6";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //-----------6---------------
-    //------------------------
-    else if([testitem.testName isEqualToString:@"RF-3b"])
-    {
-        if([testitem.testName length]!=0)
-        {
-            testitem.value  = @"michael_7";
-            testitem.result = @"PASS";
-            
-            ispass = YES;
-        }
-        else
-        {
-            testitem.value  = @"My_NULL";
-            testitem.result = @"FAIL";
-            
-            //信息汇总
-            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-            
-            //主线程刷新 log_View 的信息
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //追加字符串信息
-                [logView_Info setTextColor:[NSColor redColor]];
-                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-            });
-            ispass = NO;
-        }
-    }
-    //--------------------------
-    //--------------------------
-
-    NSLog(@"\a");
     
+    for (int i=0; i<[testitem.testAllCommand count]; i++)
+    {
+        //治具===================Fixture
+        //波形发生器==============OscillDevice
+        //安捷伦万用表============Aglient
+        //延迟时间================SW
+        NSString     * agilentReadString;
+        NSDictionary * dic=[testitem.testAllCommand objectAtIndex:i];
+        NSString * SonTestDevice=dic[@"TestDevice"];
+        NSString * SonTestCommand=dic[@"TestCommand"];
+        NSString * SonTestName=dic[@"TestName"];
+        int delayTime=[dic[@"TestDelayTime"] intValue]/1000;
+        
+        //**************************治具=Fixture
+        if ([SonTestDevice isEqualToString:@"Fixture"]) {
+            
+            NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand);
+            
+            [fixtureSerial WriteLine:SonTestCommand];
+            sleep(0.2);
+            
+            NSString  * readString;
+            int indexTime=0;
+            
+            while (YES) {
+                
+                readString=[fixtureSerial ReadExisting];
+                if ([readString isEqualToString:@"OK"]||indexTime==[testitem.retryTimes intValue] )
+                {
+                    break;
+                }
+                indexTime++;
+            }
+        }
+        //**************************波形发生器=WaveDevice
+        else if ([SonTestDevice isEqualToString:@"WaveDevice"]) {
+            
+            //波形发生器a
+            //                NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand)
+            //                sleep(0.2);
+            //                int indexTime=0;
+            //                NSString * readString;
+            //                while (YES) {
+            //                    readString=[self SendReceive:@"Oscill" CMD:NULL TimeOut:1000 Detect:'\r'];
+            //                    if ([readString isEqualToString:@"OK"]||indexTime==2)
+            //                    {
+            //                        break;
+            //                    }
+            //                    indexTime++;
+            //                }
+            NSLog(@"*************示波器发送指令**************%@",SonTestDevice);
+            
+        }
+        //**************************万用表==Agilent或者Keithley
+        else if ([SonTestDevice isEqualToString:@"Agilent"]||[SonTestDevice isEqualToString:@"Keithley"])
+        {
+            
+            //万用表发送指令
+            if ([SonTestCommand isEqualToString:@"DC Volt"]) {//直流电压测试
+                [agilent SetMessureMode:MODE_VOLT_DC andCommunicateType:MODE_LAN_Type];
+                [keithleySerial SetMessureMode:K_MODE_VOLT_DC];
+                NSLog(@"设置直流电压模式");
+            }
+            else if([SonTestCommand isEqualToString:@"AC Volt"])
+            {
+                [agilent SetMessureMode:MODE_VOLT_AC andCommunicateType:MODE_LAN_Type];
+                [keithleySerial SetMessureMode:K_MODE_VOLT_AC];
+                NSLog(@"设置交流电压模式");
+            }
+            else if ([SonTestCommand isEqualToString:@"DC Current"])
+            {
+                [agilent SetMessureMode:MODE_CURR_DC andCommunicateType:MODE_LAN_Type];
+                [keithleySerial SetMessureMode:K_MODE_CURR_DC];
+                NSLog(@"设置直流电流模式");
+                
+            }
+            else if ([SonTestCommand isEqualToString:@"AC Current"])
+            {
+                
+                [agilent SetMessureMode:MODE_CURR_AC andCommunicateType:MODE_LAN_Type];
+                [keithleySerial SetMessureMode:K_MODE_CURR_AC];
+                NSLog(@"设置交流电流模式");
+                
+            }
+            else if ([SonTestCommand containsString:@"RES"])//电阻分单位KΩ,MΩ,GΩ
+            {
+                
+                [agilent SetMessureMode:MODE_RES_4W andCommunicateType:MODE_LAN_Type];
+                [keithleySerial SetMessureMode:K_MODE_RES_4W];
+                NSLog(@"设置自动电阻模式");
+                
+                
+            }
+            else//其它的值
+            {
+                //5次电压递增测试
+                if ([SonTestName isEqualToString:@"RF-5a"]) {//设备
+                    
+                    int indexTime=0;
+                    
+                    while (YES) {
+                        
+                        [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
+                        
+                        agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
+                        
+                        //大于1，直接跳出，并发送reset指令
+                        if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
+                        {
+                            [fixtureSerial WriteLine:@"Reset"];
+                            break;
+                        }
+                        if ([agilentReadString floatValue]<1)//读取3次，3次后等待15秒再发送
+                        {
+                            indexTime++;
+                            
+                            if (indexTime==[testitem.retryTimes intValue]-1) {
+                                
+                                sleep(13.5);
+                                
+                                [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
+                                
+                                agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
+                                
+                                break;
+                                
+                            }
+                            
+                            
+                        }
+                        
+                    }
+                    
+                }
+                //其它正常读取情况
+                else
+                {
+                    [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
+                    agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
+                    
+                    
+                }
+                
+                testitem.value=@"1.5";//为获取万用表的值
+                
+                if ([SonTestCommand containsString:@"Read"]) {
+                    
+                    //1和2工站===============SF-2a&&SF-2b计算
+                    if ([testitem.testName isEqualToString:@"Sensor Board SF-2a"]||[testitem.testName isEqualToString:@"Crown flex RF-2a"]||[testitem.testName isEqualToString:@"Sensor_Flex SF-1a"]) {
+                        
+                        float num=[agilentReadString floatValue];
+                        testitem.value = [NSString stringWithFormat:@"%f%@", ((0.8 - num)/num)*10,@"G"];
+                        
+                    }
+                    if ([testitem.testName isEqualToString:@"Sensor Board SF-2b"]||[testitem.testName isEqualToString:@"Crown flex RF-2b"]||[testitem.testName isEqualToString:@"Sensor_Flex SF-1b"])
+                    {
+                        float num=[agilentReadString floatValue];
+                        if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]) {
+                            testitem.value = [NSString stringWithFormat:@"%f%@", ((1.41421*0.8 - num)/num)*5,@"G"];
+                        }
+                        else
+                        {
+                            testitem.value = [NSString stringWithFormat:@"%f%@", ((1.41421*0.8 - num)/num)*10,@"G"];
+                        }
+                    }
+                    
+                    
+                    NSLog(@"%f=====================%f",[testitem.min floatValue],[testitem.max floatValue]);
+                    
+                    if ([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue])
+                    {
+                        
+                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+                        testitem.result = @"PASS";
+                        //testitem.testMessage= @"";
+                        //testitem.isPdcaValue= YES;
+                        ispass = YES;
+                        
+                    }
+                    else
+                    {
+                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+                        testitem.result = @"FAIL";
+//                        testitem.testMessage= @"";
+//                        testitem.isPdcaValue= YES;
+                        ispass = NO;
+                    }
+                }
+            }
+            
+        }
+        else if([SonTestDevice isEqualToString:@"SW"])
+        {
+            //延迟时间
+            NSLog(@"延迟时间**************%@",SonTestDevice);
+            sleep(delayTime);
+        }
+        else
+        {
+            NSLog(@"其它设备模式");
+        }
+    }
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+//#pragma mark ---- SF-1a ----
+//    if([testitem.testName isEqualToString:@"SF-1a"])
+//    {
+//        for (int i=0; i<=[testitem.retryTimes intValue]; i++)
+//        {
+//            //第一项测试项的时候清空 logView 界面
+//            [logView_Info setString:@""];
+//            
+//            //给治具发送指令
+//            
+//            //给安捷伦发送指令
+//            
+//            //取万用最终值
+//            testitem.value = @"1.495";
+//            [testitem.value doubleValue];
+//            
+//            //符合上下限值
+//            if([testitem.value doubleValue]> [testitem.min doubleValue] && [testitem.value doubleValue]< [testitem.max doubleValue])
+//            {
+//                testitem.result = @"PASS";
+//                ispass = YES;
+//            }
+//            else
+//            {
+//                testitem.result = @"FAIL";
+//                ispass = NO;
+//            }
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//        }
+//    }
+//    //------------1-----------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-1b"])
+//    {
+//        if([testitem.testName length] !=0)
+//        {
+//            testitem.value  = @"michael_2";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //-------------2-------------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-1c"])
+//    {
+//        if([testitem.testName length]==0)
+//        {
+//            testitem.value  = @"michael_3";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //-----------3---------------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-2a"])
+//    {
+//        if([testitem.testName length]==0)
+//        {
+//            testitem.value  = @"michael_4";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //------------4--------------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-2b"])
+//    {
+//        
+//        if([testitem.testName length]!=0)
+//        {
+//            testitem.value  = @"michael_5";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //------------5--------------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-3a"])
+//    {
+//        if([testitem.testName length]!=0)
+//        {
+//            testitem.value  = @"michael_6";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //-----------6---------------
+//    //------------------------
+//    else if([testitem.testName isEqualToString:@"RF-3b"])
+//    {
+//        if([testitem.testName length]!=0)
+//        {
+//            testitem.value  = @"michael_7";
+//            testitem.result = @"PASS";
+//            
+//            ispass = YES;
+//        }
+//        else
+//        {
+//            testitem.value  = @"My_NULL";
+//            testitem.result = @"FAIL";
+//            
+//            //信息汇总
+//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
+//            
+//            //主线程刷新 log_View 的信息
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                //追加字符串信息
+//                [logView_Info setTextColor:[NSColor redColor]];
+//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
+//            });
+//            ispass = NO;
+//        }
+//    }
+//    //--------------------------
+//    //--------------------------
+//
+//    NSLog(@"\a");
+//    
     return ispass;
 }
 
@@ -699,7 +959,7 @@
         sleep(0.5);
          myThrad = nil;
         [mkTimer endTimer];
-        index = 0;
+        index = 3;
         item_index = 0;
         row_index = 0;
         [NSMenu setMenuBarVisible:YES];

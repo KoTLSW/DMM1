@@ -13,6 +13,7 @@
 //=============================================
 -(NSMutableArray *)PlistRead:(NSString *)fileName Key:(NSString *)key;
 -(void)PlistWrite:(NSString *)fileName Item:(NSString *)item;
+-(NSDictionary *)PlistRead:(NSString *)fileName;
 //=============================================
 
 
