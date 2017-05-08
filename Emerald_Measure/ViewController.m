@@ -475,7 +475,13 @@
             
             //给治具发送指令
             
+            
+            //治具返回值==> U_SF_1a  OK
+//             ReadTo:(NSString*)data TimeOut:(int)timeOut ReadInterval:(int)restTime;   //timeOut=>testitem.timeOut
+                                                                                        //restTime=>testitem.delayTime
+                        
             //给安捷伦发送指令
+            
             
             //取万用最终值
             testitem.value = @"1.495";
