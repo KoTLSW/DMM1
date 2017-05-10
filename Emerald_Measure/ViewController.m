@@ -80,6 +80,16 @@
     NSString        *SonTestCommand;
     NSString        *SonTestName;
     int             delayTime;
+    
+    //************ InfoBox *************
+    __weak IBOutlet NSTextField *passNumInfoTF;
+    __weak IBOutlet NSTextField *passNumCalculateTF;
+    __weak IBOutlet NSTextField *failNumInfoTF;
+    __weak IBOutlet NSTextField *failNumCalculateTF;
+    __weak IBOutlet NSTextField *totalNumInfo;
+    __weak IBOutlet NSTextField *fixtureID_TF;
+    __weak IBOutlet NSTextField *stationID_TF;
+    
 }
 
 
@@ -142,6 +152,8 @@
     if ([noti.object isEqualToString:@"Station_0"] || [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_0"])
     {
         NSLog(@"进入 Station_0 工站");
+        stationID_TF.stringValue = @"Sensor Board";
+        
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_0" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
@@ -149,6 +161,8 @@
     if ([noti.object isEqualToString:@"Station_1"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_1"])
     {
         NSLog(@"进入 Station_1 工站");
+        stationID_TF.stringValue = @"Crown Flex";
+        
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_1" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
@@ -156,6 +170,8 @@
     if ([noti.object isEqualToString:@"Station_2"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_2"])
     {
         NSLog(@"进入 Station_2 工站");
+        stationID_TF.stringValue = @"Sensor Flex Sub Assembly";
+        
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_2" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
@@ -163,10 +179,14 @@
     if ([noti.object isEqualToString:@"Station_3"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_3"])
     {
         NSLog(@"进入 Station_3 工站");
+        stationID_TF.stringValue = @"Crown Rotation Sub Assembly";
+        
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_3" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
     }
+    
+    fixtureID_TF.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"];
     
     if (myThrad != nil)
     {
@@ -504,6 +524,14 @@
                     passNum++;
                 }
                 testCount.stringValue = [NSString stringWithFormat:@"%d/%d",passNum,testNum];
+                totalNumInfo.stringValue = [NSString stringWithFormat:@"%d",testNum];
+                
+                passNumInfoTF.stringValue = [NSString stringWithFormat:@"%d",passNum];
+                passNumCalculateTF.stringValue = [NSString stringWithFormat:@"%.2f%%",((double)passNum/(double)testNum)*100];
+                
+                failNumInfoTF.stringValue = [NSString stringWithFormat:@"%d",(testNum - passNum)];
+                failNumCalculateTF.stringValue = [NSString stringWithFormat:@"%.2f%%",((double)(testNum-passNum)/(double)testNum)*100];
+                
                 importSN.stringValue = @"";
             });
             
@@ -759,6 +787,26 @@
     return ispass;
 }
 
+-(void)refreshTheInfoBox
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        passNumInfoTF.stringValue = @"0";
+        passNumCalculateTF.stringValue = @"0%";
+        failNumInfoTF.stringValue = @"0";
+        failNumCalculateTF.stringValue = @"0%";
+        totalNumInfo.stringValue = @"0";
+        testNum = 0;
+        passNum = 0;
+        testCount.stringValue = @"0/0";
+    });
+}
+
+#pragma mark-Button action
+- (IBAction)clickToRefreshInfoBox:(NSButton *)sender
+{
+    [self refreshTheInfoBox];
+}
+
 - (IBAction)clickToStop_ReStart:(NSButton *)sender
 {
     PDCA_Btn.enabled = NO;
@@ -805,28 +853,6 @@
     
 }
 
-
-#pragma mark--------------传递button进来
--(void)ChangeButtonStateWithButton:(id)sender
-{
-    AppDelegate *appDelegate = (AppDelegate *)[NSApplication sharedApplication].delegate;
-    appDelegate.mainWindowController = alertwindowController;
-    
-    [alertwindowController.window center];
-    // 3.设为KeyWindow并前置
-    [alertwindowController.window makeKeyAndOrderFront:self];
-    __weak  AlertWindowController * weakAlertwindowController=alertwindowController;
-    
-    weakAlertwindowController.backBlock=^(BOOL  isOK){
-        
-        NSButton  * button=sender;
-        if (!isOK) {
-            
-            button.state=!button.state;
-        }
-    };
-    
-}
 
 
 /**
