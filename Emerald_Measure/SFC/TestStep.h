@@ -51,7 +51,7 @@
 +(TestStep*)Instance;
 
 //初始化测试信息
--(void)StepInitTest;
+-(void)StepInitTest; 
 
 
 //SFC检测上传sn

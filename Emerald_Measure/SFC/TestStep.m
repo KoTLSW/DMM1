@@ -186,9 +186,6 @@ static TestStep* test=nil;
 
 
 
-
-
-
 //往偶数字符串中插入空格
 -(NSMutableString *)appendingWithNull:(NSString *)string
 {

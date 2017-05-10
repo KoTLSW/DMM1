@@ -31,8 +31,6 @@
     AgilentDevice       * agilent;//安捷伦万用表
     
     
-    
-    
     Table *mk_table;                       // table类
     Plist *plist;                       // plist类
     AlertWindowController  * alertwindowController;
@@ -57,6 +55,7 @@
     __weak IBOutlet NSView *tab_View;               // 与storyboard 关联的 outline_Tab
     __weak IBOutlet NSTextField *importSN;          //输入的sn
     __weak IBOutlet NSTextField *currentStateMsg;   //当前的状态信息
+    __weak IBOutlet NSTextField *currentStateMsgBG;
     
     __weak IBOutlet NSTextField *testResult;        //测试结果
                     NSString    *testResultStr;     //测试结果
@@ -73,6 +72,14 @@
     int      ct_cnt;           //记录cycle time定时器中断的次数
     
     SerialPort *serialPort;
+    
+    //************ testItems ************
+    NSString        *agilentReadString;
+    NSDictionary    *dic;
+    NSString        *SonTestDevice;
+    NSString        *SonTestCommand;
+    NSString        *SonTestName;
+    int             delayTime;
 }
 
 
@@ -89,10 +96,8 @@
     
     keithleySerial=[[KeithleyDevice alloc] init];
     
-    
-    
-    
-    
+    [self redirectSTD:STDOUT_FILENO];  //冲定向log
+    [self redirectSTD:STDERR_FILENO];
     
     mkTimer = [[MKTimer alloc] init];
     plist = [[Plist alloc] init];
@@ -107,6 +112,8 @@
     itemArr = [NSMutableArray array];
     PDCA_Btn.enabled = NO;
     SFC_Btn.enabled = NO;
+    
+    _stopBtn.title = @"Start";
     
     //进来就判断读取哪个配置文件
     [self selectStationNoti:nil];
@@ -233,6 +240,7 @@
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         currentStateMsg.stringValue=@"index=0,治具未连接";
                         currentStateMsg.backgroundColor = [NSColor redColor];
+                        currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     });
                     sleep(1);
                     NSLog(@"index=0,治具还未连接");
@@ -270,6 +278,7 @@
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     currentStateMsg.stringValue=@"安捷伦连接失败!";
                     currentStateMsg.backgroundColor = [NSColor redColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 });
                 sleep(1);
                 NSLog(@"安捷伦连接失败!");
@@ -293,6 +302,7 @@
                 {
                     currentStateMsg.stringValue = @"index=2 请输入 sn!";
                     currentStateMsg.backgroundColor = [NSColor yellowColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     return ;
                 }
                 if ([importSN.stringValue isEqualToString:@"123456"])
@@ -313,13 +323,14 @@
 //                        }
 //                        
 //                    }
-//
                     
+                    index = 3;
                 }
                 else
                 {
                     currentStateMsg.stringValue = @"sn 错误!!";
                     currentStateMsg.backgroundColor = [NSColor redColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 }
                 
                 //cycle_test,开始测试前清空tableView
@@ -337,6 +348,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=3 sn 正确!";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
+                currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 testResult.stringValue = @"Running";
             });
             NSLog(@"产品测试");
@@ -426,6 +438,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=4 生成数据文件";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
+                currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
             });
             sleep(1);
             
@@ -475,6 +488,7 @@
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=5 结束测试";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
+                currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
             });
             sleep(1);
             
@@ -495,18 +509,46 @@
             
             index = 0;
             
-            
 //            if ( ![[TestStep Instance]StepSFC_CheckUploadResult:SFCState=0?NO:YES andIsTestPass: [testResult.stringValue isEqualToString:@"FAIL"]?NO:YES  andFailMessage:nil]) {
 //                
 //                [self UpdateLableStatus:@"SFC上传失败" andColor:[NSColor redColor]];
 //                
 //                
 //            }
-
         }
     }
 }
 
+
+//==================== 冲定向log ============================
+- (void)redirectNotificationHandle:(NSNotification *)nf{
+    NSData *data = [[nf userInfo] objectForKey:NSFileHandleNotificationDataItem];
+    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        
+    if(logView_Info != nil)
+    {
+        NSRange range;
+        range = NSMakeRange ([[logView_Info string] length], 0);
+        [logView_Info replaceCharactersInRange: range withString: str];
+        [logView_Info scrollRangeToVisible:range];
+    }
+    [[nf object] readInBackgroundAndNotify];
+}
+
+- (void)redirectSTD:(int )fd{
+    
+    NSPipe * pipe = [NSPipe pipe] ;
+    NSFileHandle *pipeReadHandle = [pipe fileHandleForReading] ;
+    dup2([[pipe fileHandleForWriting] fileDescriptor], fd) ;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(redirectNotificationHandle:)
+                                                 name:NSFileHandleReadCompletionNotification
+                                               object:pipeReadHandle] ;
+    
+    [pipeReadHandle readInBackgroundAndNotify];
+}
+//==================== 冲定向log ============================
 
 
 //================================================
@@ -516,8 +558,6 @@
 {
     sleep(1);
     BOOL ispass=NO;
-    NSString *logViewText;//logView信息
-    
     
     for (int i=0; i<[testitem.testAllCommand count]; i++)
     {
@@ -525,12 +565,11 @@
         //波形发生器==============OscillDevice
         //安捷伦万用表============Aglient
         //延迟时间================SW
-        NSString     * agilentReadString;
-        NSDictionary * dic=[testitem.testAllCommand objectAtIndex:i];
-        NSString * SonTestDevice=dic[@"TestDevice"];
-        NSString * SonTestCommand=dic[@"TestCommand"];
-        NSString * SonTestName=dic[@"TestName"];
-        int delayTime=[dic[@"TestDelayTime"] intValue]/1000;
+        dic=[testitem.testAllCommand objectAtIndex:i];
+        SonTestDevice=dic[@"TestDevice"];
+        SonTestCommand=dic[@"TestCommand"];
+        SonTestName=dic[@"TestName"];
+        delayTime = [dic[@"TestDelayTime"] intValue]/1000;
         
         //**************************治具=Fixture
         if ([SonTestDevice isEqualToString:@"Fixture"]) {
@@ -635,7 +674,8 @@
                         {
                             indexTime++;
                             
-                            if (indexTime==[testitem.retryTimes intValue]-1) {
+                            if (indexTime==[testitem.retryTimes intValue]-1)
+                            {
                                 
                                 sleep(13.5);
                                 
@@ -644,14 +684,9 @@
                                 agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
                                 
                                 break;
-                                
                             }
-                            
-                            
                         }
-                        
                     }
-                    
                 }
                 //其它正常读取情况
                 else
@@ -708,7 +743,6 @@
                     }
                 }
             }
-            
         }
         else if([SonTestDevice isEqualToString:@"SW"])
         {
@@ -722,227 +756,6 @@
         }
     }
     
-    
-
-    
-    
-    
-    
-    
-    
-    
-//#pragma mark ---- SF-1a ----
-//    if([testitem.testName isEqualToString:@"SF-1a"])
-//    {
-//        for (int i=0; i<=[testitem.retryTimes intValue]; i++)
-//        {
-//            //第一项测试项的时候清空 logView 界面
-//            [logView_Info setString:@""];
-//            
-//            //给治具发送指令
-//            
-//            //给安捷伦发送指令
-//            
-//            //取万用最终值
-//            testitem.value = @"1.495";
-//            [testitem.value doubleValue];
-//            
-//            //符合上下限值
-//            if([testitem.value doubleValue]> [testitem.min doubleValue] && [testitem.value doubleValue]< [testitem.max doubleValue])
-//            {
-//                testitem.result = @"PASS";
-//                ispass = YES;
-//            }
-//            else
-//            {
-//                testitem.result = @"FAIL";
-//                ispass = NO;
-//            }
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//        }
-//    }
-//    //------------1-----------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-1b"])
-//    {
-//        if([testitem.testName length] !=0)
-//        {
-//            testitem.value  = @"michael_2";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //-------------2-------------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-1c"])
-//    {
-//        if([testitem.testName length]==0)
-//        {
-//            testitem.value  = @"michael_3";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //-----------3---------------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-2a"])
-//    {
-//        if([testitem.testName length]==0)
-//        {
-//            testitem.value  = @"michael_4";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //------------4--------------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-2b"])
-//    {
-//        
-//        if([testitem.testName length]!=0)
-//        {
-//            testitem.value  = @"michael_5";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //------------5--------------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-3a"])
-//    {
-//        if([testitem.testName length]!=0)
-//        {
-//            testitem.value  = @"michael_6";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //-----------6---------------
-//    //------------------------
-//    else if([testitem.testName isEqualToString:@"RF-3b"])
-//    {
-//        if([testitem.testName length]!=0)
-//        {
-//            testitem.value  = @"michael_7";
-//            testitem.result = @"PASS";
-//            
-//            ispass = YES;
-//        }
-//        else
-//        {
-//            testitem.value  = @"My_NULL";
-//            testitem.result = @"FAIL";
-//            
-//            //信息汇总
-//            logViewText = [NSString stringWithFormat:@"\n%@,%@,%@",testitem.testName,testitem.value,testitem.result];
-//            
-//            //主线程刷新 log_View 的信息
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                //追加字符串信息
-//                [logView_Info setTextColor:[NSColor redColor]];
-//                [[[logView_Info textStorage] mutableString] appendString:logViewText];
-//            });
-//            ispass = NO;
-//        }
-//    }
-//    //--------------------------
-//    //--------------------------
-//
-//    NSLog(@"\a");
-//    
     return ispass;
 }
 
@@ -959,24 +772,26 @@
         sleep(0.5);
          myThrad = nil;
         [mkTimer endTimer];
-        index = 3;
+        index = 0;
         item_index = 0;
         row_index = 0;
         [NSMenu setMenuBarVisible:YES];
         return;
     }
-    if ([sender.title isEqualToString:@"Restart"])
+    if ([sender.title isEqualToString:@"Restart"] || [sender.title isEqualToString:@"Start"])
     {
         [sender setTitle:@"Stop"];
         //启动线程,进入测试流程
         myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+        index = 0;
+        item_index = 0;
+        row_index = 0;
         [myThrad start];
         return;
     }
 }
 
 
-#pragma mark-----------上传到PDCA
 - (IBAction)ClickUploadPDCAAction:(id)sender
 {
     NSLog(@"点击上传 PDCA");
@@ -984,9 +799,6 @@
 }
 
 
-
-
-#pragma mark---------------上传到SFC
 - (IBAction)clickUpLoadSFCAction:(id)sender
 {
      NSLog(@"点击上传 SFC");
