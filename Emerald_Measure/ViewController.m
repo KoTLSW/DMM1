@@ -538,6 +538,9 @@
                     [SN_Collector setTextColor:[NSColor redColor]];
                 }
                 
+                //是否需要写入本地缓存
+                
+                
                 importSN.stringValue = @"";
             });
             
