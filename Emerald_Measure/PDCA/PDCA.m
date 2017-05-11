@@ -18,6 +18,17 @@
 @end
 //==========================================
 @implementation PDCA
+
++(PDCA*)Instance
+{
+    static PDCA *myPDCA = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        myPDCA = [[PDCA alloc] init];
+    });
+    return myPDCA;
+}
+
 //==========================================
 -(void)PDCA_GetStartTime{
     time(&time_start);

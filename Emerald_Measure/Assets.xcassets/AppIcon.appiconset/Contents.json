@@ -41,13 +41,15 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "mac",
       "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "屏幕快照 2017-05-11 下午1.42.31.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "mac",
       "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "屏幕快照 2017-05-11 下午1.42.31-1.png",
       "scale" : "2x"
     }
   ],

@@ -108,7 +108,7 @@
     
     item_index = 0;
     row_index = 0;
-    index=3;
+    index = 0;
     logView_Info.editable = NO;
     testNum = 0;
     passNum = 0;
@@ -334,7 +334,6 @@
 //                            index = 3;
 //                            
 //                        }
-//                        
 //                    }
                     
                     index = 3;
@@ -460,7 +459,7 @@
                 testNum++; //测试
                 
                 //文件夹路径
-                NSString *currentPath=@"/Users/michael/Desktop/";
+                NSString *currentPath=@"/Users/value";
         
                 //测试结束并创建文件的时间
                 end_time = [[GetTimeDay shareInstance] getFileTime];
