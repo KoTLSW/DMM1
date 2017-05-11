@@ -22,56 +22,31 @@
 
 @implementation ViewController
 {
-    SerialPort          * fixtureSerial;//治具串口
+    //************ Device *************
+    SerialPort          *serialPort;
+    SerialPort          *fixtureSerial;//治具串口
+    SerialPort          *humitureSerial; //温湿度串口
+    KeithleyDevice      *keithleySerial; //泰克调试
+    AgilentDevice       *agilent;//安捷伦万用表
+
+    //************* timer *************
+    NSString *start_time;               //启动测试的时间
+    NSString *end_time;                 //结束测试的时间
+    NSThread *myThrad;                  // 自定义线程
     
-    SerialPort          * humitureSerial; //温湿度串口
-    
-    KeithleyDevice      * keithleySerial; //泰克调试
-    
-    AgilentDevice       * agilent;//安捷伦万用表
-    
-    
+    //************ table **************
     Table *mk_table;                       // table类
     Plist *plist;                       // plist类
-    AlertWindowController  * alertwindowController;
-
-    
     NSMutableArray *itemArr;            // plist文件测试项数组
     Item *testItem ;
     NSString *itemResult; //每一个测试项的结果
     NSMutableArray *testResultArr; // 返回的结果数组
-    
     int index;                          // 测试流程下标
     int item_index;                     // 测试项下标
     int row_index;                      // table 每一行下标
-    
-    NSString *start_time;               //启动测试的时间
-    NSString *end_time;                 //结束测试的时间
-    int testNum;                        //测试次数
-    int passNum;                        //通过次数
-    
-    NSThread *myThrad;                  // 自定义线程
-    
+
     __weak IBOutlet NSView *tab_View;               // 与storyboard 关联的 outline_Tab
-    __weak IBOutlet NSTextField *importSN;          //输入的sn
-    __weak IBOutlet NSTextField *currentStateMsg;   //当前的状态信息
-    __weak IBOutlet NSTextField *currentStateMsgBG;
-    
-    __weak IBOutlet NSTextField *testResult;        //测试结果
-                    NSString    *testResultStr;     //测试结果
-    
-    __weak IBOutlet NSTextField *testFieldTimes;         //测试时间
-    __weak IBOutlet NSTextField *testCount;         //测试次数
-    
-    __weak IBOutlet NSButton *PDCA_Btn;
-    __weak IBOutlet NSButton *SFC_Btn;
-    
     __unsafe_unretained IBOutlet NSTextView *logView_Info; //log_View 中显示的信息
-    
-    MKTimer *mkTimer;               //MK 定时器对象
-    int      ct_cnt;           //记录cycle time定时器中断的次数
-    
-    SerialPort *serialPort;
     
     //************ testItems ************
     NSString        *agilentReadString;
@@ -80,8 +55,26 @@
     NSString        *SonTestCommand;
     NSString        *SonTestName;
     int             delayTime;
+    int             ct_cnt;                //记录cycle time定时器中断的次数
     
-    //************ InfoBox *************
+    //************ right_Side_Window *************
+    MKTimer *mkTimer;               //MK 定时器对象
+    int testNum;                        //测试次数
+    int passNum;                        //通过次数
+    NSString    *testResultStr;     //测试结果
+    
+    __weak IBOutlet NSTextField *importSN;          //输入的sn
+    __weak IBOutlet NSTextField *currentStateMsg;   //当前的状态信息
+    __weak IBOutlet NSTextField *currentStateMsgBG;
+    
+    __weak IBOutlet NSTextField *testResult;        //测试结果
+   
+    __weak IBOutlet NSTextField *testFieldTimes;    //测试时间
+    __weak IBOutlet NSTextField *testCount;         //测试次数
+    
+    __weak IBOutlet NSButton *PDCA_Btn;             //PDCA 按钮
+    __weak IBOutlet NSButton *SFC_Btn;              //SFC  按钮
+    
     __weak IBOutlet NSTextField *passNumInfoTF;
     __weak IBOutlet NSTextField *passNumCalculateTF;
     __weak IBOutlet NSTextField *failNumInfoTF;
@@ -89,7 +82,7 @@
     __weak IBOutlet NSTextField *totalNumInfo;
     __weak IBOutlet NSTextField *fixtureID_TF;
     __weak IBOutlet NSTextField *stationID_TF;
-    
+    __unsafe_unretained IBOutlet NSTextView *SN_Collector;//sn 收集器
 }
 
 
@@ -503,8 +496,6 @@
 //------------------------------------------------------------
         if (index == 5)
         {
-            
-            
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=5 结束测试";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
@@ -531,6 +522,21 @@
                 
                 failNumInfoTF.stringValue = [NSString stringWithFormat:@"%d",(testNum - passNum)];
                 failNumCalculateTF.stringValue = [NSString stringWithFormat:@"%.2f%%",((double)(testNum-passNum)/(double)testNum)*100];
+                
+                
+                //录入sn 收集器
+                NSString *str1 = [NSString stringWithFormat:@"%@\t%@\t\t%@",importSN.stringValue,testResultStr,end_time];
+                NSString *str2 = SN_Collector.string;
+                SN_Collector.string = [str2 stringByAppendingString:[NSString stringWithFormat:@"%@\n",str1]];
+                
+                if ([testResult.stringValue isEqualToString:@"PASS"])
+                {
+                    [SN_Collector setTextColor:[NSColor greenColor]];
+                }
+                else
+                {
+                    [SN_Collector setTextColor:[NSColor redColor]];
+                }
                 
                 importSN.stringValue = @"";
             });
@@ -798,6 +804,7 @@
         testNum = 0;
         passNum = 0;
         testCount.stringValue = @"0/0";
+        SN_Collector.string = @"";
     });
 }
 

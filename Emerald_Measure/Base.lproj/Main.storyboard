@@ -826,34 +826,6 @@
                                                 <action selector="clickToStop_ReStart:" target="XfG-lQ-9wD" id="Pgw-yS-RT0"/>
                                             </connections>
                                         </button>
-                                        <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQH-hg-2y0">
-                                            <rect key="frame" x="21" y="566" width="275" height="67"/>
-                                            <clipView key="contentView" ambiguous="YES" id="1SK-am-ukT">
-                                                <rect key="frame" x="1" y="1" width="258" height="65"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <textView ambiguous="YES" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="HWP-gp-mwH">
-                                                        <rect key="frame" x="0.0" y="0.0" width="258" height="65"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <size key="minSize" width="258" height="65"/>
-                                                        <size key="maxSize" width="463" height="10000000"/>
-                                                        <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                        <size key="minSize" width="258" height="65"/>
-                                                        <size key="maxSize" width="463" height="10000000"/>
-                                                    </textView>
-                                                </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            </clipView>
-                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gWJ-qu-A7P">
-                                                <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="VCT-4N-thK">
-                                                <rect key="frame" x="259" y="1" width="15" height="65"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                            </scroller>
-                                        </scrollView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZC6-ca-ONf">
                                             <rect key="frame" x="18" y="70" width="56" height="17"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="测试次数" id="rlu-N1-i7a">
@@ -1071,6 +1043,34 @@
                                             <color key="borderColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="fillColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                         </box>
+                                        <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQH-hg-2y0">
+                                            <rect key="frame" x="21" y="566" width="275" height="67"/>
+                                            <clipView key="contentView" ambiguous="YES" id="1SK-am-ukT">
+                                                <rect key="frame" x="1" y="1" width="258" height="65"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textView ambiguous="YES" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="HWP-gp-mwH">
+                                                        <rect key="frame" x="0.0" y="0.0" width="258" height="65"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <size key="minSize" width="258" height="65"/>
+                                                        <size key="maxSize" width="463" height="10000000"/>
+                                                        <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <size key="minSize" width="258" height="65"/>
+                                                        <size key="maxSize" width="463" height="10000000"/>
+                                                    </textView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </clipView>
+                                            <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="gWJ-qu-A7P">
+                                                <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                            <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="VCT-4N-thK">
+                                                <rect key="frame" x="259" y="1" width="15" height="65"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </scroller>
+                                        </scrollView>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -1098,6 +1098,7 @@
                     <connections>
                         <outlet property="PDCA_Btn" destination="cts-2f-NYn" id="9of-Sl-TJw"/>
                         <outlet property="SFC_Btn" destination="P2a-Mf-UtY" id="mqQ-4A-Ci7"/>
+                        <outlet property="SN_Collector" destination="HWP-gp-mwH" id="5pU-2w-IVQ"/>
                         <outlet property="currentStateMsg" destination="m3F-uo-4z2" id="xdA-ha-lHM"/>
                         <outlet property="currentStateMsgBG" destination="Ohk-xs-nr8" id="NyY-o9-LhL"/>
                         <outlet property="failNumCalculateTF" destination="SsN-bc-Mko" id="LTK-yQ-LYg"/>
