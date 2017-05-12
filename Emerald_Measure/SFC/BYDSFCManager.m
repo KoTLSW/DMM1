@@ -197,7 +197,7 @@ static BYDSFCManager* bydSFC=nil;
         }
         
         [NSThread sleepForTimeInterval:0.01];
-        time += 0.01;
+        time += 0.1;
     }
     
     if (time==5 &&_SFCErrorType!=SFC_Success)

@@ -7,6 +7,9 @@
 //
 
 #import "PDCA.h"
+
+static PDCA* poolPDCA=nil;
+
 //==========================================
 @interface PDCA ()
 {
@@ -18,18 +21,19 @@
 @end
 //==========================================
 @implementation PDCA
-
+//==========================================
 +(PDCA*)Instance
 {
-    static PDCA *myPDCA = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        myPDCA = [[PDCA alloc] init];
-    });
-    return myPDCA;
+    if(poolPDCA==nil)
+    {
+        poolPDCA=[[PDCA alloc]init];
+    }
+    
+    return poolPDCA;
 }
 
-//==========================================
+
+
 -(void)PDCA_GetStartTime{
     time(&time_start);
 }

@@ -156,7 +156,7 @@
 					<key>TestDevice</key>
 					<string>WaveDevice</string>
 					<key>TestCommand</key>
-					<string>Create Volt</string>
+					<string>MODE_Sine</string>
 					<key>TestDelayTime</key>
 					<string>1000</string>
 					<key>TestResultIsDigital</key>

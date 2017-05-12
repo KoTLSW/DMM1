@@ -60,6 +60,15 @@
         //发送通知, 激活 PDCA 按钮功能
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PDCAButtonLimit_Notification" object:nil];
     }
+    else if ([_userName.stringValue isEqualToString:@"op"]&&[_passWord.stringValue isEqualToString:@"op"]) {
+        
+        
+        [self.window orderOut:self];
+        
+        //发送通知,激活按钮状态
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"CancellButtonlimit_Notification" object:nil];
+        
+    }
     
     else
     {

@@ -27,7 +27,7 @@
 -(id)init:(NSString*)strPlistName;
 
 //
-//-(void)SetPath:(NSString*)strPlistName;
+-(void)SetPath:(NSString*)strPlistName;
 
 //
 -(void)ReadPlistParam;
@@ -42,7 +42,7 @@
 
 -(void)WriteDictionaryToFile:(NSMutableDictionary*)dic;
 
-//-(void)WriteDictionaryForParentKey:(NSString*) parentKey  SubValue:(NSArray*)value;
+-(void)WriteDictionaryForParentKey:(NSString*) parentKey  SubValue:(NSArray*)value;
 
 @end
 

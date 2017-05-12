@@ -51,6 +51,7 @@
 @property(readwrite,copy) NSString *value;
 @property(readwrite,copy) NSString *result;
 @property(readwrite)      BOOL     isTest;
+@property(nonatomic,strong)NSString *messageError;
 
 @property(readwrite,copy)NSArray  * testAllCommand;
 

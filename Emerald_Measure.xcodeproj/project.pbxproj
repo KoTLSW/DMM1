@@ -71,6 +71,9 @@
 		4CFEFB851EBF1BEF00353ABF /* AlertWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB801EBF1BEF00353ABF /* AlertWindowController.m */; };
 		4CFEFB861EBF1BEF00353ABF /* AlertWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */; };
 		4CFEFB871EBF1BEF00353ABF /* AlertYongping.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */; };
+		C67112B61EC4EADC006975BF /* Agilent3458A.m in Sources */ = {isa = PBXBuildFile; fileRef = C67112B51EC4EADC006975BF /* Agilent3458A.m */; };
+		C67112B91EC50B1C006975BF /* Param.m in Sources */ = {isa = PBXBuildFile; fileRef = C67112B81EC50B1C006975BF /* Param.m */; };
+		C67112BC1EC534E5006975BF /* Agilent33210A.m in Sources */ = {isa = PBXBuildFile; fileRef = C67112BB1EC534E5006975BF /* Agilent33210A.m */; };
 		C6C611941EC0CC0200E0099D /* KeithleyDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611921EC0CC0200E0099D /* KeithleyDevice.m */; };
 		C6C611991EC0ECC000E0099D /* Param.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C611981EC0ECC000E0099D /* Param.plist */; };
 		C6C611A11EC0ED5000E0099D /* BYDSFCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C6119C1EC0ED5000E0099D /* BYDSFCManager.m */; };
@@ -221,6 +224,12 @@
 		4CFEFB811EBF1BEF00353ABF /* AlertWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlertWindowController.xib; sourceTree = "<group>"; };
 		4CFEFB821EBF1BEF00353ABF /* AlertYongping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertYongping.h; sourceTree = "<group>"; };
 		4CFEFB831EBF1BEF00353ABF /* AlertYongping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertYongping.m; sourceTree = "<group>"; };
+		C67112B41EC4EADC006975BF /* Agilent3458A.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agilent3458A.h; sourceTree = "<group>"; };
+		C67112B51EC4EADC006975BF /* Agilent3458A.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Agilent3458A.m; sourceTree = "<group>"; };
+		C67112B71EC50B1C006975BF /* Param.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Param.h; sourceTree = "<group>"; };
+		C67112B81EC50B1C006975BF /* Param.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Param.m; sourceTree = "<group>"; };
+		C67112BA1EC534E5006975BF /* Agilent33210A.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Agilent33210A.h; sourceTree = "<group>"; };
+		C67112BB1EC534E5006975BF /* Agilent33210A.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Agilent33210A.m; sourceTree = "<group>"; };
 		C6C611911EC0CC0200E0099D /* KeithleyDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeithleyDevice.h; sourceTree = "<group>"; };
 		C6C611921EC0CC0200E0099D /* KeithleyDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeithleyDevice.m; sourceTree = "<group>"; };
 		C6C611981EC0ECC000E0099D /* Param.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Param.plist; sourceTree = "<group>"; };
@@ -438,6 +447,8 @@
 		4C9EE7FD1EADE69400B9089E /* MK_Table */ = {
 			isa = PBXGroup;
 			children = (
+				C67112B71EC50B1C006975BF /* Param.h */,
+				C67112B81EC50B1C006975BF /* Param.m */,
 				4C9EE8001EADE69400B9089E /* MK_Table.pch */,
 				4C9EE7FE1EADE69400B9089E /* Item.h */,
 				4C9EE7FF1EADE69400B9089E /* Item.m */,
@@ -507,10 +518,14 @@
 				C6C611A71EC0F02500E0099D /* Regex.framework */,
 				4CFEFB791EBF151600353ABF /* GPIBDevice.framework */,
 				4CFEFB7B1EBF152700353ABF /* GPIBDevice.h */,
+				C67112B41EC4EADC006975BF /* Agilent3458A.h */,
+				C67112B51EC4EADC006975BF /* Agilent3458A.m */,
 				4CFEFB4C1EBF08ED00353ABF /* AgilentDevice.h */,
 				4CFEFB4D1EBF08ED00353ABF /* AgilentDevice.m */,
 				C6C611911EC0CC0200E0099D /* KeithleyDevice.h */,
 				C6C611921EC0CC0200E0099D /* KeithleyDevice.m */,
+				C67112BA1EC534E5006975BF /* Agilent33210A.h */,
+				C67112BB1EC534E5006975BF /* Agilent33210A.m */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -740,6 +755,7 @@
 				4CFEFB631EBF0B0700353ABF /* FTSPI.m in Sources */,
 				4C9EE8201EADE69400B9089E /* MK_FileTXT.m in Sources */,
 				4C9EE82A1EADE69400B9089E /* HiperTimer.m in Sources */,
+				C67112B61EC4EADC006975BF /* Agilent3458A.m in Sources */,
 				4CFEFB4E1EBF08ED00353ABF /* AgilentDevice.m in Sources */,
 				4CFEFB611EBF0B0700353ABF /* FTDI_SPI.c in Sources */,
 				4CFEFB781EBF0E7100353ABF /* TestContext.mm in Sources */,
@@ -771,10 +787,12 @@
 				4C9EE81C1EADE69400B9089E /* Alert.m in Sources */,
 				4CFEFB6F1EBF0C4000353ABF /* TypeConverter.m in Sources */,
 				4C9EE8221EADE69400B9089E /* Item.m in Sources */,
+				C67112B91EC50B1C006975BF /* Param.m in Sources */,
 				4CFEFB661EBF0B0700353ABF /* main.c in Sources */,
 				4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */,
 				4CFEFB841EBF1BEF00353ABF /* AlertView.m in Sources */,
 				C6C611A31EC0ED5000E0099D /* TestStep.m in Sources */,
+				C67112BC1EC534E5006975BF /* Agilent33210A.m in Sources */,
 				4C9EE7B81EADE57000B9089E /* AppDelegate.m in Sources */,
 				4C9EE81F1EADE69400B9089E /* MK_FileFolder.m in Sources */,
 			);
@@ -860,7 +878,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -898,7 +916,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};

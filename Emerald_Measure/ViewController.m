@@ -18,25 +18,34 @@
 #import "KeithleyDevice.h"
 #import "BYDSFCManager.h"
 #import "TestStep.h"
+#import "Agilent3458A.h"
+#import "Agilent33210A.h"
+#import "Param.h"
 
 
+
+NSString  *param_path=@"Param";
 @implementation ViewController
 {
     //************ Device *************
-    SerialPort          *serialPort;
-    SerialPort          *fixtureSerial;//治具串口
-    SerialPort          *humitureSerial; //温湿度串口
-    KeithleyDevice      *keithleySerial; //泰克调试
-    AgilentDevice       *agilent;//安捷伦万用表
+    SerialPort          * serialPort;
+    SerialPort          * fixtureSerial;   //治具串口
+    SerialPort          * humitureSerial;  //温湿度串口
+    KeithleyDevice      * keithleySerial;  //泰克调试
+    Agilent3458A        * agilent3458A;    //安捷伦万用表
+    Agilent33210A       * agilent33210A;   //波形发生器
+    
 
     //************* timer *************
     NSString *start_time;               //启动测试的时间
     NSString *end_time;                 //结束测试的时间
-    NSThread *myThrad;                  // 自定义线程
+    NSThread * myThrad;                  // 自定义主线程
+    NSThread * secondThrad;              //温湿度线程
     
     //************ table **************
     Table *mk_table;                       // table类
-    Plist *plist;                       // plist类
+    Plist *plist;                          // plist类
+    Param *param;                          // param参数类
     NSMutableArray *itemArr;            // plist文件测试项数组
     Item *testItem ;
     NSString *itemResult; //每一个测试项的结果
@@ -83,6 +92,22 @@
     __weak IBOutlet NSTextField *fixtureID_TF;
     __weak IBOutlet NSTextField *stationID_TF;
     __unsafe_unretained IBOutlet NSTextView *SN_Collector;//sn 收集器
+    
+    IBOutlet NSTextField *HumitureTF;
+    
+    NSTimer             *humTimer;      //温湿度刷新定时器
+    
+    //添加的属性===========5.10====chen
+    BOOL          humitureCollect;  //温湿度连接
+    NSString *     humitString;      //返回来的温度数据
+    BOOL                isTouch;    //是否已经完全接触
+    BOOL          isUpLoadSFC;      //是否上传SFC
+    BOOL          isUpLoadPDCA;     //是否上传PDCA
+    
+    PDCA     *    pdca;            //PDCA对象
+
+    
+    
 }
 
 
@@ -90,14 +115,19 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
-    
-    
-    //初始化对象
-    serialPort = [[SerialPort alloc] init];
-    
     fixtureSerial=[[SerialPort alloc] init];
     
     keithleySerial=[[KeithleyDevice alloc] init];
+    
+    humitureSerial=[[SerialPort alloc]init];
+    
+    agilent33210A =[[Agilent33210A alloc] init];
+    
+    agilent3458A =[[Agilent3458A alloc] init];
+    
+     param = [[Param alloc]init];
+     [param ParamRead:param_path];
+     isTouch=true;//治具还未下压
     
     [self redirectSTD:STDOUT_FILENO];  //冲定向log
     [self redirectSTD:STDERR_FILENO];
@@ -108,7 +138,7 @@
     
     item_index = 0;
     row_index = 0;
-    index = 0;
+    index=0;
     logView_Info.editable = NO;
     testNum = 0;
     passNum = 0;
@@ -116,20 +146,42 @@
     PDCA_Btn.enabled = NO;
     SFC_Btn.enabled = NO;
     
-    _stopBtn.title = @"Start";
-    
     //进来就判断读取哪个配置文件
     [self selectStationNoti:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectStationNoti:) name:@"changePlistFileNotification" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectPDCA_SFC_LimitNoti:) name:@"PDCAButtonLimit_Notification" object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CancellPDCA_SFC_LimitNoti:) name:@"CancellButtonlimit_Notification" object:nil];
+    
+     myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+    [myThrad start];
+    
+    
+   // secondThrad=[[NSThread alloc] initWithTarget:self selector:@selector(TimerUpdateWindow) object:nil];
+   // [secondThrad start];
+    
+    
+
 }
+
+
 
 -(void)selectPDCA_SFC_LimitNoti:(NSNotification *)noti
 {
     PDCA_Btn.enabled = YES;
     SFC_Btn.enabled = YES;
 }
+
+
+-(void)CancellPDCA_SFC_LimitNoti:(NSNotification *)noti
+{
+    PDCA_Btn.state=YES;
+    SFC_Btn.state= YES;
+    PDCA_Btn.enabled = NO;
+    SFC_Btn.enabled  = NO;
+}
+
 
 -(void)selectStationNoti:(NSNotification *)noti
 {
@@ -209,9 +261,9 @@
     while ([[NSThread currentThread] isCancelled]==NO) //线程未结束一直处于循环状态
     {
         
-#pragma mark index=0
+#pragma mark index=0 打开治具，串口通信
 //------------------------------------------------------------
-//index=0 打开安捷伦万用表---USB通信
+//index=0
 //------------------------------------------------------------
         if (index == 0)
         {
@@ -234,10 +286,7 @@
             else
             {
                 //========================test Code============================
-//                BOOL uartConnect=[serialPort Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
-                
-                BOOL uartConnect = YES;//测试
-                //========================test Code============================
+                BOOL uartConnect=[serialPort Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
                 
                 if (uartConnect)
                 {
@@ -255,35 +304,26 @@
                         currentStateMsg.backgroundColor = [NSColor redColor];
                         currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     });
+                    index=1;
                     sleep(1);
                     NSLog(@"index=0,治具还未连接");
-                    return;
                 }
             }
         }
         
-#pragma mark index=1
+#pragma mark index=1  打开安捷伦万用表---GPIB通信
 //------------------------------------------------------------
-//index=1 打开安捷伦万用表---LAN通信
+//index=1
 //------------------------------------------------------------
         if (index==1)
         {
-            //========================test Code============================
-            BOOL testBool = YES;
-            if (testBool)
-//            if (([mk_agilent Find:nil] && [mk_agilent OpenDevice:nil]) == YES)
-                //========================test Code============================
+    
+            if ([agilent3458A FindAndOpen:nil])
             {
                 dispatch_sync(dispatch_get_main_queue(), ^{
                      currentStateMsg.stringValue=@"index=1,安捷伦已经连接";
                 });
                 sleep(1);
-                NSLog(@"index=1,安捷伦已经连接");
-                
-//                设备连接完后,发送测试温度(热敏电阻)的指令
-//                [mk_agilent SetMessureMode:MODE_RES];
-              
-//                 [mk_agilent SetMessureMode:MODE_TEMPERATURE];
                 index = 2;
             }
             else
@@ -295,70 +335,182 @@
                 });
                 sleep(1);
                 NSLog(@"安捷伦连接失败!");
-                index = 2000;
             }
         }
         
-#pragma mark index=2
+      
+#pragma mark index=2 初始化温度传感器
 //------------------------------------------------------------
-//index=2  输入产品sn
+//index=2
 //------------------------------------------------------------
-        if (index == 2)
+        if(index==2)
         {
-            NSLog(@"输入产品sn");
-            sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^{
+        
+            BOOL isCollect=[humitureSerial Open:param.humiture_uart_port_name BaudRate:BAUD_9600 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
+            
+            if (isCollect)
+            {
+                NSLog(@"温湿度串口已经连接");
+//              [humitureSerial WriteLine:@"ATUO"];//发送2s接收数据的
+                humitureCollect=YES;
+                [self HumitureStartTimer:2];
+                index = 3;
+            }
+            else
+            {
+                NSLog(@"温湿度串口还未连接");
                 
-                NSLog(@"============%@",importSN.stringValue);
+            }
+        }
+        
+        
+        
+#pragma mark index=3 初始化波形发生器
+        //------------------------------------------------------------
+        //index=3
+        //------------------------------------------------------------
+        if(index==3)
+        {
+            if (param.isWaveNeed) {//有些工站需要，有些不需要
                 
-                if ([importSN.stringValue isEqualToString:@" "] || importSN.stringValue == nil || [importSN.stringValue  isEqual: @""])
+                if ([agilent33210A Find:nil andCommunicateType:Agilent33210A_USB_Type]&&[agilent33210A OpenDevice: nil andCommunicateType:Agilent33210A_USB_Type])
                 {
-                    currentStateMsg.stringValue = @"index=2 请输入 sn!";
-                    currentStateMsg.backgroundColor = [NSColor yellowColor];
-                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
-                    return ;
-                }
-                if ([importSN.stringValue isEqualToString:@"123456"])
-                {
-                    //赋值SN
-                    [[BYDSFCManager Instance] setStrSN:importSN.stringValue];
-                    
-                    //根据SFC状态，检验SN是否过站
-//                    if (SFCState==1) {//上传SFC,检验SN的产品是否已经过站
-//                        if ([[TestStep Instance]StepSFC_CheckUploadSN:SFCState]) {
-//                            
-//                            NSLog(@"已经过站");
-//                        }
-//                        else
-//                        {
-//                            index = 3;
-//                            
-//                        }
-//                    }
-                    
-                    index = 3;
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        currentStateMsg.stringValue=@"index=3,波形发生器已连接";
+                    });
+                    sleep(1);
+                    index = 4;
                 }
                 else
                 {
-                    currentStateMsg.stringValue = @"sn 错误!!";
+                    dispatch_sync(dispatch_get_main_queue(), ^{
+                        currentStateMsg.stringValue=@"波形发生器连接失败!";
+                        currentStateMsg.backgroundColor = [NSColor redColor];
+                        currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                    });
+                    sleep(1);
+                    NSLog(@"波形发生器连接失败!");
+                }
+            }
+            else
+            {
+                 index = 4;
+                 dispatch_sync(dispatch_get_main_queue(), ^{
+                    currentStateMsg.stringValue=@"设备初始化完成";
+                    currentStateMsg.backgroundColor = [NSColor yellowColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                });
+            }
+        }
+        
+        
+        
+#pragma mark index=4 确保产品接触完整的指令
+        //------------------------------------------------------------
+        //index=4
+        //------------------------------------------------------------
+        if (index==4) {
+            
+        while (isTouch) {
+            isTouch=false;//下压成功
+            [fixtureSerial WriteLine:@"Reset"];
+            sleep(0.5);
+            if ([[[fixtureSerial ReadExisting] uppercaseString ]containsString:@"OK"])
+            {
+                NSLog(@"复位成功");
+                break;
+
+            }
+
+         }
+        sleep(0.5);
+        if(![currentStateMsg.stringValue containsString:@"请按双起按钮"])
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                currentStateMsg.stringValue = @"请按双起按钮";
+                currentStateMsg.backgroundColor = [NSColor yellowColor];
+                currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                //***********TestCode***********************//
+                //index=5;
+                //********************************************//
+            });
+        }
+            
+
+        //返回Teststart,可以开始检测SN
+            
+        if ([[fixtureSerial ReadExisting] isEqualToString:@"TestStart"])
+        {
+            index=5;
+        }
+}
+        
+        
+ 
+#pragma mark index=5  输入产品sn
+//------------------------------------------------------------
+//index=5
+//------------------------------------------------------------
+        if (index == 5)
+        {
+            
+            [self GetSFC_PDCAState];//获取是否上传的状态
+            NSLog(@"输入产品sn");
+            sleep(1);
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                if (importSN.stringValue.length==8||[importSN.stringValue isEqualToString:@"123456"])
+                {
+                   
+                    //赋值SN
+                    currentStateMsg.backgroundColor = [NSColor redColor];
+                    [[BYDSFCManager Instance] setStrSN:importSN.stringValue];
+                   
+                    //根据SFC状态，检验SN是否过站
+                    if (isUpLoadSFC) {//上传SFC,检验SN的产品是否已经过站
+                        if (![[TestStep Instance]StepSFC_CheckUploadSN:isUpLoadSFC]) {
+                            
+                            NSLog(@"已经过站");
+                            sleep(2);
+                            index = 4;
+                        }
+                        else
+                        {
+                            index=6;//进入正常测试中
+                            
+                        }
+
+                    }
+                    else
+                    {
+                    
+                         index=6;//进入正常测试中    
+                
+                    }
+                }
+                else
+                {
+                    currentStateMsg.stringValue = @"sn错误，请重新输入";
                     currentStateMsg.backgroundColor = [NSColor redColor];
                     currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                    return ;
                 }
                 
                 //cycle_test,开始测试前清空tableView
                 [mk_table ClearTable];
-                ct_cnt = 0;
+                 ct_cnt = 0;
             });
         }
     
-#pragma mark index=3
+#pragma mark index=6  开始产品测试
 //------------------------------------------------------------
-//index=3  开始产品测试
+//index=6
 //------------------------------------------------------------
-        if (index == 3)
+        if (index == 6)
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                currentStateMsg.stringValue = @"index=3 sn 正确!";
+                currentStateMsg.stringValue = @"index=6 sn 正确!";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
                 currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 testResult.stringValue = @"Running";
@@ -381,7 +533,7 @@
             //在这里加入测试的起始时间
             if (row_index == 0)
             {
-//              [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
+                [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
             
@@ -432,23 +584,25 @@
                     sleep(0.5);
                 });
                 
-                index = 4;
+                index = 7;
             }
         }
 
-#pragma mark index=4
+#pragma mark index=7  上传pdca，生成本地数据报表
 //------------------------------------------------------------
-//index=4  上传pdca，生成本地数据报表
+//index=7
 //------------------------------------------------------------
-        if (index == 4)
+        if (index == 7)
         {
             //========定时器结束========
             [mkTimer endTimer];
+            //记录PDCA结束时间;记录测试结束时间
+            [pdca PDCA_GetEndTime];
             ct_cnt = 0;
             //========================
             
             dispatch_sync(dispatch_get_main_queue(), ^{
-                currentStateMsg.stringValue = @"index=4 生成数据文件";
+                currentStateMsg.stringValue = @"index=7 生成数据文件";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
                 currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
             });
@@ -459,7 +613,7 @@
                 testNum++; //测试
                 
                 //文件夹路径
-                NSString *currentPath=@"/Users/value";
+                NSString *currentPath=@"/vault";
         
                 //测试结束并创建文件的时间
                 end_time = [[GetTimeDay shareInstance] getFileTime];
@@ -485,18 +639,35 @@
                 //创建 txt 文件,并写入数据
                 [[MK_FileTXT shareInstance] createOrFlowTXTFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:testContent TestResult:testResultStr];
                
-                index = 5;
+                index = 8;
             }
+            
+            //上传PDCA和SFC
+            if (isUpLoadPDCA) {
+                
+                [self UploadPDCA];
+            }
+            if (isUpLoadSFC) {
+                
+                if ( ![[TestStep Instance]StepSFC_CheckUploadResult:isUpLoadSFC andIsTestPass: [testResult.stringValue isEqualToString:@"FAIL"]?NO:YES  andFailMessage:nil]) {
+                    currentStateMsg.stringValue = @"SFC上传失败";
+                    currentStateMsg.backgroundColor = [NSColor greenColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                }
+                
+            }
+            
+            
         }
         
-#pragma mark index=5
+#pragma mark index=8  结束测试
 //------------------------------------------------------------
-//index=5  结束测试
+//index=8
 //------------------------------------------------------------
-        if (index == 5)
+        if (index == 8)
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
-                currentStateMsg.stringValue = @"index=5 结束测试";
+                currentStateMsg.stringValue = @"index=8 结束测试";
                 currentStateMsg.backgroundColor = [NSColor greenColor];
                 currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
             });
@@ -523,7 +694,7 @@
                 failNumCalculateTF.stringValue = [NSString stringWithFormat:@"%.2f%%",((double)(testNum-passNum)/(double)testNum)*100];
                 
                 
-                //录入sn 收集器
+              //录入sn 收集器
                 NSString *str1 = [NSString stringWithFormat:@"%@\t%@\t\t%@",importSN.stringValue,testResultStr,end_time];
                 NSString *str2 = SN_Collector.string;
                 SN_Collector.string = [str2 stringByAppendingString:[NSString stringWithFormat:@"%@\n",str1]];
@@ -538,19 +709,15 @@
                 }
                 
                 //是否需要写入本地缓存
-                
-                
                 importSN.stringValue = @"";
             });
+
+            //重新进入操作治具复位处
+            index = 4;
+            isTouch=YES;
             
-            index = 0;
             
-//            if ( ![[TestStep Instance]StepSFC_CheckUploadResult:SFCState=0?NO:YES andIsTestPass: [testResult.stringValue isEqualToString:@"FAIL"]?NO:YES  andFailMessage:nil]) {
-//                
-//                [self UpdateLableStatus:@"SFC上传失败" andColor:[NSColor redColor]];
-//                
-//                
-//            }
+
         }
     }
 }
@@ -631,20 +798,38 @@
         //**************************波形发生器=WaveDevice
         else if ([SonTestDevice isEqualToString:@"WaveDevice"]) {
             
-            //波形发生器a
-            //                NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand)
-            //                sleep(0.2);
-            //                int indexTime=0;
-            //                NSString * readString;
-            //                while (YES) {
-            //                    readString=[self SendReceive:@"Oscill" CMD:NULL TimeOut:1000 Detect:'\r'];
-            //                    if ([readString isEqualToString:@"OK"]||indexTime==2)
-            //                    {
-            //                        break;
-            //                    }
-            //                    indexTime++;
-            //                }
-            NSLog(@"*************示波器发送指令**************%@",SonTestDevice);
+            if ([SonTestCommand isEqualToString:@"MODE_Sine"]) {
+                
+                [agilent33210A SetMessureMode:MODE_Sine andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+            }
+            else if([SonTestCommand isEqualToString:@"MODE_Square"])
+            {
+                [agilent33210A SetMessureMode:MODE_Square andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+
+            }
+            else if([SonTestCommand isEqualToString:@"MODE_Ramp"])
+            {
+                 [agilent33210A SetMessureMode:MODE_Ramp andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+            
+            }
+            else if([SonTestCommand isEqualToString:@"MODE_Pulse"])
+            {
+                   [agilent33210A SetMessureMode:MODE_Pulse andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+            
+            }
+            else if([SonTestCommand isEqualToString:@"MODE_Noise"])
+            {
+                    [agilent33210A SetMessureMode:MODE_Noise andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+            
+            }
+            else//其它情况
+            {
+            
+                NSLog(@"波形发生器其它情况");
+            
+            }
+
+            NSLog(@"%@*************示波器发送指令**************%@",SonTestDevice,SonTestCommand);
             
         }
         //**************************万用表==Agilent或者Keithley
@@ -653,52 +838,46 @@
             
             //万用表发送指令
             if ([SonTestCommand isEqualToString:@"DC Volt"]) {//直流电压测试
-                [agilent SetMessureMode:MODE_VOLT_DC andCommunicateType:MODE_LAN_Type];
-                [keithleySerial SetMessureMode:K_MODE_VOLT_DC];
+                [agilent3458A SetMessureMode:Agilent3458A_VOLT_DC];
                 NSLog(@"设置直流电压模式");
             }
             else if([SonTestCommand isEqualToString:@"AC Volt"])
             {
-                [agilent SetMessureMode:MODE_VOLT_AC andCommunicateType:MODE_LAN_Type];
-                [keithleySerial SetMessureMode:K_MODE_VOLT_AC];
-                NSLog(@"设置交流电压模式");
+                [agilent3458A SetMessureMode:Agilent3458A_VOLT_AC];
+                 NSLog(@"设置交流电压模式");
             }
             else if ([SonTestCommand isEqualToString:@"DC Current"])
             {
-                [agilent SetMessureMode:MODE_CURR_DC andCommunicateType:MODE_LAN_Type];
-                [keithleySerial SetMessureMode:K_MODE_CURR_DC];
+                [agilent3458A SetMessureMode:Agilent3458A_CURR_DC];
                 NSLog(@"设置直流电流模式");
                 
             }
             else if ([SonTestCommand isEqualToString:@"AC Current"])
             {
                 
-                [agilent SetMessureMode:MODE_CURR_AC andCommunicateType:MODE_LAN_Type];
-                [keithleySerial SetMessureMode:K_MODE_CURR_AC];
+                [agilent3458A SetMessureMode:Agilent3458A_CURR_AC];
                 NSLog(@"设置交流电流模式");
                 
             }
             else if ([SonTestCommand containsString:@"RES"])//电阻分单位KΩ,MΩ,GΩ
             {
+                [agilent3458A SetMessureMode:Agilent3458A_RES_2W];
                 
-                [agilent SetMessureMode:MODE_RES_4W andCommunicateType:MODE_LAN_Type];
-                [keithleySerial SetMessureMode:K_MODE_RES_4W];
                 NSLog(@"设置自动电阻模式");
-                
                 
             }
             else//其它的值
             {
                 //5次电压递增测试
-                if ([SonTestName isEqualToString:@"RF-5a"]) {//设备
+                if ([testitem.device isEqualToString:@"SF-5a"]) {//设备
                     
                     int indexTime=0;
                     
                     while (YES) {
                         
-                        [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
+                        [agilent3458A WriteLine:@"END"];
                         
-                        agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
+                        agilentReadString=[agilent3458A ReadData:16];
                         
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
@@ -710,62 +889,85 @@
                         {
                             indexTime++;
                             
-                            if (indexTime==[testitem.retryTimes intValue]-1)
-                            {
+                            if (indexTime==[testitem.retryTimes intValue]-1) {
                                 
                                 sleep(13.5);
                                 
-                                [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
-                                
-                                agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
+                                [agilent3458A WriteLine:@"END"];
+                                agilentReadString=[agilent3458A ReadData:16];
                                 
                                 break;
+                                
                             }
+                            
+                            
                         }
+                        
                     }
+                    
                 }
                 //其它正常读取情况
                 else
                 {
-                    [agilent WriteLine:@"Read?" andCommunicateType:MODE_LAN_Type];
-                    agilentReadString=[agilent ReadData:16 andCommunicateType:MODE_LAN_Type];
                     
-                    
+                    [agilent3458A WriteLine:@"END"];
+                    agilentReadString=[agilent3458A ReadData:16];
                 }
                 
-                testitem.value=@"1.5";//为获取万用表的值
+                  float num=[agilentReadString floatValue];
                 
                 if ([SonTestCommand containsString:@"Read"]) {
                     
-                    //1和2工站===============SF-2a&&SF-2b计算
-                    if ([testitem.testName isEqualToString:@"Sensor Board SF-2a"]||[testitem.testName isEqualToString:@"Crown flex RF-2a"]||[testitem.testName isEqualToString:@"Sensor_Flex SF-1a"]) {
+                    if ([testitem.units isEqualToString:@"GΩ"]) {//GΩ的情况计算
                         
-                        float num=[agilentReadString floatValue];
-                        testitem.value = [NSString stringWithFormat:@"%f%@", ((0.8 - num)/num)*10,@"G"];
+                        testitem.value = [NSString stringWithFormat:@"%.3f", (((0.8 - num)/num)*10)/1000];
                         
                     }
-                    if ([testitem.testName isEqualToString:@"Sensor Board SF-2b"]||[testitem.testName isEqualToString:@"Crown flex RF-2b"]||[testitem.testName isEqualToString:@"Sensor_Flex SF-1b"])
+                    else if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
                     {
-                        float num=[agilentReadString floatValue];
-                        if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]) {
-                            testitem.value = [NSString stringWithFormat:@"%f%@", ((1.41421*0.8 - num)/num)*5,@"G"];
+                        if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"]) {
+                            
+                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
                         }
                         else
                         {
-                            testitem.value = [NSString stringWithFormat:@"%f%@", ((1.41421*0.8 - num)/num)*10,@"G"];
+                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
+                            
                         }
+
+                    }
+                    else if ([testitem.units isEqualToString:@"kΩ"]&&[SonTestCommand containsString:@"Read"])//KΩ的情况计算
+                    {
+                        num=num/(10E+02);
+                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+                        
+                    }
+                    else if ([testitem.units containsString:@"uA"]&&[SonTestCommand containsString:@"Read"])
+                    {
+                        testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
+                        
+                    }
+                    else
+                    {
+                        
+                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+                        
                     }
                     
+                    if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue]) {
+                        
+                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+                        testitem.result = @"PASS";
+                        ispass = YES;
+                        
+                    }
                     
-                    NSLog(@"%f=====================%f",[testitem.min floatValue],[testitem.max floatValue]);
-                    
-                    if ([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue])
+                    else if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
                     {
                         
                         testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
                         testitem.result = @"PASS";
-                        //testitem.testMessage= @"";
-                        //testitem.isPdcaValue= YES;
+                        testItem.messageError=nil;
                         ispass = YES;
                         
                     }
@@ -773,11 +975,12 @@
                     {
                         testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
                         testitem.result = @"FAIL";
-//                        testitem.testMessage= @"";
-//                        testitem.isPdcaValue= YES;
+                        testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
                         ispass = NO;
                     }
                 }
+
+              
             }
         }
         else if([SonTestDevice isEqualToString:@"SW"])
@@ -816,37 +1019,77 @@
     [self refreshTheInfoBox];
 }
 
+
+//停止线程
 - (IBAction)clickToStop_ReStart:(NSButton *)sender
 {
     PDCA_Btn.enabled = NO;
     SFC_Btn.enabled = NO;
     
-    if ([sender.title isEqualToString:@"Stop"])
-    {
-        [sender setTitle:@"Restart"];
-        
-        [myThrad cancel];
-        sleep(0.5);
-         myThrad = nil;
+    sleep(0.5);
+    if (myThrad!=nil) {
         [mkTimer endTimer];
+        [self HumitureStopTimer];
+        [myThrad cancel];
+         myThrad = nil;
+        [self closeAllDevice];
         index = 0;
         item_index = 0;
         row_index = 0;
         [NSMenu setMenuBarVisible:YES];
-        return;
     }
-    if ([sender.title isEqualToString:@"Restart"] || [sender.title isEqualToString:@"Start"])
-    {
-        [sender setTitle:@"Stop"];
+    
+    
+//    if ([sender.title isEqualToString:@"Stop"])
+//    {
+//        [sender setTitle:@"Restart"];
+//        
+//        [myThrad cancel];
+//        sleep(0.5);
+//         myThrad = nil;
+//        [mkTimer endTimer];
+//        [self HumitureStopTimer];
+//        index = 5;
+//        item_index = 0;
+//        row_index = 0;
+//        [NSMenu setMenuBarVisible:YES];
+//        return;
+//    }
+//    if ([sender.title isEqualToString:@"Restart"] || [sender.title isEqualToString:@"Start"])
+//    {
+//        [sender setTitle:@"Stop"];
+//        //启动线程,进入测试流程
+//        myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+//        index = 0;
+//        item_index = 0;
+//        row_index = 0;
+//        [myThrad start];
+//        return;
+//    }
+    
+}
+
+
+
+//开始按钮
+- (IBAction)start_Button_Action:(id)sender {
+    
+    if (myThrad==nil) {
         //启动线程,进入测试流程
         myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
         index = 0;
         item_index = 0;
         row_index = 0;
         [myThrad start];
-        return;
     }
+   
+
 }
+
+
+
+
+
 
 
 - (IBAction)ClickUploadPDCAAction:(id)sender
@@ -870,42 +1113,174 @@
 //界面消失后取消线程
 -(void)viewWillDisappear
 {
-//    //清除所有的本地的存储数据
-//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-//    
-//    for (id key in dic)
-//    {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-//    }
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-    
     //=================
     [myThrad cancel];
     myThrad = nil;
+    
+    //主动释放掉
+    [self closeAllDevice];
 }
 
-//界面消失后取消线程
--(void)viewDidDisappear
+
+//获取按钮的状态
+-(void)GetSFC_PDCAState
 {
-//    //清除所有的本地的存储数据
-//    NSDictionary *dic = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation];
-//    
-//    for (id key in dic)
-//    {
-//        [[NSUserDefaults standardUserDefaults] removeObjectForKey:key];
-//    }
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    //=================
-    [myThrad cancel];
-    myThrad = nil;
-
+    dispatch_sync(dispatch_get_main_queue(),
+                  ^{
+                      isUpLoadSFC=[SFC_Btn state]==1?YES:NO;
+                      isUpLoadPDCA=[PDCA_Btn state]==1?YES:NO;
+                  });
 }
+
+
+
+//================================================
+//上传pdca
+//================================================
+-(void)UploadPDCA
+{
+    BOOL PF = YES;    //所有测试项是否pass
+    //========================尚不清楚下面的参数意思
+    [pdca PDCA_Init:importSN.stringValue SW_name:param.sw_name SW_ver:param.sw_ver];   //上传sn，sw_name,sw_ver
+    [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
+    //========================
+    for(int i=0;i<[itemArr count];i++)
+    {
+        Item *testitem=itemArr[i];
+        
+        if(testitem.isTest)  //需要测试的才需要上传
+        {
+            Item *testitem = itemArr[i];
+             BOOL pass_fail=YES;
+            if( ![testitem.result isEqualToString:@"PASS"] )
+            {
+                pass_fail = NO;
+                
+                PF = NO;
+            }
+            
+            
+            [pdca PDCA_UploadValue:testitem.testName
+                             Lower:testitem.min
+                             Upper:testitem.max
+                              Unit:testitem.units
+                             Value:testitem.value
+                         Pass_Fail:pass_fail
+             ];
+
+        }
+        else //如果测试结果只有pass或fail
+        {
+            if([testitem.result isEqualToString:@"PASS"])
+            {
+                [pdca PDCA_UploadPass:testitem.testName];
+            }
+            else
+            {
+                [pdca PDCA_UploadFail:testitem.testName Message:testitem.messageError];
+                 PF = NO;
+            }
+        }
+        
+    }
+    
+    [pdca PDCA_Upload:PF];     //上传汇总结果
+}
+
+
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
 
     // Update the view, if already loaded.
+}
+
+
+
+
+
+//================================================
+// 开始刷新温度定时器
+//================================================
+-(void)HumitureStartTimer:(float)seconds
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //定义一个NSTimer
+        humTimer = [NSTimer scheduledTimerWithTimeInterval:seconds
+                                                    target:self
+                                                  selector:@selector(TimerUpdateWindow)
+                                                  userInfo:nil
+                                                   repeats:YES
+                    ];
+        
+    });
+    
+}
+//================================================
+// 停止温度定时器
+//================================================
+-(void)HumitureStopTimer
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(humTimer != nil){
+            [humTimer invalidate];// 定时器调用invalidate后，就会自动执行release方法。不需要在显示的调用release方法
+        }
+    });
+}
+
+
+#pragma mark--------------更新温湿度窗口
+//更新温度窗体
+-(void)TimerUpdateWindow
+{
+    @autoreleasepool
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            //执行耗时操作
+            [humitureSerial WriteLine:@"READ"];
+            sleep(2);
+            NSString * string=[humitureSerial ReadExisting];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (string.length>0)
+                {
+                    
+                    if (string.length>10)
+                    {
+                        [HumitureTF setStringValue:[string substringToIndex:11]];
+                         humitString=[string substringToIndex:11];
+                    }
+                    else
+                    {
+                        [HumitureTF setStringValue:string];
+                        humitString=string;
+                    }
+                    
+
+                }
+                else
+                {
+                    [HumitureTF setStringValue:humitString];
+                    
+                }
+                
+            });
+
+            
+        });
+        
+    }
+}
+
+#pragma mark--------释放所有设备
+-(void)closeAllDevice
+{
+    //主动释放掉
+    [humitureSerial Close];
+    [fixtureSerial Close];
+    [agilent33210A CloseDevice];
+    [agilent3458A CloseDevice];
+    
 }
 
 @end

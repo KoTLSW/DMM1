@@ -4,12 +4,14 @@
 <dict>
 	<key>dut_type</key>
 	<string>Test5</string>
+	<key>isNeedWave</key>
+	<true/>
 	<key>fixture_id</key>
 	<string>000001</string>
 	<key>fixture_uart_baud</key>
 	<integer>115200</integer>
 	<key>fixture_uart_port_name</key>
-	<string>//dev//cu.usbserial-FTDI123</string>
+	<string>//dev//cu.usbserial-Fixture</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
 	<key>fixture_uart_parity</key>
@@ -19,7 +21,7 @@
 	<key>humiture_uart_baud</key>
 	<string>9600</string>
 	<key>humiture_uart_port_name</key>
-	<string>//dev//cu.usbserial-HUMI</string>
+	<string>//dev//cu.SLAB_USBtoUART</string>
 	<key>humiture_uart_dataBit</key>
 	<string>8</string>
 	<key>humiture_uart_parity</key>
@@ -30,6 +32,8 @@
 	<string>EW_BT_MIC_SPK</string>
 	<key>sw_ver</key>
 	<string>V02</string>
+	<key>s_build</key>
+	<string>Feicui</string>
 	<key>thdn</key>
 	<integer>5</integer>
 	<key>ui_title</key>
@@ -44,7 +48,13 @@
 	<string>11111111</string>
 	<key>lineNO</key>
 	<string>99999</string>
-	<key>csv_path</key>
+	<key>waveFrequence</key>
+	<string>100</string>
+	<key>waveOffset</key>
+	<string>0.4</string>
+	<key>waveVolt</key>
+	<string>0.8</string>
+	<key>csv_path - 4</key>
 	<string>/vault/Test5/</string>
 	<key>SocketConfig</key>
 	<dict>
