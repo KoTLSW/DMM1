@@ -44,7 +44,7 @@
         }
         else
         {
-            folderPath = @"/Users/michael/Desktop/";
+            folderPath = @"/Users/";
         }
         if (testItemStartTime)
         {
@@ -84,16 +84,16 @@
     //创建由 fileTime 命名的文件
     //=============== 创建 txt 文件 =====================
     //创建文件管理对象
-    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@.txt",folderPath,testItemEndTime];
+    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@.txt",folderPath,sn];
     
     //在当前路径下判断该文件是否存在,不存在则新建文件,存在则追加文件数据
     if (![[NSFileManager defaultManager] fileExistsAtPath:defaultFileName])
     {
         //----------------------新建文件并写入数据
-        NSString *fileName = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",testItemEndTime]];
+        NSString *fileName = [folderPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt",sn]];
         
         //写入字符数据
-        testItemContent = [NSString stringWithFormat:@"%@、%@\n",testItemEndTime,testItemContent];
+        testItemContent = [NSString stringWithFormat:@"%@\n%@\n%@\n\n",testItemStartTime,testItemEndTime,testItemContent];
         
         BOOL res = [testItemContent writeToFile:fileName atomically:YES encoding:NSUTF8StringEncoding error:nil];
         
@@ -107,7 +107,6 @@
             NSLog(@"文件%@写入数据失败!!",fileName);
             return NO;
         }
-        
     }
     else
     {
@@ -122,7 +121,7 @@
         [inFile seekToEndOfFile];
         
         //写入新的字符数据
-        NSString *newStr = [NSString stringWithFormat:@"%@、%@\n",testItemEndTime,testItemContent];
+        NSString *newStr = [NSString stringWithFormat:@"%@\n%@\n%@\n\n",testItemStartTime,testItemEndTime,testItemContent];
         
         //与第一次写入的字符对比
         if (![newStr isEqualToString:testItemContent])

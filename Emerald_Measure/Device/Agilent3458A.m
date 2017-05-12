@@ -52,15 +52,15 @@
 
 
 
--(BOOL) FindAndOpen:(NSString *)serial
+-(BOOL)FindAndOpen:(NSString *)serial
 {
+    sleep(0.5);
+    status = viOpenDefaultRM (&defaultRM);
     
-        sleep(0.5);
-        status = viOpenDefaultRM (&defaultRM);
-    
-        if (status < VI_SUCCESS){
-            exit (EXIT_FAILURE);
-        }
+    if (status < VI_SUCCESS)
+    {
+        exit (EXIT_FAILURE);
+    }
         
         /*
          * Find all the VISA resources in our system and store the number of resources
@@ -80,18 +80,18 @@
          */
     
         
-        if (serial == nil) {
-
-            status = viFindRsrc(defaultRM, "GPIB[0-9]*::?*INSTR",&findList, &numInstrs, instrDescriptor);
-            
-        }else{
-            const char *s = [serial UTF8String];
-            status = viFindRsrc (defaultRM, (char*)s, &findList, &numInstrs, instrDescriptor);
-            
-        }
+    if (serial == nil)
+    {
+        status = viFindRsrc(defaultRM, "GPIB[0-9]*::?*INSTR",&findList, &numInstrs, instrDescriptor);
+    }
+    else
+    {
+        const char *s = [serial UTF8String];
+        status = viFindRsrc (defaultRM, (char*)s, &findList, &numInstrs, instrDescriptor);
+    }
     
-     if (status<VI_SUCCESS) {
-        
+     if (status<VI_SUCCESS)
+     {
          printf ("An error occurred while finding resources.\n");
          fflush(stdin);
          viClose (defaultRM);
@@ -105,10 +105,7 @@
          BOOL isOK = [self OpenDevice];
          
         return isOK;
-   
      }
-    
- 
 }
 
 

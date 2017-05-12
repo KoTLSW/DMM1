@@ -45,7 +45,7 @@
         }
         else
         {
-            folderPath = @"/Users/michael/Desktop/";
+            folderPath = @"/Users/";
         }
         if (testItemStartTime)
         {
@@ -110,7 +110,7 @@
     {
         //----------------------新建文件并写入数据
         //写入字符数据,列表头,以及第一次数据
-        NSString *firstData = [NSString stringWithFormat:@"%@\n %@,%@,%@,%@,%@",testItemTitle,sn,testResult,testItemStartTime, testItemEndTime, testItemContent];
+        NSString *firstData = [NSString stringWithFormat:@"%@\n %@,%@,%@,%@,%@",testItemTitle,sn,testResult,testItemContent,testItemStartTime, testItemEndTime];
         
         BOOL res = [firstData writeToFile:defaultFileName atomically:YES encoding:NSUTF8StringEncoding error:nil];
         
@@ -139,7 +139,7 @@
         [inFile seekToEndOfFile];
         
         //写入新的字符数据
-        NSString *newStr = [NSString stringWithFormat:@"\n%@, %@, %@, %@, %@",sn,testResult,testItemStartTime, testItemEndTime, testItemContent];;
+        NSString *newStr = [NSString stringWithFormat:@"\n%@, %@, %@, %@, %@",sn,testResult,testItemContent,testItemStartTime, testItemEndTime];;
         
         //与第一次写入的字符对比
         if (![newStr isEqualToString:testItemContent])

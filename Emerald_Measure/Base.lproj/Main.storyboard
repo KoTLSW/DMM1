@@ -751,7 +751,7 @@
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50J-ru-ugu">
                                             <rect key="frame" x="107" y="619" width="834" height="36"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="广东金龙东创智能装备有限公司" drawsBackground="YES" id="Kt6-6I-0aD">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" drawsBackground="YES" id="Kt6-6I-0aD">
                                                 <font key="font" size="30" name=".PingFangSC-Regular"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.030053213240000001" green="0.2412326336" blue="0.91232115030000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -817,10 +817,10 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eSY-kT-oDp">
-                                            <rect key="frame" x="18" y="639" width="84" height="24"/>
+                                            <rect key="frame" x="18" y="639" width="61" height="24"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="温湿度：" allowsEditingTextAttributes="YES" id="UKf-qb-ihy">
-                                                <font key="font" size="20" name=".PingFangSC-Regular"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <font key="font" size="15" name=".PingFangSC-Regular"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.39836750685018174" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="backgroundColor" red="0.90980392160000001" green="0.91372549020000005" blue="0.90980392160000001" alpha="1" colorSpace="calibratedRGB"/>
                                             </textFieldCell>
                                         </textField>
@@ -1069,14 +1069,6 @@
                                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Xf-aD-btf">
-                                            <rect key="frame" x="95" y="639" width="177" height="24"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="Bew-lB-99o">
-                                                <font key="font" metaFont="system"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jfs-yR-hwX">
                                             <rect key="frame" x="70" y="493" width="93" height="30"/>
                                             <buttonCell key="cell" type="squareTextured" title="Start" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="z2E-K2-Pwh">
@@ -1097,6 +1089,14 @@
                                                 <action selector="clickToStop_ReStart:" target="XfG-lQ-9wD" id="Pgw-yS-RT0"/>
                                             </connections>
                                         </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Xf-aD-btf">
+                                            <rect key="frame" x="83" y="639" width="193" height="24"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="Bew-lB-99o">
+                                                <font key="font" metaFont="system" size="15"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.39836750685018174" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                                 <constraints>

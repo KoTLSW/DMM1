@@ -70,7 +70,6 @@ static BYDSFCManager* bydSFC=nil;
 //    NSMutableString* urlString = [NSMutableString stringWithFormat:@"http://%@:%@/manufacturing/BobcatIntegerationServlet?",(sfcCheckType==e_BDA_VERIFY_CHECK)?_unit.BDAServerIP:_unit.MESServerIP, _unit.netPort];          // ip and port
     
      NSMutableString* urlString = [NSMutableString stringWithFormat:@"http://%@:%@/manufacturing/BobcatIntegerationServlet?",_unit.MESServerIP, _unit.netPort];          // ip and port
-    
 
     NSString* strStationID=[[PDCA Instance] GetStationID];
 

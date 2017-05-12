@@ -4,7 +4,7 @@
 <dict>
 	<key>dut_type</key>
 	<string>Test5</string>
-	<key>isNeedWave</key>
+	<key>isWaveNeed</key>
 	<true/>
 	<key>fixture_id</key>
 	<string>000001</string>
