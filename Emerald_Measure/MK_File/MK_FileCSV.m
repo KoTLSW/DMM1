@@ -91,7 +91,6 @@
         }
     }
     
-    
     //创建由 日期 命名的文件
     //获取本地时间日期
     NSDate *dateT = [[NSDate alloc] init];
@@ -103,14 +102,20 @@
     
     //=============== 创建csv文件 =====================
     //创建文件管理对象
-    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@.csv", folderPath,folderDateStr];
+    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@_Item.csv", folderPath,folderDateStr];
+    
+    //************** 2017.5.13  加入温湿度的CSV文件 ***********
+    if ([testItemTitle containsString:@"HumitureValue"])
+    {
+        defaultFileName = [NSString stringWithFormat:@"%@/%@_Hum.csv", folderPath,folderDateStr];
+    }
     
     //在当前路径下判断该文件是否存在,不存在则新建文件,存在则追加文件数据
     if (![[NSFileManager defaultManager] fileExistsAtPath:defaultFileName])
     {
         //----------------------新建文件并写入数据
         //写入字符数据,列表头,以及第一次数据
-        NSString *firstData = [NSString stringWithFormat:@"%@\n %@,%@,%@,%@,%@",testItemTitle,sn,testResult,testItemContent,testItemStartTime, testItemEndTime];
+        NSString *firstData = [NSString stringWithFormat:@"%@\n%@,%@,%@,%@,%@",testItemTitle,sn,testResult,testItemContent,testItemStartTime, testItemEndTime];
         
         BOOL res = [firstData writeToFile:defaultFileName atomically:YES encoding:NSUTF8StringEncoding error:nil];
         
@@ -124,7 +129,6 @@
             NSLog(@"文件%@写入数据失败!!",defaultFileName);
             return NO;
         }
-        
     }
     else
     {

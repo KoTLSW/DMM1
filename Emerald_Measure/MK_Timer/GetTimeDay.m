@@ -81,7 +81,7 @@
 {
     NSDate* date = [NSDate date];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"_yyyy/MM/dd"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString* currentDay = [formatter stringFromDate:date];
 //    [formatter release];
     return currentDay;

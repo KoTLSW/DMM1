@@ -246,11 +246,6 @@ NSString  *param_path=@"Param";
     [[BYDSFCManager Instance] getUnitValue];
         
     fixtureID_TF.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"];
-        
-    if (myThrad != nil)
-    {
-        return;
-    }
 }
 
 
@@ -340,8 +335,9 @@ NSString  *param_path=@"Param";
 //------------------------------------------------------------
         if (index==1)
         {
-            //测试代码
            BOOL agilent3458A_isOpen = [agilent3458A FindAndOpen:nil];
+            
+            //测试代码
             agilent3458A_isOpen = YES;
             
             if (agilent3458A_isOpen)
@@ -467,10 +463,10 @@ NSString  *param_path=@"Param";
             while (isTouch)
             {
                 isTouch=false;//下压成功
-                [fixtureSerial WriteLine:@"Reset"];
+                [fixtureSerial WriteLine:@"reset"];
                 sleep(0.5);
         
-                if ([[[fixtureSerial ReadExisting] uppercaseString ]containsString:@"OK"])
+                if ([[[fixtureSerial ReadExisting] uppercaseString ]containsString:@"RESET_OK"])
                 {
                     currentStateMsg.stringValue=@"复位成功!";
                     currentStateMsg.backgroundColor = [NSColor yellowColor];
@@ -506,7 +502,6 @@ NSString  *param_path=@"Param";
 //------------------------------------------------------------
         if (index == 5)
         {
-            
             [self GetSFC_PDCAState];//获取是否上传的状态
             NSLog(@"输入产品sn");
             sleep(1);
@@ -612,7 +607,7 @@ NSString  *param_path=@"Param";
             item_index++;
             
             //走完测试流程,进入下一步
-            if (item_index >= itemArr.count)
+            if (item_index == itemArr.count)
             {
                 //异步加载主线程显示,弹出啊 log_View
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -672,28 +667,64 @@ NSString  *param_path=@"Param";
                 //产品 sn
                 NSString *currentSN = importSN.stringValue;
                 
-                //创建文件夹
+                //创建总文件夹
                 [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:currentPath SubjectName:@"Emerald_Log"];
+                
+                //创建对应不同工站的文件夹
+                NSString *currentStationTitle = [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"];
+                
+                if ([currentStationTitle isEqualToString: @"Station_0"])
+                {
+                     [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:[NSString stringWithFormat:@"%@/Emerald_Log/%@/",currentPath,[[GetTimeDay shareInstance] getCurrentDay]] SubjectName:@"Station_0"];
+                }
+                if ([currentStationTitle isEqualToString: @"Station_1"])
+                {
+                     [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:[NSString stringWithFormat:@"%@/Emerald_Log/%@/",currentPath,[[GetTimeDay shareInstance] getCurrentDay]] SubjectName:@"Station_1"];
+                }
+                if ([currentStationTitle isEqualToString: @"Station_2"])
+                {
+                     [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:[NSString stringWithFormat:@"%@/Emerald_Log/%@/",currentPath,[[GetTimeDay shareInstance] getCurrentDay]] SubjectName:@"Station_2"];
+                }
+                if ([currentStationTitle isEqualToString: @"Station_3"])
+                {
+                    [[MK_FileFolder shareInstance] createOrFlowFolderWithCurrentPath:[NSString stringWithFormat:@"%@/Emerald_Log/%@/",currentPath,[[GetTimeDay shareInstance] getCurrentDay]] SubjectName:@"Station_3"];
+                }
                 
                 //csv文件列表头,测试标题项遍历当前plisth文件的测试项(拼接),温湿度传感器
                 NSString *titleStr;
-                for (int i = 1; i< testItemTitleArr.count; i++)
+                NSMutableString *titleMutableStr;
+                if (titleMutableStr == nil)
                 {
-                    titleStr = [[NSString stringWithFormat:@"%@,",[testItemTitleArr objectAtIndex:i-1]] stringByAppendingString:[testItemTitleArr objectAtIndex:i]];
+                    titleMutableStr = [[NSMutableString alloc] init];
+                }
+                for (int i = 0; i< testItemTitleArr.count; i++)
+                {
+                    titleStr = [testItemTitleArr objectAtIndex:i];
+                    [titleMutableStr appendString:[NSString stringWithFormat:@",%@",titleStr]];
                 }
                 
-                NSString *csvTitle = [NSString stringWithFormat:@"sn,testResult,%@,tempValue,testItemStartTime,testItemEndTime,",titleStr];
+                NSString *csvTitle = [NSString stringWithFormat:@"SN,TestResult,%@,TempValue,StartTime,EndTime",titleMutableStr];
+                NSString *humitureCSVTitle = [NSString stringWithFormat:@"SN,TestResult,HumitureValue,StartTime,EndTime"];
                 
                 //csv测试项内容,同上
                 NSString *contentStr;
-                for (int i=1; i< testItemValueArr.count; i++)
+                NSMutableString *contentMutableStr;
+                if (contentMutableStr == nil)
                 {
-                    contentStr = [[NSString stringWithFormat:@"%@,",[testItemValueArr objectAtIndex:i-1]] stringByAppendingString:[testItemValueArr objectAtIndex:i]];
+                    contentMutableStr = [[NSMutableString alloc] init];
                 }
-                NSString *csvContent = [NSString stringWithFormat:@"%@,%@",contentStr,HumitureTF.stringValue];
+                for (int i=0; i< testItemValueArr.count; i++)
+                {
+                    contentStr = [testItemValueArr objectAtIndex:i];
+                    [contentMutableStr appendString:[NSString stringWithFormat:@",%@",contentStr]];
+                }
+                NSString *csvContent = [NSString stringWithFormat:@"%@,%@",contentMutableStr,HumitureTF.stringValue];
                 
-                //创建 csv 文件,并写入数
+                //创建 csv 文件,并写入数据
                 [[MK_FileCSV shareInstance] createOrFlowCSVFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:csvContent TestItemTitle:csvTitle TestResult:testResultStr];
+                
+                //创建温湿度 csv 文件, sn,当前值,开始时间,结束时间
+                [[MK_FileCSV shareInstance] createOrFlowCSVFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:HumitureTF.stringValue TestItemTitle:humitureCSVTitle TestResult:@"--"];
                 
                 //创建 txt 文件,并写入数据
                 [[MK_FileTXT shareInstance] createOrFlowTXTFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:csvContent TestResult:testResultStr];
@@ -736,6 +767,8 @@ NSString  *param_path=@"Param";
             plist = nil;
             row_index=0;
             item_index=0;
+            testItemTitleArr = nil;
+            testItemValueArr = nil;
             
             //每次结束测试都刷新主界面
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -855,7 +888,7 @@ NSString  *param_path=@"Param";
             while (YES)
             {
                 readString=[fixtureSerial ReadExisting];
-                if ([readString isEqualToString:@"OK"]||indexTime==[testitem.retryTimes intValue])
+                if ([readString isEqualToString:@"RESET_OK"]||indexTime==[testitem.retryTimes intValue])
                 {
                     break;
                 }
@@ -933,12 +966,10 @@ NSString  *param_path=@"Param";
                 //5次电压递增测试
                 if ([testitem.testName isEqualToString:@"RF-5a"]) //设备
                 {
-                    
                     int indexTime=0;
                     
                     while (YES)
                     {
-                        
                         [agilent3458A WriteLine:@"END"];
                         
                         agilentReadString=[agilent3458A ReadData:16];
@@ -946,7 +977,7 @@ NSString  *param_path=@"Param";
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
                         {
-                            [fixtureSerial WriteLine:@"Reset"];
+                            [fixtureSerial WriteLine:@"reset"];
                             break;
                         }
                         if ([agilentReadString floatValue]<1)//读取3次，3次后等待15秒再发送
@@ -973,7 +1004,7 @@ NSString  *param_path=@"Param";
                     //测试
                     agilentReadString = @"5.5";
                     
-                    [testItemValueArr addObject:agilentReadString];
+//                    [testItemValueArr addObject:agilentReadString];
                 }
                 
                 float num=[agilentReadString floatValue];
@@ -1075,7 +1106,8 @@ NSString  *param_path=@"Param";
             NSLog(@"其它设备模式");
         }
     }
-
+    
+    [testItemValueArr addObject:testItem.value];
     [testItemTitleArr addObject: testItem.testName];
     return ispass;
 }
@@ -1118,37 +1150,10 @@ NSString  *param_path=@"Param";
         index = 0;
         item_index = 0;
         row_index = 0;
+        testItemValueArr = nil;
+        testItemTitleArr = nil;
         [NSMenu setMenuBarVisible:YES];
     }
-    
-    
-//    if ([sender.title isEqualToString:@"Stop"])
-//    {
-//        [sender setTitle:@"Restart"];
-//        
-//        [myThrad cancel];
-//        sleep(0.5);
-//         myThrad = nil;
-//        [mkTimer endTimer];
-//        [self HumitureStopTimer];
-//        index = 5;
-//        item_index = 0;
-//        row_index = 0;
-//        [NSMenu setMenuBarVisible:YES];
-//        return;
-//    }
-//    if ([sender.title isEqualToString:@"Restart"] || [sender.title isEqualToString:@"Start"])
-//    {
-//        [sender setTitle:@"Stop"];
-//        //启动线程,进入测试流程
-//        myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-//        index = 0;
-//        item_index = 0;
-//        row_index = 0;
-//        [myThrad start];
-//        return;
-//    }
-
 }
 
 
@@ -1162,6 +1167,8 @@ NSString  *param_path=@"Param";
         index = 0;
         item_index = 0;
         row_index = 0;
+        testItemValueArr = nil;
+        testItemTitleArr = nil;
         [myThrad start];
     }
 }

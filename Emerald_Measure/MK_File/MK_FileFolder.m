@@ -40,7 +40,7 @@
         }
         else
         {
-            currentPath = @"/Users/michael/Desktop/";
+            currentPath = @"/Users/Desktop/";
         }
     }
 
@@ -58,10 +58,15 @@
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     
     //将要创建的文件夹拼接到路径中(文件夹路径事先与缓存默认的路径对比)
-    if (![[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"folderPathKey"]] isEqualToString:[NSString stringWithFormat:@"%@/%@",subjectName, folderDateStr]])
+    if (![[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"folderPathKey"]] isEqualToString:[NSString stringWithFormat:@"%@/%@/%@",subjectName,currentPath,folderDateStr]])
     {
+        self.folderPath = [currentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@/",subjectName,folderDateStr]];
         
-        self.folderPath = [currentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/%@",subjectName, folderDateStr]];
+        //************** 2017.5.13 创建文件夹包含该字符,则生成不同的路径 ***********
+        if ([subjectName containsString:@"Station"])
+        {
+            self.folderPath = [currentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/",subjectName]];
+        }
         
         //录入缓存
         [[NSUserDefaults standardUserDefaults] setObject:self.folderPath forKey:@"folderPathKey"];
