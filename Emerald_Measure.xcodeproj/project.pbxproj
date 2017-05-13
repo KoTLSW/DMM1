@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C3FFADA1EC69BD70099DA97 /* Param.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FFAD91EC69BD70099DA97 /* Param.plist */; };
+		4C3FFADC1EC69C2D0099DA97 /* BYDSFCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3FFADB1EC69C2D0099DA97 /* BYDSFCManager.m */; };
 		4C6F3F961EBD822B002C747E /* StationControlWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F3F941EBD822B002C747E /* StationControlWindow.m */; };
 		4C6F3F971EBD822B002C747E /* StationControlWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F3F951EBD822B002C747E /* StationControlWindow.xib */; };
 		4C6F3FB61EBDB417002C747E /* LoginWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F3FB41EBDB417002C747E /* LoginWindow.m */; };
@@ -75,8 +77,6 @@
 		C67112B91EC50B1C006975BF /* Param.m in Sources */ = {isa = PBXBuildFile; fileRef = C67112B81EC50B1C006975BF /* Param.m */; };
 		C67112BC1EC534E5006975BF /* Agilent33210A.m in Sources */ = {isa = PBXBuildFile; fileRef = C67112BB1EC534E5006975BF /* Agilent33210A.m */; };
 		C6C611941EC0CC0200E0099D /* KeithleyDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611921EC0CC0200E0099D /* KeithleyDevice.m */; };
-		C6C611991EC0ECC000E0099D /* Param.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6C611981EC0ECC000E0099D /* Param.plist */; };
-		C6C611A11EC0ED5000E0099D /* BYDSFCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C6119C1EC0ED5000E0099D /* BYDSFCManager.m */; };
 		C6C611A21EC0ED5000E0099D /* BYDSFCUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C6119E1EC0ED5000E0099D /* BYDSFCUnit.m */; };
 		C6C611A31EC0ED5000E0099D /* TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611A01EC0ED5000E0099D /* TestStep.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C6C611A61EC0EFE500E0099D /* pudding.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6C611A41EC0EFE500E0099D /* pudding.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -103,6 +103,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C3FFAD91EC69BD70099DA97 /* Param.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Param.plist; path = MK_Table/Param.plist; sourceTree = "<group>"; };
+		4C3FFADB1EC69C2D0099DA97 /* BYDSFCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCManager.m; sourceTree = "<group>"; };
+		4C3FFADD1EC69C590099DA97 /* BYDSFCManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYDSFCManager.h; sourceTree = "<group>"; };
 		4C6F3F911EBC0D5D002C747E /* SerialPortPCH.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SerialPortPCH.pch; sourceTree = "<group>"; };
 		4C6F3F931EBD822B002C747E /* StationControlWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StationControlWindow.h; sourceTree = "<group>"; };
 		4C6F3F941EBD822B002C747E /* StationControlWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StationControlWindow.m; sourceTree = "<group>"; };
@@ -232,10 +235,7 @@
 		C67112BB1EC534E5006975BF /* Agilent33210A.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Agilent33210A.m; sourceTree = "<group>"; };
 		C6C611911EC0CC0200E0099D /* KeithleyDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeithleyDevice.h; sourceTree = "<group>"; };
 		C6C611921EC0CC0200E0099D /* KeithleyDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeithleyDevice.m; sourceTree = "<group>"; };
-		C6C611981EC0ECC000E0099D /* Param.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Param.plist; sourceTree = "<group>"; };
 		C6C6119A1EC0ED2D00E0099D /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
-		C6C6119B1EC0ED5000E0099D /* BYDSFCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDSFCManager.h; sourceTree = "<group>"; };
-		C6C6119C1EC0ED5000E0099D /* BYDSFCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCManager.m; sourceTree = "<group>"; };
 		C6C6119D1EC0ED5000E0099D /* BYDSFCUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDSFCUnit.h; sourceTree = "<group>"; };
 		C6C6119E1EC0ED5000E0099D /* BYDSFCUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCUnit.m; sourceTree = "<group>"; };
 		C6C6119F1EC0ED5000E0099D /* TestStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestStep.h; sourceTree = "<group>"; };
@@ -408,7 +408,7 @@
 			children = (
 				4C9EE84B1EAE020C00B9089E /* Logo.jpg */,
 				4C9EE7BF1EADE57100B9089E /* Assets.xcassets */,
-				C6C611981EC0ECC000E0099D /* Param.plist */,
+				4C3FFAD91EC69BD70099DA97 /* Param.plist */,
 				4CF771891EBF5DFF0065384C /* Station_0.plist */,
 				4CF7718A1EBF5DFF0065384C /* Station_1.plist */,
 				4CF7718B1EBF5DFF0065384C /* Station_2.plist */,
@@ -565,8 +565,8 @@
 		4CFEFB701EBF0C4900353ABF /* SFC */ = {
 			isa = PBXGroup;
 			children = (
-				C6C6119B1EC0ED5000E0099D /* BYDSFCManager.h */,
-				C6C6119C1EC0ED5000E0099D /* BYDSFCManager.m */,
+				4C3FFADD1EC69C590099DA97 /* BYDSFCManager.h */,
+				4C3FFADB1EC69C2D0099DA97 /* BYDSFCManager.m */,
 				C6C6119D1EC0ED5000E0099D /* BYDSFCUnit.h */,
 				C6C6119E1EC0ED5000E0099D /* BYDSFCUnit.m */,
 				C6C6119F1EC0ED5000E0099D /* TestStep.h */,
@@ -709,7 +709,7 @@
 				4C6F3FB71EBDB417002C747E /* LoginWindow.xib in Resources */,
 				4CF7718E1EBF5DFF0065384C /* Station_1.plist in Resources */,
 				4C9EE84C1EAE020C00B9089E /* Logo.jpg in Resources */,
-				C6C611991EC0ECC000E0099D /* Param.plist in Resources */,
+				4C3FFADA1EC69BD70099DA97 /* Param.plist in Resources */,
 				4CF771901EBF5DFF0065384C /* Station_3.plist in Resources */,
 				4C82EE2E1EB04D4B00BAA7A3 /* SerialPort.xib in Resources */,
 				4C9EE81D1EADE69400B9089E /* README.rtf in Resources */,
@@ -763,6 +763,7 @@
 				4C9EE82C1EADE69400B9089E /* MKTimer.m in Sources */,
 				4C9EE83B1EADE79000B9089E /* PDCA.m in Sources */,
 				C6C611AC1EC0F1A300E0099D /* PlistFile.m in Sources */,
+				4C3FFADC1EC69C2D0099DA97 /* BYDSFCManager.m in Sources */,
 				4C9EE81E1EADE69400B9089E /* MK_FileCSV.m in Sources */,
 				4CFEFB671EBF0B0700353ABF /* SPI_Test.m in Sources */,
 				C6C611A21EC0ED5000E0099D /* BYDSFCUnit.m in Sources */,
@@ -776,7 +777,6 @@
 				4C9EE82B1EADE69400B9089E /* MKCountDownTimer.m in Sources */,
 				4C9EE8261EADE69400B9089E /* Table.m in Sources */,
 				4C82EE3C1EB04D5A00BAA7A3 /* GCDAsyncSocket.m in Sources */,
-				C6C611A11EC0ED5000E0099D /* BYDSFCManager.m in Sources */,
 				4C9EE8241EADE69400B9089E /* Plist.m in Sources */,
 				4C9EE8291EADE69400B9089E /* GetTimeDay.m in Sources */,
 				4CFEFB621EBF0B0700353ABF /* FTDI_UART.c in Sources */,

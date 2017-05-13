@@ -22,7 +22,7 @@
 			<key>Min</key>
 			<string>10</string>
 			<key>Max</key>
-			<string></string>
+			<string>20</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>

@@ -100,11 +100,11 @@ NSString  *param_path=@"Param";
     
     //添加的属性===========5.10====chen
     BOOL          humitureCollect;  //温湿度连接
-    NSString *    humitString;      //返回来的温度数据
+    NSString     *humitString;      //返回来的温度数据
     BOOL          isTouch;          //是否已经完全接触
     BOOL          isUpLoadSFC;      //是否上传SFC
     BOOL          isUpLoadPDCA;     //是否上传PDCA
-    PDCA     *    pdca;             //PDCA对象
+    PDCA         *pdca;             //PDCA对象
 
 }
 
@@ -155,12 +155,8 @@ NSString  *param_path=@"Param";
      myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
     [myThrad start];
     
-    
     secondThrad=[[NSThread alloc] initWithTarget:self selector:@selector(TimerUpdateWindow) object:nil];
     [secondThrad start];
-    
-    
-
 }
 
 
@@ -185,52 +181,72 @@ NSString  *param_path=@"Param";
 {
     if (plist == nil)
     {
-         plist = [[Plist alloc] init];
+        plist = [[Plist alloc] init];
     }
+    
     if (mk_table == nil)
     {
         mk_table = [[Table alloc] init];
     }
-    
+        
     if ([noti.object isEqualToString:@"Station_0"] || [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_0"])
     {
         NSLog(@"进入 Station_0 工站");
         stationID_TF.stringValue = @"Sensor Board";
-        
+            
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_0" Key:@"AllItems"];
+            
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
+            
+        //改变serverSF的值
+        [BYDSFCManager Instance].ServerFCKey=@"ServerFC_0";
     }
+        
     if ([noti.object isEqualToString:@"Station_1"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_1"])
     {
         NSLog(@"进入 Station_1 工站");
         stationID_TF.stringValue = @"Crown Flex";
-        
+            
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_1" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
+            
+        //改变serverSF的值
+        [BYDSFCManager Instance].ServerFCKey=@"ServerFC_1";
     }
+    
     if ([noti.object isEqualToString:@"Station_2"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_2"])
     {
         NSLog(@"进入 Station_2 工站");
         stationID_TF.stringValue = @"Sensor Flex Sub Assembly";
-        
+            
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_2" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
+            
+        //改变serverSF的值
+        [BYDSFCManager Instance].ServerFCKey=@"ServerFC_2";
     }
+    
     if ([noti.object isEqualToString:@"Station_3"]|| [[[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"] isEqualToString:@"Station_3"])
     {
         NSLog(@"进入 Station_3 工站");
         stationID_TF.stringValue = @"Crown Rotation Sub Assembly";
-        
+            
         //读取 plist 文件
         itemArr = [plist PlistRead:@"Station_3" Key:@"AllItems"];
         mk_table = [mk_table init:tab_View DisplayData:itemArr];
+            
+        //改变serverSF的值
+        [BYDSFCManager Instance].ServerFCKey=@"ServerFC_3";
     }
-    
+        
+    //重新获取服务器基本
+    [[BYDSFCManager Instance] getUnitValue];
+        
     fixtureID_TF.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"CurrentStationStatus"];
-    
+        
     if (myThrad != nil)
     {
         return;
@@ -567,6 +583,7 @@ NSString  *param_path=@"Param";
             //在这里加入测试的起始时间
             if (row_index == 0)
             {
+                NSLog(@"j记录 pdca 的起始测试时间");
                 [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
@@ -954,7 +971,7 @@ NSString  *param_path=@"Param";
                     agilentReadString=[agilent3458A ReadData:16];
                     
                     //测试
-                    agilentReadString = @"1.5";
+                    agilentReadString = @"5.5";
                     
                     [testItemValueArr addObject:agilentReadString];
                 }
@@ -966,17 +983,26 @@ NSString  *param_path=@"Param";
                     if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f", (((0.8 - num)/num)*10)/1000];
+                        
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     else if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
                     {
                         if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
                         {
                             testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
+                            
+                            //测试代码
+                            testitem.value = agilentReadString;
                         }
                         
                         else
                         {
                             testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
+                            
+                            //测试代码
+                            testitem.value = agilentReadString;
                         }
                     }
                     else if ([testitem.units isEqualToString:@"kΩ"]&&[SonTestCommand containsString:@"Read"])//KΩ的情况计算
@@ -984,17 +1010,24 @@ NSString  *param_path=@"Param";
                         num=num/(10E+02);
                         testitem.value = [NSString stringWithFormat:@"%.3f",num];
                         
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     
                     else if ([testitem.units containsString:@"uA"]&&[SonTestCommand containsString:@"Read"])
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
                         
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     
                     else
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f",num];
+                        
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     
                     if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue])
@@ -1002,6 +1035,9 @@ NSString  *param_path=@"Param";
                         testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
                         testitem.result = @"PASS";
                         ispass = YES;
+                        
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     
                     else if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
@@ -1010,6 +1046,9 @@ NSString  *param_path=@"Param";
                         testitem.result = @"PASS";
                         testItem.messageError=nil;
                         ispass = YES;
+                        
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                     
                     else
@@ -1018,6 +1057,9 @@ NSString  *param_path=@"Param";
                         testitem.result = @"FAIL";
                         testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
                         ispass = NO;
+                        
+                        //测试代码
+                        testitem.value = agilentReadString;
                     }
                 }
             }

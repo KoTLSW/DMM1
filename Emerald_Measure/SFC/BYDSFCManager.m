@@ -14,9 +14,10 @@ static BYDSFCManager* bydSFC=nil;
 @synthesize SFCErrorType=_SFCErrorType;
 @synthesize errorMessage = _errorMessage;
 @synthesize SFCCheckType=_SFCCheckType;
-@synthesize strUpdateBDA=_strUpdateBDA;//获取产品的BDA
-@synthesize strMSEBDA=_strMSEBDA;//服务器BDA
-//@synthesize strLogFileText=_strLogFileText;
+@synthesize strUpdateBDA=_strUpdateBDA;  //获取产品的BDA
+@synthesize strMSEBDA=_strMSEBDA;        //服务器BDA
+@synthesize ServerFCKey=_ServerFCKey;    //
+
 
 - (id) init
 {
@@ -27,19 +28,15 @@ static BYDSFCManager* bydSFC=nil;
         
         if (configPlist != nil)
         {
-            _unit.MESServerIP = [[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_SERVER_IP];
-            _unit.BDAServerIP=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_BDA_SERVER_IP];
-            _unit.netPort=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_NET_PORT];
-            _unit.stationID=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_STATION_ID];
-            _unit.stationName=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_STATION_NANE];
-            _unit.cType=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_CTYPE];
-            _unit.product=[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_PRODUCT];
+            _ServerFCKey=@"ServerFC_0";
+            [self getUnitValue];
+            
+            
         }
-        
+    
         _errorMessage = @"";
         _strSN=[[NSString alloc] init];
         _strUpdateBDA=[[NSString alloc] init];
-//      _strLogFileText=[[NSMutableString alloc] initWithString:@""];
     }
     
     return self;
@@ -70,6 +67,7 @@ static BYDSFCManager* bydSFC=nil;
 //    NSMutableString* urlString = [NSMutableString stringWithFormat:@"http://%@:%@/manufacturing/BobcatIntegerationServlet?",(sfcCheckType==e_BDA_VERIFY_CHECK)?_unit.BDAServerIP:_unit.MESServerIP, _unit.netPort];          // ip and port
     
      NSMutableString* urlString = [NSMutableString stringWithFormat:@"http://%@:%@/manufacturing/BobcatIntegerationServlet?",_unit.MESServerIP, _unit.netPort];          // ip and port
+    
 
     NSString* strStationID=[[PDCA Instance] GetStationID];
 
@@ -318,7 +316,6 @@ static BYDSFCManager* bydSFC=nil;
         }
     }
     
-    //[[TestLog Instance] WriteLogResult:[GetTimeDay GetCurrentTime] andText:strLogFile];
     _isCheckPass = YES;
 
     [NSThread exit];
@@ -331,15 +328,7 @@ static BYDSFCManager* bydSFC=nil;
             tm->tm_mday, tm->tm_hour, tm->tm_min, tm->tm_sec];
 }
 
-//
--(BOOL)checkSNRgexedBDA:(NSString*)sn
-           andBDASerail:(NSString *)bdaSerial
-{
-    NSString* url = [self createURL:e_BDA_VERIFY_CHECK sn:sn testResult:nil
-                          startTime:nil endTime:nil bdaSerial:bdaSerial faiureMessage:nil];
-    NSLog(@"Verify BDA url:%@",url);
-    return [self submit:url];
-}
+
 
 - (BOOL) checkSerialNumber:(NSString *)sn
 {
@@ -366,32 +355,20 @@ static BYDSFCManager* bydSFC=nil;
 }
 
 
+-(void)getUnitValue{
 
-- (BOOL) checkBDASerail:(NSString *)sn
-                BDASerail:(NSString *)bdaSerial
-             startTime:(time_t)tmStart
-{
-    NSString* url = [self createURL:e_BDA_RESULT_CHECK
-                                 sn:sn
-                         testResult:nil
-                          startTime:[self timeToStr:tmStart]
-                            endTime:nil
-                          bdaSerial:bdaSerial
-                      faiureMessage:nil];
-    NSLog(@"CheckBDA url:%@",url);
-    return [self submit:url];
+    NSDictionary  * dic=[configPlist ReadDictionary:_ServerFCKey];
+    
+    _unit.MESServerIP = [dic objectForKey:CONFIG_SFC_SERVER_IP];
+    _unit.BDAServerIP =[dic objectForKey:CONFIG_SFC_BDA_SERVER_IP];
+    _unit.netPort     =[dic objectForKey:CONFIG_SFC_NET_PORT];
+    _unit.stationID   =[dic objectForKey:CONFIG_SFC_STATION_ID];
+    _unit.stationName =[dic objectForKey:CONFIG_SFC_STATION_NANE];
+    _unit.cType       =[dic objectForKey:CONFIG_SFC_CTYPE];
+    _unit.product     =[dic objectForKey:CONFIG_SFC_PRODUCT];
+    
+
 }
 
-
-
-//*************************2016/8/6****************************************************
--(BOOL)checkQueryBDA:(NSString*)sn
-{
-    NSString* url = [self createURL:e_BDA_QUERY_CHECK sn:sn testResult:nil
-                          startTime:nil endTime:nil bdaSerial:nil faiureMessage:nil];
-    NSLog(@"Verify BDA url:%@",url);
-    return [self submit:url];
-}
-//*************************end*********************************************************
 
 @end

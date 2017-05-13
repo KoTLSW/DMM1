@@ -10,7 +10,7 @@
 #import "BYDSFCUnit.h"
 #import "PlistFile.h"
 #import "PDCA.h"
-#import "Macro.h"
+#import "Macro.h"￼
 #import <Regex/Regex.h>
 
 
@@ -55,9 +55,13 @@ enum eSFC_Back_Type
 
 @property(readwrite)enum eSFC_Back_Type  SFCErrorType;
 @property(readwrite)enum eSFC_Check_Type SFCCheckType;
-@property(readwrite,copy)NSString* strSN;
-@property(readwrite,copy)NSString* strUpdateBDA;
-@property(readwrite,copy)NSString* strMSEBDA;
+@property(readwrite,copy)NSString   * strSN;
+@property(readwrite,copy)NSString   * strUpdateBDA;
+@property(readwrite,copy)NSString   * strMSEBDA;
+@property(nonatomic,strong)NSString * ServerFCKey;
+@property(readonly, nonatomic) NSString* errorMessage;
+
+
 
 +(BYDSFCManager*)Instance;
 
@@ -82,17 +86,6 @@ enum eSFC_Back_Type
 - (BOOL) checkSerialNumber:(NSString *)sn;
 
 
-
-
-//查询BDA的方法
--(BOOL)checkQueryBDA:(NSString*)sn;
-
-
-
-//
--(BOOL)checkSNRgexedBDA:(NSString*)sn
-           andBDASerail:(NSString *)bdaSerial;
-
 /*!
  * @abstract    上传最终测试结果至SFC系统
  * @param   sn      产品序列号
@@ -109,10 +102,9 @@ enum eSFC_Back_Type
            failMessage:(NSString *)failMsg;
 
 
-- (BOOL) checkBDASerail:(NSString *)sn
-              BDASerail:(NSString *)bdaSerial
-              startTime:(time_t)tmStart;
 
-@property(readonly, nonatomic) NSString* errorMessage;
+
+-(void)getUnitValue;
+
 
 @end

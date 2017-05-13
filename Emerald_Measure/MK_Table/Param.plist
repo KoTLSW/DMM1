@@ -54,8 +54,6 @@
 	<string>0.4</string>
 	<key>waveVolt</key>
 	<string>0.8</string>
-	<key>csv_path - 4</key>
-	<string>/vault/Test5/</string>
 	<key>SocketConfig</key>
 	<dict>
 		<key>Port</key>
@@ -63,7 +61,7 @@
 		<key>IP</key>
 		<string>127.0.0.1</string>
 	</dict>
-	<key>ServerFC</key>
+	<key>ServerFC_0</key>
 	<dict>
 		<key>Server_IP</key>
 		<string>10.12.5.70</string>
@@ -74,11 +72,68 @@
 		<key>C</key>
 		<string>ADD_RECORD</string>
 		<key>Station_Name</key>
-		<string>ZR-MLB-FCT1</string>
+		<string>Sensor-Board-EME</string>
 		<key>Front_StationName</key>
-		<string>ZR-MLB-ICT</string>
+		<string>Sensor-Before-EME</string>
 		<key>Next_StationName</key>
-		<string>ZR-BT-COND</string>
+		<string>Crown-Flex-EME</string>
+		<key>Product</key>
+		<string>A211</string>
+	</dict>
+	<key>ServerFC_1</key>
+	<dict>
+		<key>Server_IP</key>
+		<string>10.12.5.70</string>
+		<key>BDAServer_IP</key>
+		<string>10.12.5.70</string>
+		<key>Net_Port</key>
+		<string>80</string>
+		<key>C</key>
+		<string>ADD_RECORD</string>
+		<key>Station_Name</key>
+		<string>Crown-Flex-EME</string>
+		<key>Front_StationName</key>
+		<string>Sensor-Board-EME</string>
+		<key>Next_StationName</key>
+		<string>Sensor-FlexSub-EME</string>
+		<key>Product</key>
+		<string>A211</string>
+	</dict>
+	<key>ServerFC_2</key>
+	<dict>
+		<key>Server_IP</key>
+		<string>10.12.5.70</string>
+		<key>BDAServer_IP</key>
+		<string>10.12.5.70</string>
+		<key>Net_Port</key>
+		<string>80</string>
+		<key>C</key>
+		<string>ADD_RECORD</string>
+		<key>Station_Name</key>
+		<string>Sensor-FlexSub-EME</string>
+		<key>Front_StationName</key>
+		<string>Crown-FIex-EME</string>
+		<key>Next_StationName</key>
+		<string>Crown-RotationSub-EME</string>
+		<key>Product</key>
+		<string>A211</string>
+	</dict>
+	<key>ServerFC_3</key>
+	<dict>
+		<key>Server_IP</key>
+		<string>10.12.5.70</string>
+		<key>BDAServer_IP</key>
+		<string>10.12.5.70</string>
+		<key>Net_Port</key>
+		<string>80</string>
+		<key>C</key>
+		<string>ADD_RECORD</string>
+		<key>Station_Name</key>
+		<string>Crown-RotationSub-EME</string>
+		<key>Front_StationName</key>
+		<string>Sensor-FlexSub-EME</string>
+		<key>Next_StationName</key>
+		<string>Crown-RotationSub-Before</string>
 		<key>Product</key>
 		<string>A211</string>
 	</dict>
