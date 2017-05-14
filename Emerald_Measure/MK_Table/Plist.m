@@ -29,11 +29,7 @@
             Item *item = [[Item alloc] init];
             
             item.id         = [dic objectForKey:@"ID"];
-            item.command    = [dic objectForKey:@"Command"];
-            item.timeOut    = [dic objectForKey:@"TimeOut"];
-            item.timeDelay  = [dic objectForKey:@"TimeDelay"];
             item.retryTimes = [dic objectForKey:@"RetryTimes"];
-            item.device     = [dic objectForKey:@"Device"];
             item.testName   = [dic objectForKey:@"TestName"];
             item.units      = [dic objectForKey:@"Units"];
             item.min        = [dic objectForKey:@"Min"];

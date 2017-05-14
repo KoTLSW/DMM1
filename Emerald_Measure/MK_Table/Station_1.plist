@@ -5,18 +5,10 @@
 	<key>AllItems</key>
 	<array>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF-1a</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -124,18 +116,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF-1b</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -243,18 +227,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF-1c</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -362,18 +338,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_2a</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>GΩ</string>
 			<key>Min</key>
@@ -481,18 +449,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_2b</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>MΩ</string>
 			<key>Min</key>
@@ -636,18 +596,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_3a</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>kΩ</string>
 			<key>Min</key>
@@ -755,18 +707,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>0</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_3b</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
 			<key>Units</key>
 			<string>kΩ</string>
 			<key>Min</key>
@@ -874,18 +818,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>3</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_5a_1000</string>
+			<key>RetryTimes</key>
+			<integer>3</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -993,18 +929,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>3</integer>
-			<key>Device</key>
-			<string>RF_5a_1500</string>
 			<key>TestName</key>
 			<string>RF_5a_1500</string>
+			<key>RetryTimes</key>
+			<integer>3</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -1112,18 +1040,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>3</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_5a_2000</string>
+			<key>RetryTimes</key>
+			<integer>3</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -1231,18 +1151,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>3</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_5a_2500</string>
+			<key>RetryTimes</key>
+			<integer>3</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
@@ -1350,18 +1262,10 @@
 			</array>
 		</dict>
 		<dict>
-			<key>ID</key>
-			<string>--</string>
-			<key>TimeOut</key>
-			<integer>500</integer>
-			<key>TimeDelay</key>
-			<integer>0</integer>
-			<key>RetryTimes</key>
-			<integer>3</integer>
-			<key>Device</key>
-			<string>Fixture</string>
 			<key>TestName</key>
 			<string>RF_5a_3000</string>
+			<key>RetryTimes</key>
+			<integer>3</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>

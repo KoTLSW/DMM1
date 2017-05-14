@@ -14,11 +14,7 @@
 //=============================================
 //与table.xib 的 column identifier 对应
 #define TABLE_COLUMN_ID             @"id"
-//#define TABLE_COLUMN_COMMAND        @"command"
-//#define TABLE_COLUMN_TIMEOUT        @"timeOut"
-//#define TABLE_COLUMN_TIMEDELAY      @"timeDelay"
 //#define TABLE_COLUMN_RETRYTIMES     @"retryTimes"
-//#define TABLE_COLUMN_DEVICE         @"device"
 #define TABLE_COLUMN_TESTNAME       @"testName"
 #define TABLE_COLUMN_UNITS          @"units"
 #define TABLE_COLUMN_MIN            @"min"
@@ -39,11 +35,7 @@
 //=============================================
 //在这里设置 table delegate 方法里边的数据模型
 @property(readwrite,copy) NSString *id;
-@property(readwrite,copy) NSString *command;
-@property(readwrite,copy) NSNumber *timeOut;
-@property(readwrite,copy) NSNumber *timeDelay;
 @property(readwrite,copy) NSNumber *retryTimes;
-@property(readwrite,copy) NSString *device;
 @property(readwrite,copy) NSString *testName;
 @property(readwrite,copy) NSString *units;
 @property(readwrite,copy) NSString *min;
