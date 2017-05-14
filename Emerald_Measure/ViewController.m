@@ -155,8 +155,8 @@ NSString  *param_path=@"Param";
      myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
     [myThrad start];
     
-    secondThrad=[[NSThread alloc] initWithTarget:self selector:@selector(TimerUpdateWindow) object:nil];
-    [secondThrad start];
+//    secondThrad=[[NSThread alloc] initWithTarget:self selector:@selector(TimerUpdateWindow) object:nil];
+//    [secondThrad start];
 }
 
 
@@ -284,7 +284,7 @@ NSString  *param_path=@"Param";
             
             NSLog(@"连接治具...");
             
-            if ([serialPort IsOpen])
+            if ([fixtureSerial IsOpen])
             {
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     currentStateMsg.stringValue=@"index=0,治具已经连接";
@@ -299,10 +299,10 @@ NSString  *param_path=@"Param";
             else
             {
                 //========================test Code============================
-                BOOL uartConnect=[serialPort Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
+                BOOL uartConnect=[fixtureSerial Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
                 
-                //测试代码
-                uartConnect = YES;
+//                //测试代码
+//                uartConnect = YES;
                 
                 if (uartConnect)
                 {
@@ -337,8 +337,8 @@ NSString  *param_path=@"Param";
         {
            BOOL agilent3458A_isOpen = [agilent3458A FindAndOpen:nil];
             
-            //测试代码
-            agilent3458A_isOpen = YES;
+//            //测试代码
+//            agilent3458A_isOpen = YES;
             
             if (agilent3458A_isOpen)
             {
@@ -370,8 +370,8 @@ NSString  *param_path=@"Param";
         {
             BOOL isCollect=[humitureSerial Open:param.humiture_uart_port_name BaudRate:BAUD_9600 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
             
-            //测试代码
-            isCollect = YES;
+//            //测试代码
+//            isCollect = YES;
             
             if (isCollect)
             {
@@ -403,17 +403,17 @@ NSString  *param_path=@"Param";
         //------------------------------------------------------------
         if(index==3)
         {
-            //测试代码
-            param.isWaveNeed = YES;
+//            //测试代码
+//            param.isWaveNeed = YES;
             
             if (param.isWaveNeed)  //有些工站需要，有些不需要
             {
                 BOOL agilent33210A_isFind = [agilent33210A Find:nil andCommunicateType:Agilent33210A_USB_Type];
                 BOOL agilent33210A_isOpen =[agilent33210A OpenDevice: nil andCommunicateType:Agilent33210A_USB_Type];
              
-                //测试代码
-                agilent33210A_isFind = YES;
-                agilent33210A_isOpen = YES;
+//                //测试代码
+//                agilent33210A_isFind = YES;
+//                agilent33210A_isOpen = YES;
                 
                 if (agilent33210A_isFind && agilent33210A_isOpen)
                 {
@@ -1301,8 +1301,8 @@ NSString  *param_path=@"Param";
             sleep(2);
             NSString * string=[humitureSerial ReadExisting];
             
-            //测试代码
-            string = @"45℃/23";
+//            //测试代码
+//            string = @"45℃/23";
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (string.length>0)

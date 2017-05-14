@@ -11,7 +11,7 @@
 	<key>fixture_uart_baud</key>
 	<integer>115200</integer>
 	<key>fixture_uart_port_name</key>
-	<string>//dev//cu.usbserial-Fixture</string>
+	<string>/dev/cu.usbserial-A103PRKA</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
 	<key>fixture_uart_parity</key>
@@ -21,7 +21,7 @@
 	<key>humiture_uart_baud</key>
 	<string>9600</string>
 	<key>humiture_uart_port_name</key>
-	<string>//dev//cu.SLAB_USBtoUART</string>
+	<string>/dev/cu.hMacmini-Bluetooth-Inco</string>
 	<key>humiture_uart_dataBit</key>
 	<string>8</string>
 	<key>humiture_uart_parity</key>
@@ -29,17 +29,17 @@
 	<key>humiture_uart_stopBit</key>
 	<string>1</string>
 	<key>sw_name</key>
-	<string>EW_BT_MIC_SPK</string>
+	<string>Emerald_Testing</string>
 	<key>sw_ver</key>
-	<string>V02</string>
+	<string>V1.01</string>
 	<key>s_build</key>
-	<string>Feicui</string>
+	<string>Emerald_MK</string>
 	<key>thdn</key>
 	<integer>5</integer>
 	<key>ui_title</key>
 	<string>software test</string>
 	<key>ui_versiom</key>
-	<string>V1.0.0.9</string>
+	<string>V1.01</string>
 	<key>station</key>
 	<string>1</string>
 	<key>stationID</key>
