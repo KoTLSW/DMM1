@@ -751,7 +751,7 @@
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="50J-ru-ugu">
                                             <rect key="frame" x="107" y="619" width="834" height="36"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" drawsBackground="YES" id="Kt6-6I-0aD">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Sample" drawsBackground="YES" id="Kt6-6I-0aD">
                                                 <font key="font" size="30" name=".PingFangSC-Regular"/>
                                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" red="0.030053213240000001" green="0.2412326336" blue="0.91232115030000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1146,7 +1146,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75.5" y="815.5"/>
+            <point key="canvasLocation" x="75.5" y="888.5"/>
         </scene>
     </scenes>
     <resources>

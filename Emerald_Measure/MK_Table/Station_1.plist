@@ -881,7 +881,7 @@
 			<key>TimeDelay</key>
 			<integer>0</integer>
 			<key>RetryTimes</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
@@ -1000,7 +1000,7 @@
 			<key>TimeDelay</key>
 			<integer>0</integer>
 			<key>RetryTimes</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Device</key>
 			<string>RF_5a_1500</string>
 			<key>TestName</key>
@@ -1119,7 +1119,7 @@
 			<key>TimeDelay</key>
 			<integer>0</integer>
 			<key>RetryTimes</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
@@ -1238,7 +1238,7 @@
 			<key>TimeDelay</key>
 			<integer>0</integer>
 			<key>RetryTimes</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>
@@ -1357,7 +1357,7 @@
 			<key>TimeDelay</key>
 			<integer>0</integer>
 			<key>RetryTimes</key>
-			<integer>0</integer>
+			<integer>3</integer>
 			<key>Device</key>
 			<string>Fixture</string>
 			<key>TestName</key>

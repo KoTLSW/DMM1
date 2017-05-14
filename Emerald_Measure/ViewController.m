@@ -281,7 +281,7 @@ NSString  *param_path=@"Param";
                 currentStateMsg.backgroundColor = [NSColor yellowColor];
                 currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
             });
-            sleep(1);
+            
             NSLog(@"连接治具...");
             
             if ([serialPort IsOpen])
@@ -422,7 +422,6 @@ NSString  *param_path=@"Param";
                         currentStateMsg.backgroundColor = [NSColor yellowColor];
                         currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     });
-                    sleep(1);
                     index = 4;
                     
                     //测试代码
@@ -964,7 +963,7 @@ NSString  *param_path=@"Param";
             else//其它的值
             {
                 //5次电压递增测试
-                if ([testitem.testName isEqualToString:@"RF-5a"]) //设备
+                if ([testitem.testName containsString:@"RF_5a"]) //设备
                 {
                     int indexTime=0;
                     
@@ -974,10 +973,14 @@ NSString  *param_path=@"Param";
                         
                         agilentReadString=[agilent3458A ReadData:16];
                         
+                        //测试代码
+                        agilentReadString = @"0.5";
+                        
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
                         {
                             [fixtureSerial WriteLine:@"reset"];
+                            
                             break;
                         }
                         if ([agilentReadString floatValue]<1)//读取3次，3次后等待15秒再发送
@@ -989,11 +992,16 @@ NSString  *param_path=@"Param";
                                 sleep(13.5);
                                 [agilent3458A WriteLine:@"END"];
                                 agilentReadString=[agilent3458A ReadData:16];
-                                [testItemValueArr addObject:agilentReadString];
+                                
+                                //测试代码
+                                agilentReadString = @"0.5";
+                                
                                 break;
                             }
                         }
                     }
+                    
+                    testitem.value = agilentReadString;
                 }
                 //其它正常读取情况
                 else
@@ -1001,10 +1009,8 @@ NSString  *param_path=@"Param";
                     [agilent3458A WriteLine:@"END"];
                     agilentReadString=[agilent3458A ReadData:16];
                     
-                    //测试
+                    //测试代码
                     agilentReadString = @"5.5";
-                    
-//                    [testItemValueArr addObject:agilentReadString];
                 }
                 
                 float num=[agilentReadString floatValue];
@@ -1014,51 +1020,33 @@ NSString  *param_path=@"Param";
                     if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f", (((0.8 - num)/num)*10)/1000];
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     else if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
                     {
                         if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
                         {
                             testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
-                            
-                            //测试代码
-                            testitem.value = agilentReadString;
                         }
                         
                         else
                         {
                             testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
-                            
-                            //测试代码
-                            testitem.value = agilentReadString;
                         }
                     }
                     else if ([testitem.units isEqualToString:@"kΩ"]&&[SonTestCommand containsString:@"Read"])//KΩ的情况计算
                     {
                         num=num/(10E+02);
                         testitem.value = [NSString stringWithFormat:@"%.3f",num];
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     
                     else if ([testitem.units containsString:@"uA"]&&[SonTestCommand containsString:@"Read"])
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     
                     else
                     {
                         testitem.value = [NSString stringWithFormat:@"%.3f",num];
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     
                     if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue])
@@ -1066,9 +1054,6 @@ NSString  *param_path=@"Param";
                         testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
                         testitem.result = @"PASS";
                         ispass = YES;
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     
                     else if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
@@ -1077,9 +1062,6 @@ NSString  *param_path=@"Param";
                         testitem.result = @"PASS";
                         testItem.messageError=nil;
                         ispass = YES;
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                     
                     else
@@ -1088,9 +1070,6 @@ NSString  *param_path=@"Param";
                         testitem.result = @"FAIL";
                         testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
                         ispass = NO;
-                        
-                        //测试代码
-                        testitem.value = agilentReadString;
                     }
                 }
             }
@@ -1107,6 +1086,10 @@ NSString  *param_path=@"Param";
         }
     }
     
+    //获取万用表最终的值
+    testitem.value = agilentReadString;
+    
+    //每次的测试项与测试标题存入可变数组中
     [testItemValueArr addObject:testItem.value];
     [testItemTitleArr addObject: testItem.testName];
     return ispass;
