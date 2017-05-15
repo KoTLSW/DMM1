@@ -21,7 +21,7 @@
 	<key>humiture_uart_baud</key>
 	<string>9600</string>
 	<key>humiture_uart_port_name</key>
-	<string>/dev/cu.hMacmini-Bluetooth-Inco</string>
+	<string>/dev/cu.SLAB_USBtoUART</string>
 	<key>humiture_uart_dataBit</key>
 	<string>8</string>
 	<key>humiture_uart_parity</key>

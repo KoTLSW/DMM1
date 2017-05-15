@@ -28,7 +28,6 @@ NSString  *param_path=@"Param";
 @implementation ViewController
 {
     //************ Device *************
-    SerialPort          * serialPort;
     SerialPort          * fixtureSerial;   //治具串口
     SerialPort          * humitureSerial;  //温湿度串口
     KeithleyDevice      * keithleySerial;  //泰克调试
@@ -134,6 +133,7 @@ NSString  *param_path=@"Param";
     plist = [[Plist alloc] init];
     mk_table = [[Table alloc] init];
     
+    humitString=@"";
     item_index = 0;
     row_index = 0;
     index=0;
@@ -152,11 +152,12 @@ NSString  *param_path=@"Param";
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CancellPDCA_SFC_LimitNoti:) name:@"CancellButtonlimit_Notification" object:nil];
     
+    //测试项线程
      myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
     [myThrad start];
     
-//    secondThrad=[[NSThread alloc] initWithTarget:self selector:@selector(TimerUpdateWindow) object:nil];
-//    [secondThrad start];
+    //温湿度定时器
+    humTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(TimerUpdateWindow) userInfo:nil repeats:YES];
 }
 
 
@@ -393,6 +394,7 @@ NSString  *param_path=@"Param";
                     currentStateMsg.backgroundColor = [NSColor redColor];
                     currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 });
+                sleep(1);
                 NSLog(@"温湿度串口还未连接");
             }
         }
@@ -450,6 +452,7 @@ NSString  *param_path=@"Param";
                     currentStateMsg.backgroundColor = [NSColor yellowColor];
                     currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 });
+                sleep(1);
             }
         }
         
@@ -702,7 +705,7 @@ NSString  *param_path=@"Param";
                     [titleMutableStr appendString:[NSString stringWithFormat:@",%@",titleStr]];
                 }
                 
-                NSString *csvTitle = [NSString stringWithFormat:@"SN,TestResult,%@,TempValue,StartTime,EndTime",titleMutableStr];
+                NSString *csvTitle = [NSString stringWithFormat:@"SN,TestResult,%@,HumitureValue,StartTime,EndTime",titleMutableStr];
                 NSString *humitureCSVTitle = [NSString stringWithFormat:@"SN,TestResult,HumitureValue,StartTime,EndTime"];
                 
                 //csv测试项内容,同上
@@ -973,8 +976,8 @@ NSString  *param_path=@"Param";
                         
                         agilentReadString=[agilent3458A ReadData:16];
                         
-                        //测试代码
-                        agilentReadString = @"0.5";
+//                        //测试代码
+//                        agilentReadString = @"0.5";
                         
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
@@ -993,8 +996,8 @@ NSString  *param_path=@"Param";
                                 [agilent3458A WriteLine:@"END"];
                                 agilentReadString=[agilent3458A ReadData:16];
                                 
-                                //测试代码
-                                agilentReadString = @"0.5";
+//                                //测试代码
+//                                agilentReadString = @"0.5";
                                 
                                 break;
                             }
@@ -1009,8 +1012,8 @@ NSString  *param_path=@"Param";
                     [agilent3458A WriteLine:@"END"];
                     agilentReadString=[agilent3458A ReadData:16];
                     
-                    //测试代码
-                    agilentReadString = @"5.5";
+//                    //测试代码
+//                    agilentReadString = @"5.5";
                 }
                 
                 float num=[agilentReadString floatValue];
@@ -1087,7 +1090,9 @@ NSString  *param_path=@"Param";
     }
     
     //获取万用表最终的值
-    testitem.value = agilentReadString;
+    testitem.value = [NSString stringWithFormat:@"%.4f",[agilentReadString floatValue]];
+    
+    NSLog(@"%@",testitem.value);
     
     //每次的测试项与测试标题存入可变数组中
     [testItemValueArr addObject:testItem.value];
@@ -1293,40 +1298,36 @@ NSString  *param_path=@"Param";
 //更新温度窗体
 -(void)TimerUpdateWindow
 {
-    @autoreleasepool
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            //执行耗时操作
-            [humitureSerial WriteLine:@"READ"];
-            sleep(2);
-            NSString * string=[humitureSerial ReadExisting];
-            
-//            //测试代码
-//            string = @"45℃/23";
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (string.length>0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //执行耗时操作
+        [humitureSerial WriteLine:@"AUTO"];
+        
+        sleep(2);
+        
+        NSString * humStr=[humitureSerial ReadExisting];
+//        humStr = @"12,45";
+        humStr = [humStr stringByReplacingOccurrencesOfString:@"," withString:@"/"];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (humStr.length>0)
+            {
+                if (humStr.length>10)
                 {
-                    if (string.length>10)
-                    {
-                        [HumitureTF setStringValue:[string substringToIndex:11]];
-                         humitString=[string substringToIndex:11];
-                    }
-                    else
-                    {
-                        [HumitureTF setStringValue:string];
-                        humitString=string;
-                    }
+                    [HumitureTF setStringValue:[humStr substringToIndex:11]];
+                    humitString=[humStr substringToIndex:11];
                 }
-                
                 else
                 {
-                    [HumitureTF setStringValue:humitString];
-                    
+                    [HumitureTF setStringValue:humStr];
+                    humitString=humStr;
                 }
-            });
+            }
+            else
+            {
+                [HumitureTF setStringValue:humitString];
+            }
         });
-    }
+    });
 }
 
 #pragma mark--------释放所有设备
