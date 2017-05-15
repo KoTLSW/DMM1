@@ -103,7 +103,7 @@ NSString  *param_path=@"Param";
     BOOL          isTouch;          //是否已经完全接触
     BOOL          isUpLoadSFC;      //是否上传SFC
     BOOL          isUpLoadPDCA;     //是否上传PDCA
-    PDCA         *pdca;             //PDCA对象
+//    PDCA         *pdca;             //PDCA对象
 
 }
 
@@ -302,8 +302,8 @@ NSString  *param_path=@"Param";
                 //========================test Code============================
                 BOOL uartConnect=[fixtureSerial Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
                 
-                //测试代码
-                uartConnect = YES;
+//                //测试代码
+//                uartConnect = YES;
                 
                 if (uartConnect)
                 {
@@ -338,8 +338,8 @@ NSString  *param_path=@"Param";
         {
            BOOL agilent3458A_isOpen = [agilent3458A FindAndOpen:nil];
             
-            //测试代码
-            agilent3458A_isOpen = YES;
+//            //测试代码
+//            agilent3458A_isOpen = YES;
             
             if (agilent3458A_isOpen)
             {
@@ -371,8 +371,8 @@ NSString  *param_path=@"Param";
         {
             BOOL isCollect=[humitureSerial Open:param.humiture_uart_port_name BaudRate:BAUD_9600 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
             
-            //测试代码
-            isCollect = YES;
+//            //测试代码
+//            isCollect = YES;
             
             if (isCollect)
             {
@@ -405,17 +405,17 @@ NSString  *param_path=@"Param";
         //------------------------------------------------------------
         if(index==3)
         {
-            //测试代码
-            param.isWaveNeed = YES;
+//            //测试代码
+//            param.isWaveNeed = YES;
             
             if (param.isWaveNeed)  //有些工站需要，有些不需要
             {
                 BOOL agilent33210A_isFind = [agilent33210A Find:nil andCommunicateType:Agilent33210A_USB_Type];
                 BOOL agilent33210A_isOpen =[agilent33210A OpenDevice: nil andCommunicateType:Agilent33210A_USB_Type];
              
-                //测试代码
-                agilent33210A_isFind = YES;
-                agilent33210A_isOpen = YES;
+//                //测试代码
+//                agilent33210A_isFind = YES;
+//                agilent33210A_isOpen = YES;
                 
                 if (agilent33210A_isFind && agilent33210A_isOpen)
                 {
@@ -581,7 +581,7 @@ NSString  *param_path=@"Param";
             if (row_index == 0)
             {
                 NSLog(@"j记录 pdca 的起始测试时间");
-                [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
+//                [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
             
@@ -645,7 +645,7 @@ NSString  *param_path=@"Param";
             //========定时器结束========
             [mkTimer endTimer];
             //记录PDCA结束时间;记录测试结束时间
-            [pdca PDCA_GetEndTime];
+//            [pdca PDCA_GetEndTime];
             ct_cnt = 0;
             //========================
             
@@ -661,7 +661,7 @@ NSString  *param_path=@"Param";
                 testNum++; //测试
                 
                 //文件夹路径
-                NSString *currentPath=@"/Users/value";
+                NSString *currentPath=@"/valut";
         
                 //测试结束并创建文件的时间
                 end_time = [[GetTimeDay shareInstance] getFileTime];
@@ -737,8 +737,7 @@ NSString  *param_path=@"Param";
             //上传PDCA和SFC
             if (isUpLoadPDCA)
             {
-                
-                [self UploadPDCA];
+//                [self UploadPDCA];
             }
             
             if (isUpLoadSFC)
@@ -976,8 +975,8 @@ NSString  *param_path=@"Param";
                         
                         agilentReadString=[agilent3458A ReadData:16];
                         
-                        //测试代码
-                        agilentReadString = @"0.5";
+//                        //测试代码
+//                        agilentReadString = @"0.5";
                         
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
@@ -996,8 +995,8 @@ NSString  *param_path=@"Param";
                                 [agilent3458A WriteLine:@"END"];
                                 agilentReadString=[agilent3458A ReadData:16];
                                 
-                                //测试代码
-                                agilentReadString = @"0.5";
+//                                //测试代码
+//                                agilentReadString = @"0.5";
                                 
                                 break;
                             }
@@ -1012,8 +1011,8 @@ NSString  *param_path=@"Param";
                     [agilent3458A WriteLine:@"END"];
                     agilentReadString=[agilent3458A ReadData:16];
                     
-                    //测试代码
-                    agilentReadString = @"5.5";
+//                    //测试代码
+//                    agilentReadString = @"5.5";
                 }
                 
                 float num=[agilentReadString floatValue];
@@ -1202,58 +1201,63 @@ NSString  *param_path=@"Param";
 
 
 
-//================================================
-//上传pdca
-//================================================
--(void)UploadPDCA
-{
-    BOOL PF = YES;    //所有测试项是否pass
-    //========================尚不清楚下面的参数意思
-    [pdca PDCA_Init:importSN.stringValue SW_name:param.sw_name SW_ver:param.sw_ver];   //上传sn，sw_name,sw_ver
-    [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
-    //========================
-    for(int i=0;i<[itemArr count];i++)
-    {
-        Item *testitem=itemArr[i];
-        
-        if(testitem.isTest)  //需要测试的才需要上传
-        {
-            Item *testitem = itemArr[i];
-             BOOL pass_fail=YES;
-            if( ![testitem.result isEqualToString:@"PASS"] )
-            {
-                pass_fail = NO;
-                
-                PF = NO;
-            }
-            
-            
-            [pdca PDCA_UploadValue:testitem.testName
-                             Lower:testitem.min
-                             Upper:testitem.max
-                              Unit:testitem.units
-                             Value:testitem.value
-                         Pass_Fail:pass_fail
-             ];
+//=================== 上传 PDCA 
 
-        }
-        else //如果测试结果只有pass或fail
-        {
-            if([testitem.result isEqualToString:@"PASS"])
-            {
-                [pdca PDCA_UploadPass:testitem.testName];
-            }
-            else
-            {
-                [pdca PDCA_UploadFail:testitem.testName Message:testitem.messageError];
-                 PF = NO;
-            }
-        }
-        
-    }
-    
-    [pdca PDCA_Upload:PF];     //上传汇总结果
-}
+
+
+
+////================================================
+////上传pdca
+////================================================
+//-(void)UploadPDCA
+//{
+//    BOOL PF = YES;    //所有测试项是否pass
+//    //========================尚不清楚下面的参数意思
+//    [pdca PDCA_Init:importSN.stringValue SW_name:param.sw_name SW_ver:param.sw_ver];   //上传sn，sw_name,sw_ver
+//    [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
+//    //========================
+//    for(int i=0;i<[itemArr count];i++)
+//    {
+//        Item *testitem=itemArr[i];
+//        
+//        if(testitem.isTest)  //需要测试的才需要上传
+//        {
+//            Item *testitem = itemArr[i];
+//             BOOL pass_fail=YES;
+//            if( ![testitem.result isEqualToString:@"PASS"] )
+//            {
+//                pass_fail = NO;
+//                
+//                PF = NO;
+//            }
+//            
+//            
+//            [pdca PDCA_UploadValue:testitem.testName
+//                             Lower:testitem.min
+//                             Upper:testitem.max
+//                              Unit:testitem.units
+//                             Value:testitem.value
+//                         Pass_Fail:pass_fail
+//             ];
+//
+//        }
+//        else //如果测试结果只有pass或fail
+//        {
+//            if([testitem.result isEqualToString:@"PASS"])
+//            {
+//                [pdca PDCA_UploadPass:testitem.testName];
+//            }
+//            else
+//            {
+//                [pdca PDCA_UploadFail:testitem.testName Message:testitem.messageError];
+//                 PF = NO;
+//            }
+//        }
+//        
+//    }
+//    
+//    [pdca PDCA_Upload:PF];     //上传汇总结果
+//}
 
 
 
@@ -1306,8 +1310,8 @@ NSString  *param_path=@"Param";
         
         NSString * humStr=[humitureSerial ReadExisting];
         
-        //测试代码
-        humStr = @"12℃,45%";
+//        //测试代码
+//        humStr = @"12℃,45%";
         
         humStr = [humStr stringByReplacingOccurrencesOfString:@"," withString:@"/"];
         
