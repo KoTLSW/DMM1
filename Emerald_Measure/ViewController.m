@@ -302,8 +302,8 @@ NSString  *param_path=@"Param";
                 //========================test Code============================
                 BOOL uartConnect=[fixtureSerial Open:param.fixture_uart_port_name BaudRate:BAUD_115200 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
                 
-//                //测试代码
-//                uartConnect = YES;
+                //测试代码
+                uartConnect = YES;
                 
                 if (uartConnect)
                 {
@@ -338,8 +338,8 @@ NSString  *param_path=@"Param";
         {
            BOOL agilent3458A_isOpen = [agilent3458A FindAndOpen:nil];
             
-//            //测试代码
-//            agilent3458A_isOpen = YES;
+            //测试代码
+            agilent3458A_isOpen = YES;
             
             if (agilent3458A_isOpen)
             {
@@ -371,8 +371,8 @@ NSString  *param_path=@"Param";
         {
             BOOL isCollect=[humitureSerial Open:param.humiture_uart_port_name BaudRate:BAUD_9600 DataBit:DATA_BITS_8 StopBit:StopBitsOne Parity:PARITY_NONE FlowControl:FLOW_CONTROL_NONE];
             
-//            //测试代码
-//            isCollect = YES;
+            //测试代码
+            isCollect = YES;
             
             if (isCollect)
             {
@@ -405,17 +405,17 @@ NSString  *param_path=@"Param";
         //------------------------------------------------------------
         if(index==3)
         {
-//            //测试代码
-//            param.isWaveNeed = YES;
+            //测试代码
+            param.isWaveNeed = YES;
             
             if (param.isWaveNeed)  //有些工站需要，有些不需要
             {
                 BOOL agilent33210A_isFind = [agilent33210A Find:nil andCommunicateType:Agilent33210A_USB_Type];
                 BOOL agilent33210A_isOpen =[agilent33210A OpenDevice: nil andCommunicateType:Agilent33210A_USB_Type];
              
-//                //测试代码
-//                agilent33210A_isFind = YES;
-//                agilent33210A_isOpen = YES;
+                //测试代码
+                agilent33210A_isFind = YES;
+                agilent33210A_isOpen = YES;
                 
                 if (agilent33210A_isFind && agilent33210A_isOpen)
                 {
@@ -705,7 +705,7 @@ NSString  *param_path=@"Param";
                     [titleMutableStr appendString:[NSString stringWithFormat:@",%@",titleStr]];
                 }
                 
-                NSString *csvTitle = [NSString stringWithFormat:@"SN,TestResult,%@,HumitureValue,StartTime,EndTime",titleMutableStr];
+                NSString *csvTitle = [NSString stringWithFormat:@"SN,TestResult,%@,TempValue,StartTime,EndTime",titleMutableStr];
                 NSString *humitureCSVTitle = [NSString stringWithFormat:@"SN,TestResult,HumitureValue,StartTime,EndTime"];
                 
                 //csv测试项内容,同上
@@ -976,8 +976,8 @@ NSString  *param_path=@"Param";
                         
                         agilentReadString=[agilent3458A ReadData:16];
                         
-//                        //测试代码
-//                        agilentReadString = @"0.5";
+                        //测试代码
+                        agilentReadString = @"0.5";
                         
                         //大于1，直接跳出，并发送reset指令
                         if (agilentReadString.length>0&&[agilentReadString floatValue]>=1)
@@ -996,8 +996,8 @@ NSString  *param_path=@"Param";
                                 [agilent3458A WriteLine:@"END"];
                                 agilentReadString=[agilent3458A ReadData:16];
                                 
-//                                //测试代码
-//                                agilentReadString = @"0.5";
+                                //测试代码
+                                agilentReadString = @"0.5";
                                 
                                 break;
                             }
@@ -1012,8 +1012,8 @@ NSString  *param_path=@"Param";
                     [agilent3458A WriteLine:@"END"];
                     agilentReadString=[agilent3458A ReadData:16];
                     
-//                    //测试代码
-//                    agilentReadString = @"5.5";
+                    //测试代码
+                    agilentReadString = @"5.5";
                 }
                 
                 float num=[agilentReadString floatValue];
@@ -1305,7 +1305,10 @@ NSString  *param_path=@"Param";
         sleep(2);
         
         NSString * humStr=[humitureSerial ReadExisting];
-//        humStr = @"12,45";
+        
+        //测试代码
+        humStr = @"12℃,45%";
+        
         humStr = [humStr stringByReplacingOccurrencesOfString:@"," withString:@"/"];
         
         dispatch_async(dispatch_get_main_queue(), ^{
