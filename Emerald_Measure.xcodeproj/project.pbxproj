@@ -80,7 +80,6 @@
 		C6C611A21EC0ED5000E0099D /* BYDSFCUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C6119E1EC0ED5000E0099D /* BYDSFCUnit.m */; };
 		C6C611A31EC0ED5000E0099D /* TestStep.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611A01EC0ED5000E0099D /* TestStep.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C6C611A61EC0EFE500E0099D /* pudding.mm in Sources */ = {isa = PBXBuildFile; fileRef = C6C611A41EC0EFE500E0099D /* pudding.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		C6C611A81EC0F02500E0099D /* Regex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6C611A71EC0F02500E0099D /* Regex.framework */; };
 		C6C611AC1EC0F1A300E0099D /* PlistFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611AB1EC0F1A300E0099D /* PlistFile.m */; };
 		C6C611AF1EC0F20B00E0099D /* TimeDate.m in Sources */ = {isa = PBXBuildFile; fileRef = C6C611AE1EC0F20B00E0099D /* TimeDate.m */; };
 /* End PBXBuildFile section */
@@ -242,7 +241,6 @@
 		C6C611A01EC0ED5000E0099D /* TestStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestStep.m; sourceTree = "<group>"; };
 		C6C611A41EC0EFE500E0099D /* pudding.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = pudding.mm; sourceTree = "<group>"; };
 		C6C611A51EC0EFE500E0099D /* pudding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pudding.h; sourceTree = "<group>"; };
-		C6C611A71EC0F02500E0099D /* Regex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Regex.framework; sourceTree = "<group>"; };
 		C6C611A91EC0F1A300E0099D /* BYDSFCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BYDSFCManager.h; sourceTree = "<group>"; };
 		C6C611AA1EC0F1A300E0099D /* PlistFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlistFile.h; sourceTree = "<group>"; };
 		C6C611AB1EC0F1A300E0099D /* PlistFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlistFile.m; sourceTree = "<group>"; };
@@ -255,7 +253,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C6C611A81EC0F02500E0099D /* Regex.framework in Frameworks */,
 				4C9EE8391EADE79000B9089E /* libInstantPudding.dylib in Frameworks */,
 				4C9EE82E1EADE69400B9089E /* VISA.framework in Frameworks */,
 				4C9EE83A1EADE79000B9089E /* libIPSFCPost.dylib in Frameworks */,
@@ -515,7 +512,6 @@
 		4CFEFB4B1EBF08ED00353ABF /* Device */ = {
 			isa = PBXGroup;
 			children = (
-				C6C611A71EC0F02500E0099D /* Regex.framework */,
 				4CFEFB791EBF151600353ABF /* GPIBDevice.framework */,
 				4CFEFB7B1EBF152700353ABF /* GPIBDevice.h */,
 				C67112B41EC4EADC006975BF /* Agilent3458A.h */,

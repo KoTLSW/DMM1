@@ -11,7 +11,7 @@
 #import "PlistFile.h"
 #import "PDCA.h"
 #import "Macro.h"￼
-#import <Regex/Regex.h>
+//#import <Regex/Regex.h>
 
 
 // 指定的检查类型

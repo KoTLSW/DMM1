@@ -10,8 +10,10 @@
 	<string>000001</string>
 	<key>fixture_uart_baud</key>
 	<integer>115200</integer>
-	<key>fixture_uart_port_name</key>
+	<key>fixture_uart_port_name-0</key>
 	<string>/dev/cu.usbserial-A103PRKA</string>
+	<key>fixture_uart_port_name</key>
+	<string>/dev/cu.usbserial-A103PRKD</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
 	<key>fixture_uart_parity</key>
