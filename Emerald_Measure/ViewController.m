@@ -289,6 +289,7 @@ NSString  *param_path=@"Param";
             {
                 dispatch_sync(dispatch_get_main_queue(), ^{
                     currentStateMsg.stringValue=@"index=0,治具已经连接";
+                    [fixtureSerial WriteLine:@"reset"];
                     currentStateMsg.backgroundColor = [NSColor yellowColor];
                     currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                 });
@@ -309,6 +310,7 @@ NSString  *param_path=@"Param";
                 {
                     dispatch_sync(dispatch_get_main_queue(), ^{
                         currentStateMsg.stringValue=@"index=0,治具已经连接";
+                         [fixtureSerial WriteLine:@"reset"];
                         currentStateMsg.backgroundColor = [NSColor yellowColor];
                         currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     });
@@ -462,9 +464,9 @@ NSString  *param_path=@"Param";
         //------------------------------------------------------------
         if (index==4)
         {
-            while (isTouch)
-            {
-                isTouch=false;//下压成功
+//            while (isTouch)
+//            {
+//                isTouch=false;//下压成功
                 [fixtureSerial WriteLine:@"reset"];
                 sleep(0.5);
         
@@ -474,22 +476,32 @@ NSString  *param_path=@"Param";
                     currentStateMsg.backgroundColor = [NSColor yellowColor];
                     currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
                     NSLog(@"复位成功!");
-                    break;
+                    sleep(1);
+//                    break;
                 }
-            }
+                else
+                {
+                    currentStateMsg.stringValue=@"复位失败!";
+                    currentStateMsg.backgroundColor = [NSColor redColor];
+                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+                    NSLog(@"复位失败!");
+                    sleep(1);
+//                    break;
+                }
+//            }
             
             sleep(0.5);
-            if(![currentStateMsg.stringValue containsString:@"请按双启按钮"])
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    currentStateMsg.stringValue = @"请按双启按钮";
-                    currentStateMsg.backgroundColor = [NSColor yellowColor];
-                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
-                    //***********TestCode***********************//
-                    //index=5;
-                    //********************************************//
-                });
-            }
+//            if(![currentStateMsg.stringValue containsString:@"请按双启按钮"])
+//            {
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    currentStateMsg.stringValue = @"请按双启按钮";
+//                    currentStateMsg.backgroundColor = [NSColor yellowColor];
+//                    currentStateMsgBG.backgroundColor = currentStateMsg.backgroundColor;
+//                    //***********TestCode***********************//
+//                    //index=5;
+//                    //********************************************//
+//                });
+//            }
         
             //返回Teststart,可以开始检测SN
             if ([[fixtureSerial ReadExisting] isEqualToString:@"TestStart"])
@@ -632,6 +644,10 @@ NSString  *param_path=@"Param";
                     sleep(0.5);
                 });
                 
+                
+                [fixtureSerial WriteLine:@"reset"];
+                sleep(0.7);
+            
                 index = 7;
             }
         }
@@ -881,7 +897,7 @@ NSString  *param_path=@"Param";
             NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand);
             
             [fixtureSerial WriteLine:SonTestCommand];
-            sleep(0.2);
+            sleep(0.7);
             
             NSString  * readString;
             int indexTime=0;
@@ -891,6 +907,7 @@ NSString  *param_path=@"Param";
                 readString=[fixtureSerial ReadExisting];
                 if ([readString isEqualToString:@"RESET_OK"]||indexTime==[testitem.retryTimes intValue])
                 {
+                    sleep(3);
                     break;
                 }
                 indexTime++;
@@ -927,7 +944,8 @@ NSString  *param_path=@"Param";
             {
                 NSLog(@"波形发生器其它情况");
             }
-
+            
+            sleep(1);
             NSLog(@"%@*************示波器发送指令**************%@",SonTestDevice,SonTestCommand);
             
         }
@@ -1015,65 +1033,65 @@ NSString  *param_path=@"Param";
 //                    agilentReadString = @"5.5";
                 }
                 
-                float num=[agilentReadString floatValue];
-                
-                if ([SonTestCommand containsString:@"Read"])
-                {
-                    if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
-                    {
-                        testitem.value = [NSString stringWithFormat:@"%.3f", (((0.8 - num)/num)*10)/1000];
-                    }
-                    else if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
-                    {
-                        if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
-                        {
-                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
-                        }
-                        
-                        else
-                        {
-                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
-                        }
-                    }
-                    else if ([testitem.units isEqualToString:@"kΩ"]&&[SonTestCommand containsString:@"Read"])//KΩ的情况计算
-                    {
-                        num=num/(10E+02);
-                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
-                    }
-                    
-                    else if ([testitem.units containsString:@"uA"]&&[SonTestCommand containsString:@"Read"])
-                    {
-                        testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
-                    }
-                    
-                    else
-                    {
-                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
-                    }
-                    
-                    if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue])
-                    {
-                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
-                        testitem.result = @"PASS";
-                        ispass = YES;
-                    }
-                    
-                    else if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
-                    {
-                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
-                        testitem.result = @"PASS";
-                        testItem.messageError=nil;
-                        ispass = YES;
-                    }
-                    
-                    else
-                    {
-                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
-                        testitem.result = @"FAIL";
-                        testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
-                        ispass = NO;
-                    }
-                }
+//                float num=[agilentReadString floatValue];
+//                
+//                if ([SonTestCommand containsString:@"Read"])
+//                {
+//                    if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
+//                    {
+//                        testitem.value = [NSString stringWithFormat:@"%.3f", (((0.8 - num)/num)*10)/1000];
+//                    }
+//                    else if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
+//                    {
+//                        if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
+//                        {
+//                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
+//                        }
+//                        
+//                        else
+//                        {
+//                            testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
+//                        }
+//                    }
+//                    else if ([testitem.units isEqualToString:@"kΩ"]&&[SonTestCommand containsString:@"Read"])//KΩ的情况计算
+//                    {
+//                        num=num/(10E+02);
+//                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+//                    }
+//                    
+//                    else if ([testitem.units containsString:@"uA"]&&[SonTestCommand containsString:@"Read"])
+//                    {
+//                        testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
+//                    }
+//                    
+//                    else
+//                    {
+//                        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+//                    }
+//                    
+//                    if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue])
+//                    {
+//                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+//                        testitem.result = @"PASS";
+//                        ispass = YES;
+//                    }
+//                    
+//                    else if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
+//                    {
+//                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+//                        testitem.result = @"PASS";
+//                        testItem.messageError=nil;
+//                        ispass = YES;
+//                    }
+//                    
+//                    else
+//                    {
+//                        testitem.value  = [NSString stringWithFormat:@"%@",testitem.value];
+//                        testitem.result = @"FAIL";
+//                        testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
+//                        ispass = NO;
+//                    }
+//                }
             }
         }
         else if([SonTestDevice isEqualToString:@"SW"])
@@ -1089,7 +1107,20 @@ NSString  *param_path=@"Param";
     }
     
     //获取万用表最终的值
-    testitem.value = [NSString stringWithFormat:@"%.4f",[agilentReadString floatValue]];
+    if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",[agilentReadString floatValue]];
+        testitem.result = @"PASS";
+        testItem.messageError=nil;
+        ispass = YES;
+    }
+    else
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",[agilentReadString floatValue]];
+        testitem.result = @"FAIL";
+        testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
+        ispass = NO;
+    }
     
     NSLog(@"%@",testitem.value);
     
