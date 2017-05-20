@@ -138,8 +138,8 @@ static BYDSFCManager* bydSFC=nil;
             [urlString appendFormat:@"%@=%@&", SFC_TEST_SN, sn];
             [urlString appendFormat:@"%@=%@&",SFC_TEST_C_TYPE,@"QUERY_RECORD"];
             [urlString appendFormat:@"%@=%@",SFC_TEST_P_TYPE,@"bda"];
-//            _strUpdateBDA=strbdaSerial;
-//            [self setStrUpdateBDA:strbdaSerial];
+            _strUpdateBDA=strbdaSerial;
+            [self setStrUpdateBDA:strbdaSerial];
         }
             break;
         default:
@@ -154,7 +154,7 @@ static BYDSFCManager* bydSFC=nil;
 {
     BOOL flag = NO;
     _isCheckPass = NO;
-    //[[TestLog Instance] WriteLogResult:[GetTimeDay GetCurrentTime] andText:urlString];
+//    [[TestLog Instance] WriteLogResult:[GetTimeDay GetCurrentTime] andText:urlString];
     NSString* url = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest* urlRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     
@@ -223,35 +223,35 @@ static BYDSFCManager* bydSFC=nil;
     {
         if (_SFCCheckType==e_BDA_VERIFY_CHECK)
         {
-//             NSString* strBDARegex=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(\\w*)(?=)"];
-//             strBDARegex=[strBDARegex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//             NSLog(@"regex bda:%@",strBDARegex);
+             NSString* strBDARegex=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(\\w*)(?=)"];
+             strBDARegex=[strBDARegex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+             NSLog(@"regex bda:%@",strBDARegex);
              NSLog(@"Update bda:%@",_strUpdateBDA);
-//            [strLogFile appendFormat:@"regex bda:%@\r\n",strBDARegex];
+            [strLogFile appendFormat:@"regex bda:%@\r\n",strBDARegex];
             [strLogFile appendFormat:@"Update bda:%@\r\n",_strUpdateBDA];
             
-//            if ([strBDARegex isEqualToString:_strUpdateBDA])
-//            {
-//                _SFCErrorType=SFC_Success;
-//                NSLog(@"upload bda is equal to http back bda");
-//                [strLogFile appendString:@"upload bda is equal to http back bda\r\n"];
-//            }
-//            else
-//            {
-//                _SFCErrorType=SFC_BDA_Not_Regex_SN;
-//                NSLog(@"upload bda is not equal to http back bda");
-//                [strLogFile appendString:@"upload bda is not equal to http back bda\r\n"];
-//            }
+            if ([strBDARegex isEqualToString:_strUpdateBDA])
+            {
+                _SFCErrorType=SFC_Success;
+                NSLog(@"upload bda is equal to http back bda");
+                [strLogFile appendString:@"upload bda is equal to http back bda\r\n"];
+            }
+            else
+            {
+                _SFCErrorType=SFC_BDA_Not_Regex_SN;
+                NSLog(@"upload bda is not equal to http back bda");
+                [strLogFile appendString:@"upload bda is not equal to http back bda\r\n"];
+            }
         }
         
         //*******************************2016/8/6*************************************************************
         else if (_SFCCheckType==e_BDA_QUERY_CHECK)
         {
-//            NSString* strBDARegex=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(\\w*)(?=)"];
-//            strBDARegex=[strBDARegex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//            [[BYDSFCManager Instance]setStrMSEBDA:strBDARegex];
+            NSString* strBDARegex=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(\\w*)(?=)"];
+            strBDARegex=[strBDARegex stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [[BYDSFCManager Instance]setStrMSEBDA:strBDARegex];
             NSLog(@"====================%@",[BYDSFCManager Instance].strMSEBDA);
-//            [strLogFile appendFormat:@"query bda:%@\r\n",strBDARegex];
+            [strLogFile appendFormat:@"query bda:%@\r\n",strBDARegex];
             _SFCErrorType=SFC_Success;
         }
         //*******************************2016/8/6*************************************************************
@@ -260,61 +260,61 @@ static BYDSFCManager* bydSFC=nil;
             _SFCErrorType=SFC_Success;
         }
     }
-//    else if ([Regex RegexBoolResult:backFromHttpStr andRegex:@"Done"])
-//    {
-//        _SFCErrorType =SFC_SN_Error;
-//    }
-//    else if ([Regex RegexBoolResult:backFromHttpStr andRegex:@"ERROR"])
-//    {
-//        NSString* strResult=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<=：)(.*?)(?=,)"];
-//        
-//        if ([Regex RegexBoolResult:strResult andRegex:[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_FRONT_STATION_NAME]])
-//        {
-//            _SFCErrorType=SFC_StayInFrontStation;
-//        }
-//        else if ([Regex RegexBoolResult:strResult andRegex:[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_NEXT_STATION_NAME]])
-//        {
-//            if (_SFCCheckType==e_COMPLETE_RESULT_CHECK)
-//            {
-//                _SFCErrorType=SFC_Success;
-//                NSLog(@"This is check Test result");
-//                [strLogFile appendString:@"This is check Test result\r\n"];
-//            }
-//            else
-//            {
-//               _SFCErrorType=SFC_StayInNextStation;
-//                 NSLog(@"This is check SN");
-//                [strLogFile appendString:@"This is check SN\r\n"];
-//            }
-//        }
-//        else if([Regex RegexBoolResult:backFromHttpStr andRegex:@"Exceeded"])
-//        {
-//            _SFCErrorType=SFC_OutOfTestCount;
-//        }
-//        else if([Regex RegexBoolResult:backFromHttpStr andRegex:@"exist"])
-//        {
-//            NSString* strBackBindSN=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(.*?)(?=;)"];
-//            
-//            if (strBackBindSN!=nil && [strBackBindSN isEqualToString:_strSN])
-//            {
-//                _SFCErrorType=SFC_Success;
-//                NSLog(@"BDA Binding success");
-//                [strLogFile appendString:@"BDA Binding success\r\n"];
-//
-//            }
-//            else
-//            {
-//                 _SFCErrorType=SFC_Exist_Error;
-//                 NSLog(@"BDA Binding error");
-//                [strLogFile appendString:@"BDA Binding error\r\n"];
-//            }
-//        }
-//        
-//        else
-//        {
-//            _SFCErrorType=SFC_SN_Error;
-//        }
-//    }
+    else if ([Regex RegexBoolResult:backFromHttpStr andRegex:@"Done"])
+    {
+        _SFCErrorType =SFC_SN_Error;
+    }
+    else if ([Regex RegexBoolResult:backFromHttpStr andRegex:@"ERROR"])
+    {
+        NSString* strResult=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<=：)(.*?)(?=,)"];
+        
+        if ([Regex RegexBoolResult:strResult andRegex:[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_FRONT_STATION_NAME]])
+        {
+            _SFCErrorType=SFC_StayInFrontStation;
+        }
+        else if ([Regex RegexBoolResult:strResult andRegex:[[configPlist ReadDictionary:CONFIG_SFC] objectForKey:CONFIG_SFC_NEXT_STATION_NAME]])
+        {
+            if (_SFCCheckType==e_COMPLETE_RESULT_CHECK)
+            {
+                _SFCErrorType=SFC_Success;
+                NSLog(@"This is check Test result");
+                [strLogFile appendString:@"This is check Test result\r\n"];
+            }
+            else
+            {
+               _SFCErrorType=SFC_StayInNextStation;
+                 NSLog(@"This is check SN");
+                [strLogFile appendString:@"This is check SN\r\n"];
+            }
+        }
+        else if([Regex RegexBoolResult:backFromHttpStr andRegex:@"Exceeded"])
+        {
+            _SFCErrorType=SFC_OutOfTestCount;
+        }
+        else if([Regex RegexBoolResult:backFromHttpStr andRegex:@"exist"])
+        {
+            NSString* strBackBindSN=[Regex RegexStrResult:backFromHttpStr andRegex:@"(?<==)(.*?)(?=;)"];
+            
+            if (strBackBindSN!=nil && [strBackBindSN isEqualToString:_strSN])
+            {
+                _SFCErrorType=SFC_Success;
+                NSLog(@"BDA Binding success");
+                [strLogFile appendString:@"BDA Binding success\r\n"];
+
+            }
+            else
+            {
+                 _SFCErrorType=SFC_Exist_Error;
+                 NSLog(@"BDA Binding error");
+                [strLogFile appendString:@"BDA Binding error\r\n"];
+            }
+        }
+        
+        else
+        {
+            _SFCErrorType=SFC_SN_Error;
+        }
+    }
     
     _isCheckPass = YES;
 

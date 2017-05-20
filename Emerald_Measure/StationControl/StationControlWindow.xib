@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
@@ -25,18 +24,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zTa-J4-Fuv">
-                        <rect key="frame" x="14" y="172" width="79" height="18"/>
-                        <buttonCell key="cell" type="radio" title="Station_0" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ssH-op-Z24">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="clickStation_0:" target="-2" id="Ql2-kP-lwk"/>
-                        </connections>
-                    </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uyc-5V-d4T">
-                        <rect key="frame" x="135" y="172" width="76" height="18"/>
+                        <rect key="frame" x="132" y="164" width="87" height="31"/>
                         <buttonCell key="cell" type="radio" title="Station_1" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ZGj-s9-mKh">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -46,7 +35,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tIZ-rf-Awd">
-                        <rect key="frame" x="260" y="172" width="79" height="18"/>
+                        <rect key="frame" x="247" y="164" width="89" height="31"/>
                         <buttonCell key="cell" type="radio" title="Station_2" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="l8Q-sJ-BRL">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -56,7 +45,7 @@
                         </connections>
                     </button>
                     <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oq6-9U-rxf">
-                        <rect key="frame" x="383" y="172" width="79" height="18"/>
+                        <rect key="frame" x="370" y="164" width="97" height="30"/>
                         <buttonCell key="cell" type="radio" title="Station_3" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="1p7-lT-ffU">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
@@ -109,6 +98,16 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zTa-J4-Fuv">
+                        <rect key="frame" x="14" y="164" width="96" height="31"/>
+                        <buttonCell key="cell" type="radio" title="Station_0" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ssH-op-Z24">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="clickStation_0:" target="-2" id="Ql2-kP-lwk"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>

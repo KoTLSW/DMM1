@@ -67,7 +67,8 @@
     BOOL      _pdca_is_upload;
     
     //波形发生器类
-    BOOL      _isWaveNeed;
+    BOOL        _isWaveNeed;
+    BOOL        _isDebug;
     NSString * _s_build;
     NSString * _waveOffset;
     NSString * _waveFrequence;
@@ -99,6 +100,7 @@
 @synthesize fixture_id             = _fixture_id;
 @synthesize file_path              = _file_path;
 @synthesize isWaveNeed             = _isWaveNeed;
+@synthesize isDebug                = _isDebug;
 @synthesize s_build                = _s_build;
 @synthesize waveVolt               = _waveVolt;
 @synthesize waveOffset             = _waveOffset;
@@ -163,6 +165,7 @@
     self.file_path             =[dictionary objectForKey:@"file_path"];
     //是否需要波形发生器
     self.isWaveNeed            =[[dictionary objectForKey:@"isWaveNeed"] boolValue];
+    self.isDebug               =[[dictionary objectForKey:@"isDebug"] boolValue];
     self.waveFrequence         =[dictionary objectForKey:@"waveFrequence"];
     self.waveOffset            =[dictionary objectForKey:@"waveOffset"];
     self.waveVolt              =[dictionary objectForKey:@"waveVolt"];
@@ -173,7 +176,6 @@
     //s_build
     self.s_build               =[dictionary objectForKey:@"s_build"];
     
-                                   
     self.pcb_uart_port_name     = [dictionary objectForKey:@"pcb_uart_port_name"];
     self.pcb_uart_baud          = [[dictionary objectForKey:@"pcb_uart_baud"]integerValue];
     
@@ -219,27 +221,25 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     
     //添加内容
-    [dictionary setObject:_csv_path                                            forKey:@"csv_path"];
-    [dictionary setObject:_dut_type                                            forKey:@"dut_type"];
-    [dictionary setObject:_ui_title                                            forKey:@"ui_title"];
-    [dictionary setObject:_sw_name                                             forKey:@"sw_name"];
-    [dictionary setObject:_sw_ver                                              forKey:@"sw_ver"];
-    [dictionary setObject:_fixture_uart_port_name                              forKey:@"fixture_uart_port_name"];
-    [dictionary setObject:[NSNumber numberWithInteger:_fixture_uart_baud]      forKey:@"fixture_uart_baud"];
+    [dictionary setObject:_csv_path forKey:@"csv_path"];
+    [dictionary setObject:_dut_type forKey:@"dut_type"];
+    [dictionary setObject:_ui_title forKey:@"ui_title"];
+    [dictionary setObject:_sw_name  forKey:@"sw_name"];
+    [dictionary setObject:_sw_ver   forKey:@"sw_ver"];
+    [dictionary setObject:_fixture_uart_port_name forKey:@"fixture_uart_port_name"];
+    [dictionary setObject:[NSNumber numberWithInteger:_fixture_uart_baud] forKey:@"fixture_uart_baud"];
     //温湿度传感器
-     [dictionary setObject:_humiture_uart_port_name                              forKey:@"humiture_uart_port_name"];
-    [dictionary setObject:[NSNumber numberWithInteger:_humiture_uart_baud]                              forKey:@"humiture_uart_baud"];
+    [dictionary setObject:_humiture_uart_port_name forKey:@"humiture_uart_port_name"];
+    [dictionary setObject:[NSNumber numberWithInteger:_humiture_uart_baud] forKey:@"humiture_uart_baud"];
     [dictionary setObject:_file_path forKey:@"file_path"];
     
     
     //波形发生器
-    [dictionary setObject:[NSNumber numberWithBool:_isWaveNeed]            forKey:@"isWaveNeed"];
+    [dictionary setObject:[NSNumber numberWithBool:_isWaveNeed] forKey:@"isWaveNeed"];
+    [dictionary setObject:[NSNumber numberWithBool:_isDebug] forKey:@"isDebug"];
     [dictionary setObject:_waveOffset forKey:@"waveOffset"];
-    
     [dictionary setObject:_waveFrequence forKey:@"waveFrequence"];
-    
     [dictionary setObject:_waveVolt forKey:@"waveVolt"];
-    
     [dictionary setObject:@"s_build" forKey:@"s_build"];
     
     

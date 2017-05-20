@@ -1,0 +1,200 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red170\green13\blue145;\red92\green38\blue153;\red46\green13\blue110;
+\red63\green110\blue116;\red38\green71\blue75;\red196\green26\blue22;\red28\green0\blue207;\red100\green56\blue32;
+\red0\green116\blue0;}
+{\*\expandedcolortbl;;\csgenericrgb\c66667\c5098\c56863;\csgenericrgb\c36078\c14902\c60000;\csgenericrgb\c18039\c5098\c43137;
+\csgenericrgb\c24706\c43137\c45490;\csgenericrgb\c14902\c27843\c29412;\csgenericrgb\c76863\c10196\c8627;\csgenericrgb\c10980\c0\c81176;\csgenericrgb\c39216\c21961\c12549;
+\csgenericrgb\c0\c45490\c0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww26200\viewh15280\viewkind0
+\deftab529
+\pard\tx529\pardeftab529\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf0 \CocoaLigature0 -(\cf2 void\cf0 )PushInstantPudding:(\cf3 NSString\cf0  *)thisPort\{\
+	\cf2 id\cf0  POOL=[[\cf3 NSAutoreleasePool\cf0  \cf4 alloc\cf0 ] \cf4 init\cf0 ];\
+	\cf2 if\cf0 (\cf5 puddingOn\cf0 )\{\
+		\
+		\cf2 int\cf0  portId=[thisPort \cf4 intValue\cf0 ];\
+		\
+		\cf3 NSMutableArray\cf0  *cPuddingValues=[[\cf3 NSMutableArray\cf0  \cf4 alloc\cf0 ] \cf4 initWithArray\cf0 :\cf5 puddingValues\cf0 [portId]];\
+		\cf3 NSMutableArray\cf0  *cPuddingResults=[[\cf3 NSMutableArray\cf0  \cf4 alloc\cf0 ] \cf4 initWithArray\cf0 :\cf5 puddingResults\cf0 [portId]];\
+		\cf3 NSMutableArray\cf0  *cfailItems=[[\cf3 NSMutableArray\cf0  \cf4 alloc\cf0 ] \cf4 initWithArray\cf0 :\cf5 failItems\cf0 [portId]];\
+		\cf3 NSString\cf0  *theSN=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 SN\cf0 [portId]];\
+\
+        \cf3 NSString\cf0  *theMPN=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 mpns\cf0 [portId]];\
+		\cf3 NSString\cf0  *theRegion=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 regiones\cf0 [portId]];\
+        \cf3 NSString\cf0  *theCFG=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 CFGNum\cf0 [portId]];\
+\
+       \
+        \cf3 NSString\cf0  *Mdlc=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 MdlC\cf0 [portId]];\
+\
+        \cf3 NSString\cf0  *MkBSString=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 MkBS\cf0 [portId]];\
+        \cf3 NSString\cf0  *MkBHString=[[\cf3 NSString\cf0  \cf4 alloc\cf0 ] \cf4 initWithString\cf0 :\cf5 MkBH\cf0 [portId]];\
+\
+\
+		\cf5 IP_UUTHandle\cf0  UID;\
+		\cf3 Boolean\cf0  APIcheck;\
+		\cf5 IP_TestSpecHandle\cf0  testSpec;\
+		\
+		\cf5 IP_API_Reply\cf0  reply = \cf6 IP_UUTStart\cf0 (&UID);\
+		\cf2 if\cf0 (!\cf6 IP_success\cf0 (reply))\{\
+			\cf4 NSRunAlertPanel\cf0 (\cf7 @"Confirm1"\cf0 , [\cf3 NSString\cf0  \cf4 stringWithCString\cf0 :\cf6 IP_reply_getError\cf0 (reply) \cf4 encoding\cf0 :\cf8 1\cf0 ], \cf7 @"YES"\cf0 , \cf2 nil\cf0 ,\cf2 nil\cf0 );\
+			\cf4 exit\cf0 (-\cf8 1\cf0 );\
+			\
+		\}\
+		\cf6 IP_reply_destroy\cf0 (reply);\
+		\
+		\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_STATIONSOFTWAREVERSION\cf0 , [\cf5 Version\cf0  \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ]  ));\
+		\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_STATIONSOFTWARENAME\cf0 , [\cf5 SWName\cf0  \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ]  ));\
+		\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_STATIONLIMITSVERSION\cf0 , [\cf5 Version\cf0  \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] ));\
+		\
+		\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_SERIALNUMBER\cf0 , [theSN \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] ));\
+        \
+       \cf10 // Upload MoPED Mdlc-v1.2.0\cf0 \
+        \cf2 if\cf0 (![Mdlc \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+            \
+            \cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_MOPED\cf0 , [Mdlc \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] ));\
+        \}\
+        \cf10 //Upload MkBS\cf0 \
+        \cf2 if\cf0 (![MkBSString \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+            \
+            \cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_MPN_SWBH\cf0 , [MkBSString \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] ));\
+        \}\
+        \cf10 //Upload MkBH\cf0 \
+        \cf2 if\cf0 (![MkBHString \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+            \
+            \cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_MPN_HWBH\cf0 , [MkBHString \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] ));\
+        \}\
+\
+        \
+      \
+		\
+		\cf3 NSString\cf0  *tt=\cf7 @"MPNBURN_log"\cf0 ;\
+		\cf6 IP_addBlob\cf0 (UID,[tt \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ],[\cf5 logfilename\cf0 [portId] \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ]);\
+		\
+       \
+		\cf2 if\cf0 ([\cf5 puddingType\cf0  \cf4 hasPrefix\cf0 :\cf7 @"MPN"\cf0 ])\{\
+			\cf2 if\cf0 (![theMPN \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+				\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_MPN\cf0 ,[theMPN \cf4 cStringUsingEncoding\cf0 :\cf8 4\cf0 ]));\
+			\}\
+			\cf2 if\cf0 (![theRegion \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+				\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_REGION_CODE\cf0 ,[theRegion \cf4 cStringUsingEncoding\cf0 :\cf8 4\cf0 ]));\
+			\}\
+			\cf2 if\cf0 (![theCFG \cf4 isEqualToString\cf0 :\cf7 @"N/A"\cf0 ])\{\
+				\cf6 handleReply\cf0 (\cf6 IP_addAttribute\cf0 ( UID, \cf9 IP_ATTRIBUTE_CFG\cf0 ,[theCFG \cf4 cStringUsingEncoding\cf0 :\cf8 4\cf0 ]));\
+			\}\
+			\
+			\
+		\}\
+		\
+		\
+		\cf2 for\cf0 (\cf2 int\cf0  i=\cf8 0\cf0 ;i<[\cf5 puddingItems\cf0 [portId] \cf4 count\cf0 ];i++)\{\
+			\cf2 id\cf0  thisPuddingItem=[\cf5 puddingItems\cf0 [portId] \cf4 objectAtIndex\cf0 :i];\
+			\
+			testSpec=\cf6 IP_testSpec_create\cf0 ();\
+			\cf3 NSString\cf0  *Title=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"NAME"\cf0 ];\
+			APIcheck=\cf6 IP_testSpec_setTestName\cf0 (testSpec, [Title \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ], [Title \cf4 length\cf0 ]);\
+			\
+			\cf3 NSString\cf0  *subTest=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"SUBNAME"\cf0 ];\
+			\cf2 if\cf0 (subTest!=\cf2 nil\cf0 )\{\
+				APIcheck = \cf6 IP_testSpec_setSubTestName\cf0 ( testSpec, [subTest \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ],[subTest \cf4 length\cf0 ]);\
+			\}\
+			\cf3 NSString\cf0  *subsubTest=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"SUBSUBNAME"\cf0 ];\
+			\cf2 if\cf0 (subsubTest!=\cf2 nil\cf0 )\{\
+				APIcheck = \cf6 IP_testSpec_setSubSubTestName\cf0 ( testSpec, [subsubTest \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ],[subsubTest \cf4 length\cf0 ]);\
+			\}\
+			\cf3 NSString\cf0  *theUpperLimit=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"UpperLimit"\cf0 ];\
+			\cf2 if\cf0 (theUpperLimit==\cf2 nil\cf0 )\{\
+				theUpperLimit=\cf7 @""\cf0 ;\
+			\}\
+			\cf3 NSString\cf0  *theLowerLimit=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"LowerLimit"\cf0 ];\
+			\cf2 if\cf0 (theLowerLimit==\cf2 nil\cf0 )\{\
+				theLowerLimit=\cf7 @""\cf0 ;\
+			\}\
+			APIcheck=\cf6 IP_testSpec_setLimits\cf0 (testSpec, [theLowerLimit \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ], [theLowerLimit \cf4 length\cf0 ], [theUpperLimit \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ], [theUpperLimit \cf4 length\cf0 ]);\
+			\cf3 NSString\cf0  *theMeasurementUnit=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"MeasurementUnit"\cf0 ];\
+			\cf2 if\cf0 (theMeasurementUnit!=\cf2 nil\cf0 )\{\
+				APIcheck=\cf6 IP_testSpec_setUnits\cf0 (testSpec, [theMeasurementUnit \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ], [theMeasurementUnit \cf4 length\cf0 ]);\
+			\}\
+			APIcheck=\cf6 IP_testSpec_setPriority\cf0 (testSpec, \cf6 IP_PRIORITY_REALTIME\cf0 );\
+			\cf5 IP_TestResultHandle\cf0  puddingResult=\cf6 IP_testResult_create\cf0 ();\
+			\cf3 NSString\cf0  *valueStr=[cPuddingValues \cf4 objectAtIndex\cf0 :i];\
+			\cf2 if\cf0 (\cf4 NSOrderedSame\cf0 ==[valueStr \cf4 compare\cf0 :\cf7 @"Pass"\cf0  \cf4 options\cf0 :\cf4 NSCaseInsensitiveSearch\cf0 ] || \cf4 NSOrderedSame\cf0 ==[valueStr \cf4 compare\cf0 :\cf7 @"Fail"\cf0  \cf4 options\cf0 :\cf4 NSCaseInsensitiveSearch\cf0 ])\{\
+				valueStr=\cf7 @""\cf0 ;\
+			\}\
+			\cf2 const\cf0  \cf2 char\cf0  *value=[valueStr \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ];\
+			\cf2 int\cf0  valueLength=[valueStr \cf4 length\cf0 ];\
+			\cf2 int\cf0  result=\cf6 IP_FAIL\cf0 ;\
+			\cf3 NSString\cf0  *resultStr=[cPuddingResults \cf4 objectAtIndex\cf0 :i];\
+			\
+			\
+			\
+			\
+			\cf2 if\cf0 ([resultStr \cf4 isEqualToString\cf0 :\cf7 @"PASS"\cf0 ])\{\
+				result=\cf6 IP_PASS\cf0 ;\
+			\}\
+			\cf2 if\cf0  (\cf6 stringisnumber\cf0 (valueStr)) \{\
+				APIcheck=\cf6 IP_testResult_setValue\cf0 (puddingResult, value,valueLength);\
+			\}\
+			APIcheck=\cf6 IP_testResult_setResult\cf0 (puddingResult, result);\
+			\cf2 if\cf0 (!result)\{\
+				\cf3 NSString\cf0  *failDes=[thisPuddingItem \cf4 objectForKey\cf0 :\cf7 @"NAME"\cf0 ];\
+				APIcheck=\cf6 IP_testResult_setMessage\cf0 (puddingResult, [failDes \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ], [failDes \cf4 length\cf0 ]);\
+			\}\
+			reply=\cf6 IP_addResult\cf0 (UID, testSpec, puddingResult);\
+			\cf2 if\cf0 (!\cf6 IP_success\cf0 (reply))\{\
+				\cf4 NSRunAlertPanel\cf0 (\cf7 @"Confirm"\cf0 , [\cf3 NSString\cf0  \cf4 stringWithCString\cf0 :\cf6 IP_reply_getError\cf0 (reply) \cf4 encoding\cf0 :\cf8 1\cf0 ], \cf7 @"YES"\cf0 , \cf2 nil\cf0 ,\cf2 nil\cf0 );\
+			\}\
+			\cf6 IP_reply_destroy\cf0 (reply);\
+			\cf6 IP_testResult_destroy\cf0 (puddingResult);\
+			\cf6 IP_testSpec_destroy\cf0 (testSpec);\
+		\}\
+        \
+		\cf5 IP_API_Reply\cf0  doneReply=\cf6 IP_UUTDone\cf0 (UID);\
+		\cf2 if\cf0 (!\cf6 IP_success\cf0 (doneReply))\{\
+			\
+			\cf4 NSRunAlertPanel\cf0 (\cf7 @"Confirm3"\cf0 , [\cf3 NSString\cf0  \cf4 stringWithCString\cf0 :\cf6 IP_reply_getError\cf0 (doneReply) \cf4 encoding\cf0 :\cf8 1\cf0 ], \cf7 @"YES"\cf0 , \cf2 nil\cf0 ,\cf2 nil\cf0 );\
+			\cf10 //exit(-1);\cf0 \
+			\cf5 IP_API_Reply\cf0  amiReply=\cf6 IP_amIOkay\cf0 ( UID, [theSN \cf4 cStringUsingEncoding\cf0 :\cf8 1\cf0 ] );\
+			\cf2 if\cf0  (!\cf6 IP_success\cf0 (amiReply)) \{\
+				\
+				\
+                \cf10 //	IP_sendStationFailureReport(UID,IP_reply_getError(amiReply), IP_reply_getError(amiReply));\cf0 \
+				\
+				\
+				\cf6 IP_reply_destroy\cf0 (amiReply);\
+			\}\
+			\
+		\}\
+		\cf6 IP_reply_destroy\cf0 (doneReply);\
+		\
+		\
+		\cf5 IP_API_Reply\cf0  commitReply;\
+		\
+		\cf2 if\cf0 ([cfailItems \cf4 count\cf0 ]>\cf8 0\cf0 )\{\
+			\
+			commitReply=\cf6 IP_UUTCommit\cf0 (UID, \cf6 IP_FAIL\cf0 );\
+			\
+			\
+		\}\
+		\cf2 else\cf0 \{\
+			\
+			\
+			commitReply=\cf6 IP_UUTCommit\cf0 (UID, \cf6 IP_PASS\cf0 );\
+			\
+		\}\
+		\cf2 if\cf0 (!\cf6 IP_success\cf0 (commitReply))\{\
+			\
+			;\
+			\
+			\
+		\}\
+		\cf6 IP_reply_destroy\cf0 (commitReply);\
+		\cf6 IP_UID_destroy\cf0 (UID);\
+	\}\
+	\
+	[POOL \cf4 release\cf0 ];\
+	\
+	\
+	\
+\}}

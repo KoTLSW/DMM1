@@ -6,6 +6,8 @@
 	<string>Test5</string>
 	<key>isWaveNeed</key>
 	<true/>
+	<key>isDebug</key>
+	<true/>
 	<key>fixture_id</key>
 	<string>000001</string>
 	<key>fixture_uart_baud</key>
@@ -51,9 +53,9 @@
 	<key>lineNO</key>
 	<string>99999</string>
 	<key>waveFrequence</key>
-	<string>100</string>
+	<string>1000</string>
 	<key>waveOffset</key>
-	<string>0.4</string>
+	<string>0</string>
 	<key>waveVolt</key>
 	<string>0.8</string>
 	<key>SocketConfig</key>

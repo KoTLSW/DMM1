@@ -40,6 +40,7 @@
 
 //是否需要波形发生器
 @property(nonatomic,assign)BOOL isWaveNeed;
+@property(nonatomic,assign)BOOL isDebug;
 @property(nonatomic,strong)NSString * waveFrequence;//频率
 @property(nonatomic,strong)NSString * waveVolt;//电压
 @property(nonatomic,strong)NSString * waveOffset;//偏移
