@@ -48,7 +48,6 @@ static PDCA* poolPDCA=nil;
     IP_reply_destroy(IP_addAttribute(UID, IP_ATTRIBUTE_SERIALNUMBER, [sn UTF8String]));
     IP_reply_destroy(IP_addAttribute(UID, IP_ATTRIBUTE_STATIONSOFTWARENAME, [sw_name UTF8String]));
     IP_reply_destroy(IP_addAttribute(UID, IP_ATTRIBUTE_STATIONSOFTWAREVERSION, [sw_ver UTF8String]));
-    
     IP_reply_destroy(IP_setStartTime(UID,time_start));
 }
 //==========================================
@@ -134,8 +133,10 @@ static PDCA* poolPDCA=nil;
     
     if(pass_fail == NO){
         IP_reply_destroy(IP_UUTCommit(UID, IP_FAIL));
+        NSLog(@"PDCA_Upload fail");
     }else{
         IP_reply_destroy(IP_UUTCommit(UID, IP_PASS));
+        NSLog(@"PDCA_Upload pass");
     }
     
     IP_reply_destroy(IP_setStopTime(UID,time_end));

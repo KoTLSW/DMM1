@@ -634,7 +634,7 @@ NSString  *param_path=@"Param";
             sleep(1);
             dispatch_async(dispatch_get_main_queue(), ^{
                 _startBtn.enabled = YES;
-                currentStateMsg.stringValue = @"请点击 Start 按钮";
+                currentStateMsg.stringValue = @"请点击 Testing 按钮";
                 NSLog(@"wait to start button...");
                 [currentStateMsg setTextColor:[NSColor redColor]];
             });
@@ -694,8 +694,16 @@ NSString  *param_path=@"Param";
             
             [mk_table flushTableRow:testItem RowIndex:row_index];
             
-            row_index++;
-            item_index++;
+            
+            //给治具发送reset指令,收到 RESET_OK 后往下跑
+            [fixtureSerial WriteLine:@"reset"];
+            sleep(1);
+            if ([[[fixtureSerial ReadExisting] uppercaseString ]containsString:@"RESET_OK"])
+            {
+                NSLog(@"item testing fixture reset_ok");
+                row_index++;
+                item_index++;
+            }
             
             //走完测试流程,进入下一步
             if (item_index == itemArr.count)
@@ -879,7 +887,7 @@ NSString  *param_path=@"Param";
                 failNumCalculateTF.stringValue = [NSString stringWithFormat:@"%.2f%%",((double)(testNum-passNum)/(double)testNum)*100];
                 
               //录入sn 收集器
-                NSString *str1 = [NSString stringWithFormat:@"%@__%@__%@_%@",importSN.stringValue,testResultStr,HumitureTF.stringValue,[[GetTimeDay shareInstance] getCurrentTime]];
+                NSString *str1 = [NSString stringWithFormat:@"%@___%@__%@",importSN.stringValue,testResultStr,[[GetTimeDay shareInstance] getCurrentTime]];
                 NSString *str2 = SN_Collector.string;
                 SN_Collector.string = [str2 stringByAppendingString:[NSString stringWithFormat:@"%@\n",str1]];
                 
@@ -998,7 +1006,7 @@ NSString  *param_path=@"Param";
             }
             else if([SonTestCommand isEqualToString:@"MODE_Square"])
             {
-                [agilent33210A SetMessureMode:MODE_Square andCommunicateType:Agilent33210A_USB_Type andFREQuency:param.waveFrequence andVOLTage:param.waveVolt andOFFSet:param.waveOffset];
+                [agilent33210A SetMessureMode:MODE_Square andCommunicateType:Agilent33210A_USB_Type andFREQuency:@"5" andVOLTage:@"1.8" andOFFSet:@"0"];
 
             }
             else if([SonTestCommand isEqualToString:@"MODE_Ramp"])
@@ -1126,17 +1134,17 @@ NSString  *param_path=@"Param";
                 }
                 if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
                 {
-                    testitem.value = [NSString stringWithFormat:@"%f", ((0.8 - num)/num)*10];
+                    testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
                 }
                 if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
                 {
                     if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
                     {
-                        testitem.value = [NSString stringWithFormat:@"%f", ((0.7071*0.8 - num)/num)*5];
+                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
                     }
                     else
                     {
-                        testitem.value = [NSString stringWithFormat:@"%f", ((0.7071*0.8 - num)/num)*10];
+                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
                     }
                 }
                 if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
@@ -1175,6 +1183,13 @@ NSString  *param_path=@"Param";
         testitem.result = @"FAIL";
         testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
         ispass = NO;
+    }
+    
+    //code 2017.5.23
+    if ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])
+    {
+        testitem.result = @"PASS";
+        ispass = YES;
     }
     
     NSLog(@"%@",testitem.value);
@@ -1244,7 +1259,7 @@ NSString  *param_path=@"Param";
 {
     if ([sender.title isEqualToString:@"Start"]) {
         
-        [sender setTitle:@"Start again"];
+        [sender setTitle:@"Testing"];
         
         NSLog(@"start the action!!");
         if (myThrad==nil)
@@ -1338,7 +1353,6 @@ NSString  *param_path=@"Param";
                              Value:testitem.value
                          Pass_Fail:pass_fail
              ];
-
         }
         else //如果测试结果只有pass或fail
         {

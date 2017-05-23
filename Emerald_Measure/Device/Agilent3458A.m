@@ -128,48 +128,55 @@
 -(void)SetMessureMode:(enum Agilent3458AMessureMode)agilentMode
 {
     switch (agilentMode) {
-        case Agilent3458A_CURR_DC:{
-             [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        case Agilent3458A_CURR_DC:
+        {
+//             [self WriteLine:@"OUTPUT 722;"];usleep(1000);
              [self WriteLine:@"FUNC DCI"];usleep(1000);
-             [self WriteLine:@"DCI 10E-9"];usleep(1000);
-             [self WriteLine:@"NPLC 1"];usleep(1000);
-            }break;
-        case Agilent3458A_CURR_AC:{
+//             [self WriteLine:@"DCI 10E-9"];usleep(1000);
+//             [self WriteLine:@"NPLC 1"];usleep(1000);
             
-            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        }break;
+        
+        case Agilent3458A_CURR_AC:
+        {
+//            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
             [self WriteLine:@"FUNC ACI"];usleep(1000);
-            [self WriteLine:@"ACBAND 5E3,8E3"];usleep(1000);
+//            [self WriteLine:@"ACBAND 5E3,8E3"];usleep(1000);
    
         }
-            break;
-        case Agilent3458A_VOLT_DC:{
-        
-            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        break;
+            
+        case Agilent3458A_VOLT_DC:
+        {
+//            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
             [self WriteLine:@"FUNC DCV"];usleep(1000);
-            [self WriteLine:@"NPLC 1"];usleep(1000);
+//            [self WriteLine:@"NPLC 1"];usleep(1000);
 
         }
-            break;
-        case Agilent3458A_VOLT_AC:{
+        break;
             
-            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        case Agilent3458A_VOLT_AC:
+        {
+//            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
             [self WriteLine:@"FUNC ACV"];usleep(1000);
-            [self WriteLine:@"ACBAND 5E3,8E3"];usleep(1000);
-        
+//            [self WriteLine:@"ACBAND 5E3,8E3"];usleep(1000);
         
         }
-            break;
-        case Agilent3458A_RES_4W:{
-        
-            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        break;
+            
+        case Agilent3458A_RES_4W:
+        {
+//            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
             [self WriteLine:@"FUNC OHMF"];usleep(1000);
         }
-            break;
-        case Agilent3458A_RES_2W:{
-            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
+        break;
+            
+        case Agilent3458A_RES_2W:
+        {
+//            [self WriteLine:@"OUTPUT 722;"];usleep(1000);
             [self WriteLine:@"FUNC OHM"];usleep(1000);
         }
-            break;
+        break;
 
         default:
             break;

@@ -190,6 +190,7 @@
 		4C9EE8471EADEE4A00B9089E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4C9EE84B1EAE020C00B9089E /* Logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Logo.jpg; sourceTree = "<group>"; };
 		4CB1F8441ED0500C00DDFCC8 /* Regex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Regex.framework; sourceTree = "<group>"; };
+		4CDDB7041ED4460900632A96 /* InstantPudding_API_QT1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstantPudding_API_QT1.h; path = PDCA_FeiCui/InstantPudding_API_QT1.h; sourceTree = "<group>"; };
 		4CF771891EBF5DFF0065384C /* Station_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_0.plist; path = MK_Table/Station_0.plist; sourceTree = "<group>"; };
 		4CF7718A1EBF5DFF0065384C /* Station_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_1.plist; path = MK_Table/Station_1.plist; sourceTree = "<group>"; };
 		4CF7718B1EBF5DFF0065384C /* Station_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_2.plist; path = MK_Table/Station_2.plist; sourceTree = "<group>"; };
@@ -361,6 +362,7 @@
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
 				4CFEFB701EBF0C4900353ABF /* SFC */,
 				4C9EE82F1EADE79000B9089E /* PDCA */,
+				4CDDB7041ED4460900632A96 /* InstantPudding_API_QT1.h */,
 				4C9EE7EF1EADE69400B9089E /* MK_Alert */,
 				4C9EE7F41EADE69400B9089E /* MK_File */,
 				4C9EE7FD1EADE69400B9089E /* MK_Table */,

@@ -378,7 +378,6 @@ extern "C" {
 	bool IP_success( IP_API_Reply reply );
 	
 	
-	
 	///create a new testresult pointer (caller needs to delete this later with IP_result_destroy() )
 	IP_TestResultHandle IP_testResult_create( void );
 	
