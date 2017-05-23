@@ -8,8 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ViewController : NSViewController <NSTextViewDelegate>
+@interface ViewController : NSViewController <NSTextViewDelegate,NSTextFieldDelegate>
 @property (weak) IBOutlet NSButton *stopBtn;
+@property (weak) IBOutlet NSButton *startBtn;
 
 @end
-

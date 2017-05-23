@@ -16,12 +16,10 @@
 #import "AppDelegate.h"
 #import "AlertWindowController.h"
 #import "KeithleyDevice.h"
-#import "BYDSFCManager.h"
 #import "TestStep.h"
 #import "Agilent3458A.h"
 #import "Agilent33210A.h"
 #import "Param.h"
-
 
 
 NSString  *param_path=@"Param";
@@ -33,7 +31,6 @@ NSString  *param_path=@"Param";
     KeithleyDevice      * keithleySerial;  //泰克调试
     Agilent3458A        * agilent3458A;    //安捷伦万用表
     Agilent33210A       * agilent33210A;   //波形发生器
-    
 
     //************* timer *************
     NSString *start_time;               //启动测试的时间
@@ -146,6 +143,7 @@ NSString  *param_path=@"Param";
     itemArr = [NSMutableArray array];
     PDCA_Btn.enabled = NO;
     SFC_Btn.enabled = NO;
+//    _startBtn.enabled = NO;
     
     if (param.isDebug)
     {
@@ -183,14 +181,13 @@ NSString  *param_path=@"Param";
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CancellPDCA_SFC_LimitNoti:) name:@"CancellButtonlimit_Notification" object:nil];
     
-    //测试项线程
-     myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-    [myThrad start];
+//    //测试项线程
+//     myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+//    [myThrad start];
     
     //温湿度定时器
     humTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(TimerUpdateWindow) userInfo:nil repeats:YES];
 }
-
 
 
 -(void)selectPDCA_SFC_LimitNoti:(NSNotification *)noti
@@ -590,7 +587,7 @@ NSString  *param_path=@"Param";
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 //判断 SN 的规则
-                if (importSN.stringValue.length==8||[importSN.stringValue isEqualToString:@"123456"])
+                if (importSN.stringValue.length==17||[importSN.stringValue isEqualToString:@"0123456789ABCDEFG"])
                 {
                     //赋值SN
                     [TestStep Instance].strSN=importSN.stringValue;;
@@ -628,13 +625,29 @@ NSString  *param_path=@"Param";
             });
         }
     
-#pragma mark index=6  开始产品测试
+#pragma mark index=6  等待点击开始按钮
 //------------------------------------------------------------
 //index=6
 //------------------------------------------------------------
         if (index == 6)
         {
+            sleep(1);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _startBtn.enabled = YES;
+                currentStateMsg.stringValue = @"请点击 Start 按钮";
+                NSLog(@"wait to start button...");
+                [currentStateMsg setTextColor:[NSColor redColor]];
+            });
+        }
+        
+#pragma mark index=7  开始产品测试
+//------------------------------------------------------------
+//index=7
+//------------------------------------------------------------
+        if (index == 7)
+        {
             dispatch_sync(dispatch_get_main_queue(), ^{
+                _startBtn.enabled = NO;
                 currentStateMsg.stringValue = @"index=6 sn 正确!";
                 NSLog(@"sn 正确!");
                 [currentStateMsg setTextColor:[NSColor blueColor]];
@@ -657,7 +670,7 @@ NSString  *param_path=@"Param";
             if (row_index == 0)
             {
                 NSLog(@"j记录 pdca 的起始测试时间");
-//                [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
+                [pdca PDCA_GetStartTime];                        //记录pcda的起始测试时间
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
             
@@ -712,20 +725,20 @@ NSString  *param_path=@"Param";
                 [fixtureSerial WriteLine:@"reset"];
                 sleep(0.7);
             
-                index = 7;
+                index = 8;
             }
         }
 
-#pragma mark index=7  上传pdca，生成本地数据报表
+#pragma mark index=8  上传pdca，生成本地数据报表
 //------------------------------------------------------------
-//index=7
+//index=8
 //------------------------------------------------------------
-        if (index == 7)
+        if (index == 8)
         {
             //========定时器结束========
             [mkTimer endTimer];
             //记录PDCA结束时间;记录测试结束时间
-//            [pdca PDCA_GetEndTime];
+            [pdca PDCA_GetEndTime];
             ct_cnt = 0;
             //========================
             
@@ -811,13 +824,13 @@ NSString  *param_path=@"Param";
                 //创建 txt 文件,并写入数据
                 [[MK_FileTXT shareInstance] createOrFlowTXTFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:csvContent TestResult:testResultStr];
                
-                index = 8;
+                index = 9;
             }
             
             //上传PDCA和SFC
             if (isUpLoadPDCA)
             {
-//                [self UploadPDCA];
+                [self UploadPDCA];
             }
             
             if (isUpLoadSFC)
@@ -831,11 +844,11 @@ NSString  *param_path=@"Param";
             }
         }
         
-#pragma mark index=8  结束测试
+#pragma mark index=9  结束测试
 //------------------------------------------------------------
-//index=8
+//index=9
 //------------------------------------------------------------
-        if (index == 8)
+        if (index == 9)
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 currentStateMsg.stringValue = @"index=8 结束测试";
@@ -882,12 +895,14 @@ NSString  *param_path=@"Param";
                 //是否需要写入本地缓存
                 importSN.stringValue = @"";
             });
-
-            //重新进入操作治具复位处
-            index = 4;
             
-            //测试代码
-            index = 5;
+            [self clickToStop_ReStart:_stopBtn];
+            
+//            //重新进入操作治具复位处
+//            index = 4;
+//            
+//            //测试代码
+//            index = 5;
             
 //            isTouch=YES;
         }
@@ -1103,30 +1118,30 @@ NSString  *param_path=@"Param";
                     }
                 }
                 
-                float num=[agilentReadString floatValue];
+                double num=[agilentReadString floatValue];
 
                 if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
                 {
-                    testitem.value = [NSString stringWithFormat:@"%.3f",num];
+                    testitem.value = [NSString stringWithFormat:@"%f",num];
                 }
                 if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
                 {
-                    testitem.value = [NSString stringWithFormat:@"%.3f", ((0.8 - num)/num)*10];
+                    testitem.value = [NSString stringWithFormat:@"%f", ((0.8 - num)/num)*10];
                 }
                 if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
                 {
                     if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
                     {
-                        testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*5];
+                        testitem.value = [NSString stringWithFormat:@"%f", ((0.7071*0.8 - num)/num)*5];
                     }
                     else
                     {
-                        testitem.value = [NSString stringWithFormat:@"%.3f", ((1.41421*0.8 - num)/num)*10];
+                        testitem.value = [NSString stringWithFormat:@"%f", ((0.7071*0.8 - num)/num)*10];
                     }
                 }
                 if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
                 {
-                    testitem.value = [NSString stringWithFormat:@"%.3f",num/1000];
+                    testitem.value = [NSString stringWithFormat:@"%f",num/1000];
                 }
                 if ([testitem.units containsString:@"uA"])
                 {
@@ -1195,55 +1210,76 @@ NSString  *param_path=@"Param";
 //停止线程
 - (IBAction)clickToStop_ReStart:(NSButton *)sender
 {
+    NSLog(@"stop the action!!");
     PDCA_Btn.enabled = NO;
     SFC_Btn.enabled = NO;
     
     sleep(0.5);
-    if (myThrad!=nil) {
-        [mkTimer endTimer];
+    if (myThrad!=nil)
+    {
+         [mkTimer endTimer];
         [self HumitureStopTimer];
         [myThrad cancel];
          myThrad = nil;
         [self closeAllDevice];
         index = 0;
-        item_index = 0;
+         item_index = 0;
         row_index = 0;
         testItemValueArr = nil;
         testItemTitleArr = nil;
+    }
+    
+    if ([NSMenu menuBarVisible]==NO)
+    {
         [NSMenu setMenuBarVisible:YES];
     }
+    
+    [_startBtn setEnabled:YES];
+    [_startBtn setTitle:@"Start"];
 }
 
 
 //开始按钮
-- (IBAction)start_Button_Action:(id)sender
+- (IBAction)start_Button_Action:(NSButton *)sender
 {
-    if (myThrad==nil)
+    if ([sender.title isEqualToString:@"Start"]) {
+        
+        [sender setTitle:@"Start again"];
+        
+        NSLog(@"start the action!!");
+        if (myThrad==nil)
+        {
+            //启动线程,进入测试流程
+            myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
+            index = 0;
+            item_index = 0;
+            row_index = 0;
+            testItemValueArr = nil;
+            testItemTitleArr = nil;
+            [myThrad start];
+        }
+        [sender setEnabled:NO];
+    }
+    
+    else
     {
-        //启动线程,进入测试流程
-        myThrad = [[NSThread alloc] initWithTarget:self selector:@selector(Working) object:nil];
-        index = 0;
-        item_index = 0;
-        row_index = 0;
-        testItemValueArr = nil;
-        testItemTitleArr = nil;
-        [myThrad start];
+        [sender setEnabled:NO];
+        [sender setTitle:@"Start"];
+        NSLog(@"Start again");
+        index = 7;
     }
 }
 
 
-
-- (IBAction)ClickUploadPDCAAction:(id)sender
+- (IBAction)ClickUploadPDCAAction:(NSButton *)sender
 {
     NSLog(@"点击上传 PDCA");
 }
 
-
-- (IBAction)clickUpLoadSFCAction:(id)sender
+- (IBAction)clickUpLoadSFCAction:(NSButton *)sender
 {
      NSLog(@"点击上传 SFC");
 }
-
 
 
 /**
@@ -1269,7 +1305,6 @@ NSString  *param_path=@"Param";
             isUpLoadPDCA=[PDCA_Btn state]==1?YES:NO;
     });
 }
-
 
 #pragma mark----上传 PDCA
 //================================================
@@ -1403,6 +1438,7 @@ NSString  *param_path=@"Param";
         });
     });
 }
+
 
 #pragma mark--------释放所有设备
 -(void)closeAllDevice

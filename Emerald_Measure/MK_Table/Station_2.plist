@@ -268,7 +268,7 @@
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>kΩ</string>
+			<string>KΩ</string>
 			<key>Min</key>
 			<string>54</string>
 			<key>Max</key>
