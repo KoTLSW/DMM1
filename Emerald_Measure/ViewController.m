@@ -1312,6 +1312,7 @@ NSString  *param_path=@"Param";
 //================================================
 -(void)UploadPDCA
 {
+    NSLog(@"上传PDCA");
     BOOL PF = YES;    //所有测试项是否pass
     [pdca PDCA_Init:importSN.stringValue SW_name:param.sw_name SW_ver:param.sw_ver];   //上传sn，sw_name,sw_ver
     [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
@@ -1327,10 +1328,8 @@ NSString  *param_path=@"Param";
             if( ![testitem.result isEqualToString:@"PASS"] )
             {
                 pass_fail = NO;
-                
                 PF = NO;
             }
-            
             
             [pdca PDCA_UploadValue:testitem.testName
                              Lower:testitem.min

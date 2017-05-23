@@ -99,12 +99,21 @@ static PDCA* poolPDCA=nil;
     IP_TestSpecHandle     testSpec = IP_testSpec_create();
     IP_TestResultHandle testResult = IP_testResult_create();
     
-    IP_testSpec_setTestName(testSpec, [test_name UTF8String], strlen([test_name UTF8String]));
-    IP_testSpec_setLimits(testSpec, [lower UTF8String],strlen([lower UTF8String]), [upper UTF8String], strlen([upper UTF8String]));
-    IP_testSpec_setUnits(testSpec, [units UTF8String], strlen([units UTF8String]));
-    IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
+    BOOL testNameBool = IP_testSpec_setTestName(testSpec, [test_name UTF8String], strlen([test_name UTF8String]));
+    NSLog(@"uploadPDCA_testNameBool = %hhd",testNameBool);
     
-    IP_testResult_setValue(testResult, [value UTF8String], strlen([value UTF8String]));
+    BOOL testLimitsBool = IP_testSpec_setLimits(testSpec, [lower UTF8String],strlen([lower UTF8String]), [upper UTF8String], strlen([upper UTF8String]));
+    NSLog(@"uploadPDCA_testLimitsBool = %hhd",testLimitsBool);
+    
+    BOOL testUnitsBool = IP_testSpec_setUnits(testSpec, [units UTF8String], strlen([units UTF8String]));
+    NSLog(@"uploadPDCA_testUnitsBool = %hhd",testUnitsBool);
+    
+    BOOL testSpecBool = IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
+    NSLog(@"uploadPDCA_testSpecBool = %hhd",testSpecBool);
+    
+    BOOL testValueBool = IP_testResult_setValue(testResult, [value UTF8String], strlen([value UTF8String]));
+    NSLog(@"uploadPDCA_testValueBool = %hhd",testValueBool);
+    
     
     if(pass_fail == NO){
         IP_testResult_setResult(testResult, IP_FAIL);

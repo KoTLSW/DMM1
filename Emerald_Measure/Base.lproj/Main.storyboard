@@ -701,7 +701,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="du1-6i-Rjs">
-                                            <rect key="frame" x="15" y="609" width="98" height="58"/>
+                                            <rect key="frame" x="24" y="609" width="98" height="58"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="58" id="88w-dI-1N6"/>
                                                 <constraint firstAttribute="width" constant="98" id="knz-1c-LeK"/>
@@ -811,7 +811,7 @@
                                         <constraint firstItem="kqA-6f-CLp" firstAttribute="top" secondItem="evU-wF-X8y" secondAttribute="bottom" id="IBE-ag-NMw"/>
                                         <constraint firstItem="evU-wF-X8y" firstAttribute="leading" secondItem="LPk-1o-7PN" secondAttribute="leading" constant="107" id="Iag-qi-VpT"/>
                                         <constraint firstItem="qkk-Tf-09B" firstAttribute="top" secondItem="aG5-h0-eLP" secondAttribute="bottom" constant="8" id="M0Q-xT-Wkb"/>
-                                        <constraint firstItem="evU-wF-X8y" firstAttribute="leading" secondItem="du1-6i-Rjs" secondAttribute="trailing" constant="-6" id="X3L-tc-1cm"/>
+                                        <constraint firstItem="evU-wF-X8y" firstAttribute="leading" secondItem="du1-6i-Rjs" secondAttribute="trailing" constant="-15" id="X3L-tc-1cm"/>
                                         <constraint firstItem="evU-wF-X8y" firstAttribute="top" secondItem="LPk-1o-7PN" secondAttribute="top" constant="8" id="bAE-Da-F6a"/>
                                         <constraint firstItem="kqA-6f-CLp" firstAttribute="top" secondItem="du1-6i-Rjs" secondAttribute="bottom" id="dM3-3M-hif"/>
                                         <constraint firstItem="qkk-Tf-09B" firstAttribute="leading" secondItem="LPk-1o-7PN" secondAttribute="leading" constant="20" id="hvd-4X-VkD"/>
