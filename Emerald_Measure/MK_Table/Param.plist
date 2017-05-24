@@ -7,7 +7,7 @@
 	<key>isWaveNeed</key>
 	<true/>
 	<key>isDebug</key>
-	<false/>
+	<true/>
 	<key>fixture_id</key>
 	<string>000001</string>
 	<key>fixture_uart_baud</key>

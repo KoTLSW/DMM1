@@ -69,7 +69,8 @@ static BYDSFCManager* bydSFC=nil;
      NSMutableString* urlString = [NSMutableString stringWithFormat:@"http://%@:%@/manufacturing/BobcatIntegerationServlet?",_unit.MESServerIP, _unit.netPort];          // ip and port
     
 
-    NSString* strStationID=[[PDCA Instance] GetStationID];
+//    NSString* strStationID=[[PDCA Instance] GetStationID];
+    NSString *strStationID = @"MK_Test_Station";
 
     
     switch (sfcCheckType)

@@ -49,6 +49,7 @@ NSString  *param_path=@"Param";
     int index;                          // 测试流程下标
     int item_index;                     // 测试项下标
     int row_index;                      // table 每一行下标
+    
 
     __weak IBOutlet NSTextField *bigTitleTF;
     __weak IBOutlet NSTextField *versionTF;
@@ -102,8 +103,11 @@ NSString  *param_path=@"Param";
     BOOL          isTouch;          //是否已经完全接触
     BOOL          isUpLoadSFC;      //是否上传SFC
     BOOL          isUpLoadPDCA;     //是否上传PDCA
+    
+    
     PDCA         *pdca;             //PDCA对象
-
+    NSString     *ReStaName;
+    NSString     *ReStaID;
 }
 
 
@@ -1166,13 +1170,13 @@ NSString  *param_path=@"Param";
         }
     }
     
-    if ([testitem.max isEqualToString:@"∞"]&&[testitem.value floatValue]>=[testitem.min floatValue])
-    {
-        testitem.result = @"PASS";
-        ispass = YES;
-    }
+//    if ([testitem.max isEqualToString:@"--"]&&[testitem.value floatValue]>=[testitem.min floatValue])
+//    {
+//        testitem.result = @"PASS";
+//        ispass = YES;
+//    }
     //获取万用表最终的值
-    if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]))
+    if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]) || ([testitem.max isEqualToString:@"--"]&&[testitem.value floatValue]>=[testitem.min floatValue]) || ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])  || ([testitem.min isEqualToString:@"--"]&&[testitem.value floatValue]<=[testitem.max floatValue]) )
     {
         testitem.result = @"PASS";
         testItem.messageError=nil;
@@ -1185,12 +1189,12 @@ NSString  *param_path=@"Param";
         ispass = NO;
     }
     
-    //code 2017.5.23
-    if ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])
-    {
-        testitem.result = @"PASS";
-        ispass = YES;
-    }
+//    //code 2017.5.23
+//    if ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])
+//    {
+//        testitem.result = @"PASS";
+//        ispass = YES;
+//    }
     
     NSLog(@"%@",testitem.value);
     
@@ -1325,11 +1329,70 @@ NSString  *param_path=@"Param";
 //================================================
 //上传pdca
 //================================================
+-(NSString *)GetSpecStr:(NSString *)Original thestartStr:(NSString *)startStr theendStr:(NSString *)endStr
+{
+    if([startStr length]>0 && [Original rangeOfString:startStr].length)
+    {
+        int sP=(int)[Original rangeOfString:startStr].location;
+        sP= sP + (int)[startStr length];
+        Original=[Original substringFromIndex:sP];
+    }
+    if([endStr length]>0 && [Original rangeOfString:endStr].length)
+    {
+        int eL=(int)[Original rangeOfString:endStr].location;
+        return [Original substringToIndex:eL];
+    }
+    
+    return Original;
+}
+
 -(void)UploadPDCA
 {
+    //调用 方法解析 json 文档,取得对应的额sn参数,station 信息
+    
     NSLog(@"上传PDCA");
     BOOL PF = YES;    //所有测试项是否pass
-    [pdca PDCA_Init:importSN.stringValue SW_name:param.sw_name SW_ver:param.sw_ver];   //上传sn，sw_name,sw_ver
+    
+    //------------ json ------------
+    NSString *restoreinfoPath = @"/vault/data_collection/test_station_config/gh_station_info.json";
+    if (![[NSFileManager defaultManager] fileExistsAtPath:restoreinfoPath])
+    {
+        NSLog(@"Can't find /vault/data_collection/test_station_config/gh_station_info.json !");
+        //return;
+    }
+    else
+    {
+        NSData *filecontent=[[NSFileManager defaultManager] contentsAtPath:restoreinfoPath];
+        NSString *info=[[NSString alloc]initWithData:filecontent encoding:1];
+        NSArray * lineArray=[info componentsSeparatedByString:@"\n"];
+        
+        //NSString *productline;
+        //NSString *unitline;
+        for(int i=0;i<[lineArray count];i++)
+        {
+            NSString *linestring=[lineArray objectAtIndex:i];
+            NSLog(@"json linestring is ============ %@ ==========", linestring);
+            
+            //ReStaName
+            if ([linestring rangeOfString:@"\"STATION_TYPE\" :"].length>0)
+            {
+                NSString *STATION_TYPE=@"";
+                STATION_TYPE=[self GetSpecStr:linestring thestartStr:@": \"" theendStr:@"\","];
+                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@" " withString:@""];
+                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                ReStaName=[[NSString alloc] initWithString:STATION_TYPE];
+                NSLog(@"%@",ReStaName);
+            }
+        }
+    }
+    //------------------------
+    
+    //SW_name  对应 json 的 STATION_TYPE
+    NSString *json_STATION_TYPE =ReStaName;
+    NSLog(@"json_STATION_TYPE is ============== %@ ==============", json_STATION_TYPE);
+    
+    [pdca PDCA_Init:importSN.stringValue SW_name:json_STATION_TYPE  SW_ver:param.sw_ver SL_ver:param.sw_ver];   //上传sn，sw_name,sw_ver, sl_ver
     [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
 
     for(int i=0;i<[itemArr count];i++)
@@ -1368,9 +1431,8 @@ NSString  *param_path=@"Param";
         }
     }
     
-    [pdca PDCA_Upload:PF];     //上传汇总结果
+    [pdca PDCA_Upload:PF];     //上传测试项是否成功
 }
-
 
 
 - (void)setRepresentedObject:(id)representedObject {

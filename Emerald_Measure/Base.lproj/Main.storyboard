@@ -1070,7 +1070,7 @@
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                             <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="VCT-4N-thK">
-                                                <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
+                                                <rect key="frame" x="258" y="1" width="16" height="62"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                             </scroller>
                                         </scrollView>
@@ -1082,18 +1082,8 @@
                                                 <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jfs-yR-hwX">
-                                            <rect key="frame" x="66" y="497" width="93" height="32"/>
-                                            <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" state="mixed" borderStyle="border" allowsMixedState="YES" imageScaling="proportionallyDown" inset="2" id="z2E-K2-Pwh">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="start_Button_Action:" target="XfG-lQ-9wD" id="sa2-zi-Vgt"/>
-                                            </connections>
-                                        </button>
                                         <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xSu-H4-gjG">
-                                            <rect key="frame" x="202" y="497" width="95" height="32"/>
+                                            <rect key="frame" x="99" y="499" width="95" height="32"/>
                                             <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" inset="2" id="xGJ-dw-VNf">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -1126,6 +1116,16 @@
                                             </buttonCell>
                                             <connections>
                                                 <action selector="clickUpLoadSFCAction:" target="XfG-lQ-9wD" id="iuQ-ru-VH3"/>
+                                            </connections>
+                                        </button>
+                                        <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jfs-yR-hwX">
+                                            <rect key="frame" x="209" y="499" width="93" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" state="mixed" borderStyle="border" allowsMixedState="YES" imageScaling="proportionallyDown" inset="2" id="z2E-K2-Pwh">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="start_Button_Action:" target="XfG-lQ-9wD" id="sa2-zi-Vgt"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -1184,7 +1184,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Logo" width="266" height="182"/>
+        <image name="Logo" width="267" height="183"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
     </resources>
 </document>
