@@ -842,6 +842,7 @@ NSString  *param_path=@"Param";
             //上传PDCA和SFC
             if (isUpLoadPDCA)
             {
+                NSLog(@"开始上传pdca");
                 [self UploadPDCA];
             }
             
