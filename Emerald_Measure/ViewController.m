@@ -109,8 +109,9 @@ NSString  *param_path=@"Param";
 //    PDCA         *pdca;             //PDCA对象
     NSString     *ReStaName;
     NSString     *ReStaID;
-    NSMutableArray *cfailItems;
     BOOL debug_skip_pudding_error;
+    NSMutableArray *failItems;
+    NSMutableArray *pdcaResultArr;
 }
 
 
@@ -139,7 +140,8 @@ NSString  *param_path=@"Param";
     plist = [[Plist alloc] init];
     mk_table = [[Table alloc] init];
 //    pdca = [[PDCA alloc] init];
-    cfailItems = [[NSMutableArray alloc] init];
+    pdcaResultArr = [NSMutableArray arrayWithCapacity:0];
+    failItems = [NSMutableArray arrayWithCapacity:0];
     
     humitString=@"";
     item_index = 0;
@@ -856,7 +858,8 @@ NSString  *param_path=@"Param";
             if (isUpLoadPDCA)
             {
                 NSLog(@"开始上传pdca");
-                [self UploadPDCA_Feicui];
+//                [self UploadPDCA_Feicui];
+                [self uploadPDCA_Feicui_2];
 //                [self UploadPDCA];
             }
             
@@ -1195,12 +1198,15 @@ NSString  *param_path=@"Param";
     {
         testitem.result = @"PASS";
         testItem.messageError=nil;
+        [pdcaResultArr addObject: @"PASS"];
         ispass = YES;
     }
     else
     {
         testitem.result = @"FAIL";
         testItem.messageError=[NSString stringWithFormat:@"%@Fail",testitem.testName];
+        [pdcaResultArr addObject: @"FAIL"];
+        [failItems addObject:@"FAIL"];
         ispass = NO;
     }
     
@@ -1217,7 +1223,8 @@ NSString  *param_path=@"Param";
     [testItemValueArr addObject:testItem.value];
     [testItemTitleArr addObject: testItem.testName];
     
-    [cfailItems addObject:[NSNumber numberWithBool:ispass]];
+//    [cfailItems addObject:[NSNumber numberWithBool:ispass]];
+   
     
     return ispass;
 }
@@ -1393,6 +1400,253 @@ void handleReply( IP_API_Reply reply )
 }
 
 
+-(void)uploadPDCA_Feicui_2
+{
+        //------------ json ------------
+        NSString *restoreinfoPath = @"/vault/data_collection/test_station_config/gh_station_info.json";
+        if (![[NSFileManager defaultManager] fileExistsAtPath:restoreinfoPath])
+        {
+            NSLog(@"Can't find /vault/data_collection/test_station_config/gh_station_info.json !");
+            //return;
+        }
+        else
+        {
+            NSData *filecontent=[[NSFileManager defaultManager] contentsAtPath:restoreinfoPath];
+            NSString *info=[[NSString alloc]initWithData:filecontent encoding:1];
+            NSArray * lineArray=[info componentsSeparatedByString:@"\n"];
+    
+            //NSString *productline;
+            //NSString *unitline;
+            for(int i=0;i<[lineArray count];i++)
+            {
+                NSString *linestring=[lineArray objectAtIndex:i];
+                NSLog(@"json linestring is ============ %@ ==========", linestring);
+    
+                //ReStaName
+                if ([linestring rangeOfString:@"\"STATION_TYPE\" :"].length>0)
+                {
+                    NSString *STATION_TYPE=@"";
+                    STATION_TYPE=[self GetSpecStr:linestring thestartStr:@": \"" theendStr:@"\","];
+                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@" " withString:@""];
+                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+                    ReStaName=[[NSString alloc] initWithString:STATION_TYPE];
+                    NSLog(@"%@",ReStaName);
+                }
+            }
+        }
+        //------------------------
+    
+    
+    NSMutableArray *cPuddingValues=[[NSMutableArray alloc] initWithArray:testItemValueArr];
+    NSMutableArray *cPuddingResults=[[NSMutableArray alloc] initWithArray:pdcaResultArr];
+    NSMutableArray *cfailItems=[[NSMutableArray alloc] initWithArray:failItems];
+    NSString *theSN=[[NSString alloc] initWithString:importSN.stringValue];
+    
+//    if([theSN length]!=SN_LENGTH){
+//        
+//        NSRunAlertPanel(@"Confirm", @"SN is Error!", @"YES", nil,nil);
+//        return;
+//    }
+    
+    
+    IP_UUTHandle UID;
+    Boolean APIcheck;
+    IP_TestSpecHandle testSpec;
+    
+    IP_API_Reply reply = IP_UUTStart(&UID);
+    if(!IP_success(reply)){
+        NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
+//        exit(-1);
+        
+    }
+    IP_reply_destroy(reply);
+    
+    handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_STATIONSOFTWAREVERSION, [ [NSString stringWithFormat:@"%@",param.sw_ver] cStringUsingEncoding:1]  ));
+    handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_STATIONSOFTWARENAME, [ReStaName cStringUsingEncoding:1]  ));
+    handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_STATIONLIMITSVERSION, [[NSString stringWithFormat:@"%@",param.sw_ver] cStringUsingEncoding:1]));
+    
+    handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_SERIALNUMBER, [theSN cStringUsingEncoding:1] ));
+    
+//    if ([PDCAInfo count])
+//    {
+//        for (id item in PDCAInfo)
+//        {
+//            if (![[PDCAInfo objectForKey:item] isEqualToString:@"N/A"])
+//            {
+//                
+//                handleReply(IP_addAttribute( UID, [item cStringUsingEncoding:1], [[PDCAInfo objectForKey:item] cStringUsingEncoding:1] ));
+//            }
+//        }
+//    }
+    
+    //
+//    handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_SPECIAL_BUILD, [[globalDic objectForKey:@"sbuild"] cStringUsingEncoding:1]));
+//    if ([SWName containsString:@"BCM"]) {
+//        handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_IOFLEXSERIALNUMBER, [[globalDic objectForKey:@"sensorflex"] cStringUsingEncoding:1]));
+//    }
+    //        handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_IOFLEXSERIALNUMBER, [[globalDic objectForKey:@"sensorflex"] cStringUsingEncoding:1]));
+    //
+    
+//    NSString *tt=[SWName stringByAppendingString: @"_log"];
+//    IP_addBlob(UID,[tt cStringUsingEncoding:1],[logfilename cStringUsingEncoding:1]);
+//    
+//    //Upload csvlog to PDCA - fish
+//    IP_addBlob(UID, [[SWName stringByAppendingString:@"_csvlog"] cStringUsingEncoding:1], [csvlogName cStringUsingEncoding:1]);
+    
+    //raw_data_folder
+    //        if([swStation containsString:@"BCM"]){
+//    NSTask *task;
+//    task = [[NSTask alloc] init];
+//    [task setLaunchPath:@"/bin/sh"];
+//    NSString *fileName = [raw_data_folder stringByReplacingOccurrencesOfString:@"/vault/tmp/" withString:@""];
+//    NSString *thisCommand = [NSString stringWithFormat:@"cd /vault/tmp; zip -r %@.zip %@", fileName, raw_data_folder];
+//    NSArray *argument = [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", thisCommand], nil];
+//    [task setArguments: argument];
+//    
+//    NSPipe *pipe;
+//    pipe = [NSPipe pipe];
+//    [task setStandardOutput: pipe];
+    
+//    NSFileHandle *file;
+//    file = [pipe fileHandleForReading];
+//    
+//    [task launch];
+//    
+//    NSData *data;
+//    data = [file readDataToEndOfFile];
+//    IP_addBlob(UID, [[SWName stringByAppendingString:@"_logFolder"] cStringUsingEncoding:1], [[raw_data_folder stringByAppendingString:@".zip"] cStringUsingEncoding:1]);
+    //        }
+    //        /vault/tmp/F9W62570SGXH82J11_20160824185432
+    
+    
+    
+    for(int i=0;i<[testItemValueArr count];i++){
+        id thisPuddingItem=[testItemValueArr objectAtIndex:i];
+        testSpec=IP_testSpec_create();
+//        NSString *Title=[thisPuddingItem objectForKey:@"NAME"];
+        NSString *Title = @"sf-1a";
+        
+        APIcheck=IP_testSpec_setTestName(testSpec, [Title cStringUsingEncoding:1], [Title length]);
+        
+//        NSString *subTest=[thisPuddingItem objectForKey:@"SUBNAME"];
+//        if(subTest!=nil){
+//            APIcheck = IP_testSpec_setSubTestName( testSpec, [subTest cStringUsingEncoding:1],[subTest length]);
+//        }
+//        NSString *subsubTest=[thisPuddingItem objectForKey:@"SUBSUBNAME"];
+//        if(subsubTest!=nil){
+//            APIcheck = IP_testSpec_setSubSubTestName( testSpec, [subsubTest cStringUsingEncoding:1],[subsubTest length]);
+//        }
+        
+        
+//        NSString *theUpperLimit=[thisPuddingItem objectForKey:@"UpperLimit"];
+        NSString *theUpperLimit = @"80";
+        if(theUpperLimit==nil){
+            theUpperLimit=@"";
+        }
+        
+//        NSString *theLowerLimit=[thisPuddingItem objectForKey:@"LowerLimit"];
+        NSString *theLowerLimit = @"20";
+        if(theLowerLimit==nil){
+            theLowerLimit=@"";
+        }
+        /* Save dynamic limits: Doris*/
+        
+//        if ([[dynamicLimits objectForKey:Title]count]>0) {
+//            theLowerLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"LowerLimit"];
+//            theUpperLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"UpperLimit"];
+//        }
+        
+        /* Save dynamic limits: Doris*/
+        
+        
+        APIcheck=IP_testSpec_setLimits(testSpec, [theLowerLimit cStringUsingEncoding:1], [theLowerLimit length], [theUpperLimit cStringUsingEncoding:1], [theUpperLimit length]);
+//        NSString *theMeasurementUnit=[thisPuddingItem objectForKey:@"MeasurementUnit"];
+        NSString *theMeasurementUnit = @"mV";
+        if(theMeasurementUnit!=nil){
+            APIcheck=IP_testSpec_setUnits(testSpec, [theMeasurementUnit cStringUsingEncoding:1], [theMeasurementUnit length]);
+        }
+//        if ([[[testSet objectForKey:@"CASE"] objectForKey:@"PDCA_Priority"] isEqualToString:@"-2"])
+//            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
+//        else if(_GRR_Mode)
+//            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
+//        else
+        
+            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
+        
+        IP_TestResultHandle puddingResult=IP_testResult_create();
+        NSString *valueStr=[cPuddingValues objectAtIndex:i];
+        if(NSOrderedSame==[valueStr compare:@"Pass" options:NSCaseInsensitiveSearch] || NSOrderedSame==[valueStr compare:@"Fail" options:NSCaseInsensitiveSearch]){
+            valueStr=@"";
+        }
+        const char *value=[valueStr cStringUsingEncoding:1];
+        int valueLength=[valueStr length];
+        int result=IP_FAIL;
+        NSString *resultStr=[cPuddingResults objectAtIndex:i];
+        if([resultStr isEqualToString:@"PASS"]){
+            result=IP_PASS;
+        }
+        
+        
+        if (stringisnumber(valueStr)) {
+            APIcheck=IP_testResult_setValue(puddingResult, value,valueLength);
+        }
+        APIcheck=IP_testResult_setResult(puddingResult, result);
+        if(!result){
+            NSString *failDes=@"";
+            //==========errorcode@errormessage================
+            if([[thisPuddingItem objectForKey:@"ErrorCode"] length]==0){
+                
+                failDes=[failDes stringByAppendingString:@"N/A" ];
+            }else {
+                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"ErrorCode"] ];
+            }
+            failDes=[failDes stringByAppendingString:@"@"];
+            
+            //If SF compare fail, upload error message
+//            if ([PDCAInfo count]>0 && [[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]length]>0) {
+//                
+//                failDes=[failDes stringByAppendingString:[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]];
+//                
+//            }else{
+//                
+//                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"NAME"]];
+//                
+//            }
+            
+            //================================================
+            APIcheck=IP_testResult_setMessage(puddingResult, [failDes cStringUsingEncoding:1], [failDes length]);
+        }
+        reply=IP_addResult(UID, testSpec, puddingResult);
+        if(!IP_success(reply)){
+            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
+        }
+        IP_reply_destroy(reply);
+        IP_testResult_destroy(puddingResult);
+        IP_testSpec_destroy(testSpec);
+    }
+    IP_API_Reply doneReply=IP_UUTDone(UID);
+    if(!IP_success(doneReply)){
+        //NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(doneReply) encoding:1], @"YES", nil,nil);
+        //exit(-1);
+    }
+    IP_reply_destroy(doneReply);
+    IP_API_Reply commitReply;
+    if([cfailItems count]>0){
+        commitReply=IP_UUTCommit(UID, IP_FAIL);
+    }
+    else{
+        commitReply=IP_UUTCommit(UID, IP_PASS);
+    }
+    if(!IP_success(commitReply)){
+        ;
+    }
+    IP_reply_destroy(commitReply);
+    IP_UID_destroy(UID);
+
+}
+
+
 -(void)UploadPDCA_Feicui
 {
 //      调用 方法解析 json 文档,取得对应的额sn参数,station 信息
@@ -1432,8 +1686,6 @@ void handleReply( IP_API_Reply reply )
         }
         //-----------------------
     
-    
-    
     IP_UUTHandle UID;
     Boolean APIcheck;
     IP_TestSpecHandle testSpec;
@@ -1460,7 +1712,7 @@ void handleReply( IP_API_Reply reply )
             IP_UUTCancel(UID);
             IP_UID_destroy(UID);
             IP_reply_destroy(reply);
-            exit(-1);
+//            exit(-1);
         }
     }
     IP_reply_destroy(reply);
@@ -1474,7 +1726,7 @@ void handleReply( IP_API_Reply reply )
             IP_UUTCancel(UID);
             IP_UID_destroy(UID);
             IP_reply_destroy(reply);
-            exit(-1);
+//            exit(-1);
         }
     }
     IP_reply_destroy(reply);
@@ -1488,13 +1740,14 @@ void handleReply( IP_API_Reply reply )
             IP_UUTCancel(UID);
             IP_UID_destroy(UID);
             IP_reply_destroy(reply);
-            exit(-1);
+//            exit(-1);
         }
     }
     IP_reply_destroy(reply);
     
     
     reply=IP_addAttribute( UID, IP_ATTRIBUTE_SERIALNUMBER, [importSN.stringValue cStringUsingEncoding:1] );
+    
     if(!debug_skip_pudding_error)
     {
         if(!IP_success(reply)){
@@ -1502,11 +1755,18 @@ void handleReply( IP_API_Reply reply )
             IP_UUTCancel(UID);
             IP_UID_destroy(UID);
             IP_reply_destroy(reply);
-            exit(-1);
+//            exit(-1);
         }
     }
     
     IP_reply_destroy(reply);
+    
+    //上传值
+    reply=IP_addAttribute( UID, [@"item_1" cStringUsingEncoding:1], [@"01" cStringUsingEncoding:1]);
+    reply=IP_addAttribute( UID, [@"item_2" cStringUsingEncoding:1], [@"02" cStringUsingEncoding:1]);
+    reply=IP_addAttribute( UID, [@"item_3" cStringUsingEncoding:1], [@"03" cStringUsingEncoding:1]);
+    reply=IP_addAttribute( UID, [@"item_4" cStringUsingEncoding:1], [@"04" cStringUsingEncoding:1]);
+    reply=IP_addAttribute( UID, [@"item_5" cStringUsingEncoding:1], [@"05" cStringUsingEncoding:1]);
     
     /*
      reply=IP_addAttribute( UID, IP_ATTRIBUTE_BUILD_EVENT, [buildEvent cStringUsingEncoding:1] );
@@ -1545,13 +1805,13 @@ void handleReply( IP_API_Reply reply )
         }
         
 //        NSString *theUpperLimit=[thisPuddingItem objectForKey:@"UpperLimit"];
-        NSString *theUpperLimit = @"mk_test_upperLimit";
+        NSString *theUpperLimit = @"80";
         if(theUpperLimit==nil){
             theUpperLimit=@"N/A";
             
         }
 //        NSString *theLowerLimit=[thisPuddingItem objectForKey:@"LowerLimit"];
-        NSString *theLowerLimit = @"mk_test_theLowerLimit";
+        NSString *theLowerLimit = @"20";
         if(theLowerLimit==nil){
             theLowerLimit=@"N/A";
             
@@ -1559,7 +1819,7 @@ void handleReply( IP_API_Reply reply )
         APIcheck=IP_testSpec_setLimits(testSpec, [theLowerLimit cStringUsingEncoding:1], [theLowerLimit length], [theUpperLimit cStringUsingEncoding:1], [theUpperLimit length]);
         
 //        NSString *theMeasurementUnit=[thisPuddingItem objectForKey:@"MeasurementUnit"];
-        NSString *theMeasurementUnit  = @"mk_test_theMeasurementUnit";
+        NSString *theMeasurementUnit  = @"mV";
         if(theMeasurementUnit==nil){
             theMeasurementUnit=@"N/A";
             
@@ -1571,20 +1831,18 @@ void handleReply( IP_API_Reply reply )
         IP_TestResultHandle puddingResult=IP_testResult_create();
         
 //        NSString *valueStr=[cPuddingValues objectAtIndex:i];
-        NSString *valueStr = @"mk_test_valueStr";
+        NSString *valueStr = @"122";
         const char *value=[valueStr cStringUsingEncoding:1];
         int valueLength=[valueStr length];
         int result=IP_FAIL;
 //        NSString *resultStr=[cPuddingResults objectAtIndex:i];
-        NSString *resultStr = @"mk_test_resultStr";
+        NSString *resultStr = @"PASS";
         if([resultStr isEqualToString:@"PASS"]){
             result=IP_PASS;
-            
         }
         if (stringisnumber(valueStr)) {
             APIcheck=IP_testResult_setValue(puddingResult, value,valueLength);
         }
-        
         
         APIcheck=IP_testResult_setResult(puddingResult, result);
         if(!result){
@@ -1610,7 +1868,7 @@ void handleReply( IP_API_Reply reply )
         
         if(!IP_success(reply)){
             NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-            exit(-1);
+//            exit(-1);
         }
         IP_reply_destroy(reply);
         IP_testResult_destroy(puddingResult);
@@ -1661,7 +1919,7 @@ void handleReply( IP_API_Reply reply )
     
     IP_API_Reply commitReply;
     
-    if([cfailItems count]>0){
+    if([failItems count]>0){
         commitReply=IP_UUTCommit(UID, IP_FAIL);
     }
     else{
