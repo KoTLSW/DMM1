@@ -216,7 +216,6 @@ enum IP_QUERY_NUMBER
 	IP_QUERY_STATION_SW,	// what is the 'right' software for this unit / station combo? message must contain Unit serial number
 	
 	IP_QUERY_COUNT			// this must always be the last in the enum
-
 };
 
 enum IP_MSG_NUMBER
@@ -453,7 +452,6 @@ extern "C" {
 	///extract the info from gh_station_info.txt file and passed back through char ** and strLength
 	///validate the length of the char * with strLength. Do not forget the free the memory after using the char *
 	IP_API_Reply IP_getGHStationInfo(IP_UUTHandle hGHStation,enum IP_ENUM_GHSTATIONINFO eGHStationInfo,char** cppValue,size_t *sLength );
-	
 	
 	
 	///Use to manually set the start/stop times.  Automatic timestamps will not be used ( usually done through UUTStart() and UUTDone() )
