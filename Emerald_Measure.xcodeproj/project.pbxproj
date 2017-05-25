@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0A586E1ED682320009F6F6 /* libInstantPudding.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A586D1ED682320009F6F6 /* libInstantPudding.dylib */; };
+		4C0A58701ED6834F0009F6F6 /* libIPSFCPost.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A586F1ED6834F0009F6F6 /* libIPSFCPost.dylib */; };
+		4C0A58721ED683580009F6F6 /* libCBAuth.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A58711ED683580009F6F6 /* libCBAuth.dylib */; };
+		4C0A587B1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A587A1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib */; };
 		4C3FFADA1EC69BD70099DA97 /* Param.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3FFAD91EC69BD70099DA97 /* Param.plist */; };
 		4C3FFADC1EC69C2D0099DA97 /* BYDSFCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3FFADB1EC69C2D0099DA97 /* BYDSFCManager.m */; };
 		4C6F3F961EBD822B002C747E /* StationControlWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C6F3F941EBD822B002C747E /* StationControlWindow.m */; };
@@ -49,10 +53,6 @@
 		4C9EE8481EADEE4A00B9089E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9EE8471EADEE4A00B9089E /* ViewController.m */; };
 		4C9EE84C1EAE020C00B9089E /* Logo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C9EE84B1EAE020C00B9089E /* Logo.jpg */; };
 		4CB1F8451ED0500C00DDFCC8 /* Regex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB1F8441ED0500C00DDFCC8 /* Regex.framework */; };
-		4CDDB70E1ED5199300632A96 /* libCBAuth.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDDB7091ED5199300632A96 /* libCBAuth.dylib */; };
-		4CDDB70F1ED5199300632A96 /* libInstantPudding.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDDB70A1ED5199300632A96 /* libInstantPudding.dylib */; };
-		4CDDB7101ED5199300632A96 /* libIPSFCPost.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CDDB70B1ED5199300632A96 /* libIPSFCPost.dylib */; };
-		4CDDB7111ED5199300632A96 /* PDCA.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDDB70D1ED5199300632A96 /* PDCA.m */; };
 		4CF7718D1EBF5DFF0065384C /* Station_0.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF771891EBF5DFF0065384C /* Station_0.plist */; };
 		4CF7718E1EBF5DFF0065384C /* Station_1.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF7718A1EBF5DFF0065384C /* Station_1.plist */; };
 		4CF7718F1EBF5DFF0065384C /* Station_2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CF7718B1EBF5DFF0065384C /* Station_2.plist */; };
@@ -102,6 +102,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C0A586C1ED682320009F6F6 /* InstantPudding_API_QT1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPudding_API_QT1.h; sourceTree = "<group>"; };
+		4C0A586D1ED682320009F6F6 /* libInstantPudding.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libInstantPudding.dylib; sourceTree = "<group>"; };
+		4C0A586F1ED6834F0009F6F6 /* libIPSFCPost.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libIPSFCPost.dylib; sourceTree = "<group>"; };
+		4C0A58711ED683580009F6F6 /* libCBAuth.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libCBAuth.dylib; sourceTree = "<group>"; };
+		4C0A58731ED683670009F6F6 /* CBAuth_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAuth_API.h; sourceTree = "<group>"; };
+		4C0A58741ED683670009F6F6 /* IPSFCPost_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPSFCPost_API.h; sourceTree = "<group>"; };
+		4C0A58781ED699C80009F6F6 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4C0A587A1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libInstantPudding_1.1.31.dylib; sourceTree = "<group>"; };
 		4C3FFAD91EC69BD70099DA97 /* Param.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Param.plist; path = MK_Table/Param.plist; sourceTree = "<group>"; };
 		4C3FFADB1EC69C2D0099DA97 /* BYDSFCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BYDSFCManager.m; sourceTree = "<group>"; };
 		4C3FFADD1EC69C590099DA97 /* BYDSFCManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BYDSFCManager.h; sourceTree = "<group>"; };
@@ -181,15 +189,6 @@
 		4C9EE8471EADEE4A00B9089E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4C9EE84B1EAE020C00B9089E /* Logo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Logo.jpg; sourceTree = "<group>"; };
 		4CB1F8441ED0500C00DDFCC8 /* Regex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Regex.framework; sourceTree = "<group>"; };
-		4CDDB7041ED4460900632A96 /* InstantPudding_API_QT1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstantPudding_API_QT1.h; path = PDCA_FeiCui/InstantPudding_API_QT1.h; sourceTree = "<group>"; };
-		4CDDB7061ED5199300632A96 /* CBAuth_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAuth_API.h; sourceTree = "<group>"; };
-		4CDDB7071ED5199300632A96 /* InstantPudding_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPudding_API.h; sourceTree = "<group>"; };
-		4CDDB7081ED5199300632A96 /* IPSFCPost_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPSFCPost_API.h; sourceTree = "<group>"; };
-		4CDDB7091ED5199300632A96 /* libCBAuth.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libCBAuth.dylib; sourceTree = "<group>"; };
-		4CDDB70A1ED5199300632A96 /* libInstantPudding.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libInstantPudding.dylib; sourceTree = "<group>"; };
-		4CDDB70B1ED5199300632A96 /* libIPSFCPost.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libIPSFCPost.dylib; sourceTree = "<group>"; };
-		4CDDB70C1ED5199300632A96 /* PDCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDCA.h; sourceTree = "<group>"; };
-		4CDDB70D1ED5199300632A96 /* PDCA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDCA.m; sourceTree = "<group>"; };
 		4CF771891EBF5DFF0065384C /* Station_0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_0.plist; path = MK_Table/Station_0.plist; sourceTree = "<group>"; };
 		4CF7718A1EBF5DFF0065384C /* Station_1.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_1.plist; path = MK_Table/Station_1.plist; sourceTree = "<group>"; };
 		4CF7718B1EBF5DFF0065384C /* Station_2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Station_2.plist; path = MK_Table/Station_2.plist; sourceTree = "<group>"; };
@@ -253,12 +252,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CDDB7101ED5199300632A96 /* libIPSFCPost.dylib in Frameworks */,
-				4CDDB70F1ED5199300632A96 /* libInstantPudding.dylib in Frameworks */,
+				4C0A58701ED6834F0009F6F6 /* libIPSFCPost.dylib in Frameworks */,
 				4CB1F8451ED0500C00DDFCC8 /* Regex.framework in Frameworks */,
 				4C9EE82E1EADE69400B9089E /* VISA.framework in Frameworks */,
 				4CFEFB651EBF0B0700353ABF /* libftd2xx.1.2.2.dylib in Frameworks */,
-				4CDDB70E1ED5199300632A96 /* libCBAuth.dylib in Frameworks */,
+				4C0A587B1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib in Frameworks */,
+				4C0A58721ED683580009F6F6 /* libCBAuth.dylib in Frameworks */,
+				4C0A586E1ED682320009F6F6 /* libInstantPudding.dylib in Frameworks */,
 				4CFEFB7A1EBF151600353ABF /* GPIBDevice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +280,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C0A586B1ED682320009F6F6 /* PDCA_FeiCui */ = {
+			isa = PBXGroup;
+			children = (
+				4C0A586C1ED682320009F6F6 /* InstantPudding_API_QT1.h */,
+				4C0A587A1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib */,
+				4C0A586D1ED682320009F6F6 /* libInstantPudding.dylib */,
+			);
+			path = PDCA_FeiCui;
+			sourceTree = "<group>";
+		};
 		4C6F3F921EBD81DE002C747E /* StationControl */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +338,7 @@
 		4C9EE7AA1EADE57000B9089E = {
 			isa = PBXGroup;
 			children = (
+				4C0A58781ED699C80009F6F6 /* Security.framework */,
 				4C9EE7B51EADE57000B9089E /* Emerald_Measure */,
 				4C9EE7CC1EADE57100B9089E /* Emerald_MeasureTests */,
 				4C9EE7D71EADE57100B9089E /* Emerald_MeasureUITests */,
@@ -358,8 +369,7 @@
 				4C82EE311EB04D5A00BAA7A3 /* PACSocket */,
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
 				4CFEFB701EBF0C4900353ABF /* SFC */,
-				4CDDB7051ED5199300632A96 /* PDCA */,
-				4CDDB7041ED4460900632A96 /* InstantPudding_API_QT1.h */,
+				4C0A586B1ED682320009F6F6 /* PDCA_FeiCui */,
 				4C9EE7EF1EADE69400B9089E /* MK_Alert */,
 				4C9EE7F41EADE69400B9089E /* MK_File */,
 				4C9EE7FD1EADE69400B9089E /* MK_Table */,
@@ -494,21 +504,6 @@
 			path = Visa;
 			sourceTree = "<group>";
 		};
-		4CDDB7051ED5199300632A96 /* PDCA */ = {
-			isa = PBXGroup;
-			children = (
-				4CDDB7061ED5199300632A96 /* CBAuth_API.h */,
-				4CDDB7071ED5199300632A96 /* InstantPudding_API.h */,
-				4CDDB7081ED5199300632A96 /* IPSFCPost_API.h */,
-				4CDDB7091ED5199300632A96 /* libCBAuth.dylib */,
-				4CDDB70A1ED5199300632A96 /* libInstantPudding.dylib */,
-				4CDDB70B1ED5199300632A96 /* libIPSFCPost.dylib */,
-				4CDDB70C1ED5199300632A96 /* PDCA.h */,
-				4CDDB70D1ED5199300632A96 /* PDCA.m */,
-			);
-			path = PDCA;
-			sourceTree = "<group>";
-		};
 		4CFEFB4B1EBF08ED00353ABF /* Device */ = {
 			isa = PBXGroup;
 			children = (
@@ -570,6 +565,10 @@
 				C6C611A01EC0ED5000E0099D /* TestStep.m */,
 				4CFEFB711EBF0C4900353ABF /* IACSFC.h */,
 				4CFEFB721EBF0C4900353ABF /* IACSFC.m */,
+				4C0A58731ED683670009F6F6 /* CBAuth_API.h */,
+				4C0A58741ED683670009F6F6 /* IPSFCPost_API.h */,
+				4C0A58711ED683580009F6F6 /* libCBAuth.dylib */,
+				4C0A586F1ED6834F0009F6F6 /* libIPSFCPost.dylib */,
 			);
 			path = SFC;
 			sourceTree = "<group>";
@@ -785,7 +784,6 @@
 				C67112B91EC50B1C006975BF /* Param.m in Sources */,
 				4CFEFB661EBF0B0700353ABF /* main.c in Sources */,
 				4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */,
-				4CDDB7111ED5199300632A96 /* PDCA.m in Sources */,
 				4CFEFB841EBF1BEF00353ABF /* AlertView.m in Sources */,
 				C6C611A31EC0ED5000E0099D /* TestStep.m in Sources */,
 				C67112BC1EC534E5006975BF /* Agilent33210A.m in Sources */,
@@ -841,6 +839,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -885,6 +884,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -933,12 +933,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA",
 					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui/lib",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui/lib/security",
+					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui",
+					"$(PROJECT_DIR)/Emerald_Measure/SFC",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "michael.Emerald-Measure";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -959,12 +959,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA",
 					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui/lib",
-					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui/lib/security",
+					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui",
+					"$(PROJECT_DIR)/Emerald_Measure/SFC",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "michael.Emerald-Measure";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
