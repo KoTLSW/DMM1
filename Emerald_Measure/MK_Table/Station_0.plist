@@ -12,9 +12,9 @@
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>1.45</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>1.55</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -123,9 +123,9 @@
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>-1.515</string>
+			<string>-1.55</string>
 			<key>Max</key>
-			<string>-1.485</string>
+			<string>-1.45</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -456,7 +456,7 @@
 			<key>Units</key>
 			<string>MΩ</string>
 			<key>Min</key>
-			<string>8.2</string>
+			<string>--</string>
 			<key>Max</key>
 			<string>--</string>
 			<key>Value</key>

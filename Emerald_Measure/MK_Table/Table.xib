@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
     <objects>
@@ -33,7 +32,7 @@
                                 <tableViewGridLines key="gridStyleMask" vertical="YES" horizontal="YES"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="id" editable="NO" width="120" minWidth="10" maxWidth="3.4028234663852886e+38" id="yHq-jB-9M1">
+                                    <tableColumn identifier="id" editable="NO" width="34" minWidth="10" maxWidth="3.4028234663852886e+38" id="yHq-jB-9M1">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="ID">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -45,7 +44,7 @@
                                             <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </tableColumn>
-                                    <tableColumn identifier="testName" editable="NO" width="140" minWidth="10" maxWidth="3.4028234663852886e+38" id="wht-Ti-wcH">
+                                    <tableColumn identifier="testName" editable="NO" width="256" minWidth="10" maxWidth="3.4028234663852886e+38" id="wht-Ti-wcH">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="TestName">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +56,7 @@
                                             <color key="backgroundColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </tableColumn>
-                                    <tableColumn identifier="units" editable="NO" width="99" minWidth="10" maxWidth="3.4028234663852886e+38" id="S0Q-fS-R9X">
+                                    <tableColumn identifier="units" editable="NO" width="66" minWidth="10" maxWidth="3.4028234663852886e+38" id="S0Q-fS-R9X">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="center" title="Units">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -128,12 +127,12 @@
                         </subviews>
                         <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="0.20000000000000001" horizontal="YES" id="rvS-mu-0ak">
-                        <rect key="frame" x="-7" y="8" width="0.0" height="15"/>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="rvS-mu-0ak">
+                        <rect key="frame" x="1" y="368" width="917" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="9ri-tq-LN3">
-                        <rect key="frame" x="-14" y="16" width="15" height="0.0"/>
+                        <rect key="frame" x="-15" y="23" width="16" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <tableHeaderView key="headerView" id="yK2-zm-QEh">

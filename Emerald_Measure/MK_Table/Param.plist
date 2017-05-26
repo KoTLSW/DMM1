@@ -3,18 +3,18 @@
 <plist version="1.0">
 <dict>
 	<key>dut_type</key>
-	<string>Test5</string>
+	<string>--</string>
 	<key>isWaveNeed</key>
 	<true/>
 	<key>isDebug</key>
-	<true/>
+	<false/>
 	<key>fixture_id</key>
 	<string>000001</string>
 	<key>fixture_uart_baud</key>
 	<integer>115200</integer>
-	<key>fixture_uart_port_name</key>
+	<key>fixture_uart_port_name-0</key>
 	<string>/dev/cu.usbserial-A103PRKA</string>
-	<key>fixture_uart_port_name-1</key>
+	<key>fixture_uart_port_name</key>
 	<string>/dev/cu.usbserial-A103PRKD</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
@@ -35,7 +35,7 @@
 	<key>sw_name</key>
 	<string>Emerald_Testing</string>
 	<key>sw_ver</key>
-	<string>V1.01</string>
+	<string>V1.014</string>
 	<key>s_build</key>
 	<string>Emerald_MK</string>
 	<key>thdn</key>
@@ -43,7 +43,7 @@
 	<key>ui_title</key>
 	<string>software test</string>
 	<key>ui_versiom</key>
-	<string>V1.01</string>
+	<string>--</string>
 	<key>station</key>
 	<string>1</string>
 	<key>stationID</key>

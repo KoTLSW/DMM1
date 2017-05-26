@@ -112,6 +112,18 @@ NSString  *param_path=@"Param";
     BOOL debug_skip_pudding_error;
     NSMutableArray *failItemsArr;
     NSMutableArray *passItemsArr;
+    
+    double num;
+    double DCIN2V_CURR_value;
+    double DCIN3V_CURR_value;
+    double POSFWDVOLTAGE_DIFF_value;
+    double POSFWDVOLTAGE_value;
+    double NEGFWDVOLTAGE_DIFF_value;
+    double NEGFWDVOLTAGE_value;
+    double RIN_value;
+    double RIN_VOUT_value;
+    double ZIN_value;
+    double ZIN_VOUT_value;
 }
 
 
@@ -970,6 +982,81 @@ NSString  *param_path=@"Param";
 //==================== 冲定向log ============================
 
 
+-(double)CALCULATE:(NSString *)str
+{
+    NSDictionary *dice = [NSDictionary dictionary];
+    
+    if ([str isEqualToString:@"POSFWDVOLTAGE_DIFF"])
+    {
+       dic = [self getItemBytes:itemArr WithTestName:@"POSFWDVOLTAGE"];
+        
+        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+        double FW_value = [FW_valuestr doubleValue];
+        return (FW_value-1.5);
+    }
+    else if ([str isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
+    {
+        dic = [self getItemBytes:itemArr WithTestName:@"NEGFWDVOLTAGE"];
+        
+        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+        double FW_value = [FW_valuestr doubleValue];
+        return (FW_value+1.5);
+    }
+    else if ([str isEqualToString:@"RIN"])
+    {
+        dic = [self getItemBytes:itemArr WithTestName:@"RIN_VOUT"];
+        
+        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+        double FW_value = [FW_valuestr doubleValue];
+        return (10.0*FW_value/(0.8-FW_value));
+    }
+    else if ([str isEqualToString:@"ZIN"])
+    {
+        dic = [self getItemBytes:itemArr WithTestName:@"ZIN_VOUT"];
+        
+        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+        double FW_value = [FW_valuestr doubleValue];
+        return (10*FW_value/(0.565-FW_value));
+    }
+    else if ([str isEqualToString:@"SAFETYR"])
+    {
+        dic = [self getItemBytes:itemArr WithTestName:@"DCIN2V_CURR"];
+        NSString *FW_valuestr1 = [dic objectForKey:@"Value"];
+        double FW_value1 = [FW_valuestr1 doubleValue];
+        
+        dic = [self getItemBytes:itemArr WithTestName:@"DCIN3V_CURR"];
+        NSString *FW_valuestr2 = [dic objectForKey:@"Value"];
+        double FW_value2 = [FW_valuestr2 doubleValue];
+        
+        return 1.0/(1000.0*(FW_value2-FW_value1));
+    }
+    
+    else
+    {
+        [self getItemBytes:itemArr WithTestName:@""];
+        return 0;
+    }
+}
+
+
+
+//calculate
+-(NSDictionary *)getItemBytes:(NSArray *)testNameArr WithTestName:(NSString *)testName
+{
+    NSDictionary *dic = [NSDictionary dictionary];
+    
+    for(int count = 0; count < testNameArr.count; count++)
+    {
+        dic = testNameArr[count];
+        if ([[dic objectForKey:@"POSFWDVOLTAGE"] isEqualToString: testName])
+        {
+            return dic;
+        }
+    }
+    return nil;
+}
+
+
 //================================================
 //测试项指令解析
 //================================================
@@ -986,6 +1073,7 @@ NSString  *param_path=@"Param";
         testItemTitleArr = [NSMutableArray arrayWithCapacity:0];
     }
     
+    
     for (int i=0; i<[testitem.testAllCommand count]; i++)
     {
         //治具===================Fixture
@@ -998,7 +1086,21 @@ NSString  *param_path=@"Param";
         SonTestName=dic[@"TestName"];
         delayTime = [dic[@"TestDelayTime"] intValue]/1000;
         
+        
+        
+//        if ([[testitem.testAllCommand[i] objectForKey:@"TestCommand"] isEqualToString:@"CALCULATE"])
+//        {
+////            CALCULATE(testitem.testName));
+//            
+//            [self CALCULATE:testitem.testName];
+//        }
+        
         //**************************治具=Fixture
+//        if ([SonTestDevice isEqualToString:@"CALCULATE"])
+//        {
+//            [self CALCULATE:testItem.testName];
+//        }
+        
         if ([SonTestDevice isEqualToString:@"Fixture"])
         {
             NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand);
@@ -1088,7 +1190,7 @@ NSString  *param_path=@"Param";
             else//其它的值
             {
                 //5次电压递增测试
-                if ([testitem.testName containsString:@"RF_5a"]) //设备
+                if ([testitem.testName containsString:@"_CURR"]) //设备
                 {
                     int indexTime=0;
                     
@@ -1115,7 +1217,7 @@ NSString  *param_path=@"Param";
                         {
                             indexTime++;
                             
-                            if (indexTime==[testitem.retryTimes intValue]-1)
+                            if (indexTime >= [testitem.retryTimes intValue]-1)
                             {
                                 sleep(13.5);
                                 [agilent3458A WriteLine:@"END"];
@@ -1147,37 +1249,192 @@ NSString  *param_path=@"Param";
                     }
                 }
                 
-                double num=[agilentReadString floatValue];
-
-                if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
-                {
-                    testitem.value = [NSString stringWithFormat:@"%f",num];
-                }
-                if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
-                {
-                    testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
-                }
-                if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
-                {
-                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
-                    {
-                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
-                    }
-                    else
-                    {
-                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
-                    }
-                }
-                if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
-                {
-                    testitem.value = [NSString stringWithFormat:@"%f",num/1000];
-                }
-                if ([testitem.units containsString:@"uA"])
-                {
-                    testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
-                }
+                num = [agilentReadString floatValue];
+                testitem.value = [NSString stringWithFormat:@"%f",num];
+                
+                
+//                if ([str isEqualToString:@"POSFWDVOLTAGE_DIFF"])
+//                {
+//                    dic = [self getItemBytes:itemArr WithTestName:@"POSFWDVOLTAGE"];
+//                    
+//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//                    double FW_value = [FW_valuestr doubleValue];
+//                    return (FW_value-1.5);
+//                }
+//                else if ([str isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
+//                {
+//                    dic = [self getItemBytes:itemArr WithTestName:@"NEGFWDVOLTAGE"];
+//                    
+//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//                    double FW_value = [FW_valuestr doubleValue];
+//                    return (FW_value+1.5);
+//                }
+//                else if ([str isEqualToString:@"RIN"])
+//                {
+//                    dic = [self getItemBytes:itemArr WithTestName:@"RIN_VOUT"];
+//                    
+//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//                    double FW_value = [FW_valuestr doubleValue];
+//                    return (10.0*FW_value/(0.8-FW_value));
+//                }
+//                else if ([str isEqualToString:@"ZIN"])
+//                {
+//                    dic = [self getItemBytes:itemArr WithTestName:@"ZIN_VOUT"];
+//                    
+//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//                    double FW_value = [FW_valuestr doubleValue];
+//                    return (10*FW_value/(0.565-FW_value));
+//                }
+//                else if ([str isEqualToString:@"SAFETYR"])
+//                {
+//                    dic = [self getItemBytes:itemArr WithTestName:@"DCIN2V_CURR"];
+//                    NSString *FW_valuestr1 = [dic objectForKey:@"Value"];
+//                    double FW_value1 = [FW_valuestr1 doubleValue];
+//                    
+//                    dic = [self getItemBytes:itemArr WithTestName:@"DCIN3V_CURR"];
+//                    NSString *FW_valuestr2 = [dic objectForKey:@"Value"];
+//                    double FW_value2 = [FW_valuestr2 doubleValue];
+//                    
+//                    return 1.0/(1000.0*(FW_value2-FW_value1));
+//                }
+//                
+//                else
+//                {
+//                    [self getItemBytes:itemArr WithTestName:@""];
+//                    return 0;
+//                }
+                
+              //                if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
+//                {
+//                    testitem.value = [NSString stringWithFormat:@"%f",num];
+//                }
+//                if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
+//                {
+//                    testitem.value = [NSString stringWithFormat:@"%f",num];
+//                    testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
+//                }
+//                if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
+//                {
+////                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
+////                    {
+////                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
+////                    }
+////                    else
+////                    {
+////                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
+////                    }
+//                    
+//                }
+//                if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
+//                {
+//                    testitem.value = [NSString stringWithFormat:@"%f",num/1000];
+//                }
+//                if ([testitem.units containsString:@"uA"])
+//                {
+//                    testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
+//                }
+                
             }
         }
+        
+        //-------------------------------------------------------
+        
+        if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE_DIFF"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value-1.5];
+        }
+        else if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE"])
+        {
+            POSFWDVOLTAGE_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value];
+        }
+        
+        else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value+1.5];
+        }
+        else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE"])
+        {
+            NEGFWDVOLTAGE_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value];
+        }
+        
+        else if ([testItem.testName isEqualToString:@"RIN"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",(10.0*RIN_VOUT_value/(0.8-RIN_VOUT_value))];
+        }
+        else if ([testItem.testName isEqualToString:@"RIN_VOUT"])
+        {
+            RIN_VOUT_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",RIN_VOUT_value];
+        }
+        
+        else if ([testItem.testName isEqualToString:@"ZIN"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value))];
+        }
+        else if ([testItem.testName isEqualToString:@"ZIN_VOUT"])
+        {
+            ZIN_VOUT_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",ZIN_VOUT_value];
+        }
+        
+        else if ([testItem.testName isEqualToString:@"DCIN2V_CURR"])
+        {
+            DCIN2V_CURR_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",DCIN2V_CURR_value];
+        }
+        
+        else if ([testItem.testName isEqualToString:@"DCIN3V_CURR"])
+        {
+            DCIN3V_CURR_value = num;
+            testitem.value = [NSString stringWithFormat:@"%f",DCIN3V_CURR_value];
+        }
+        
+        
+        else if ([testItem.testName isEqualToString:@"SAFETYR"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",1.0/(1000.0*(DCIN3V_CURR_value - DCIN2V_CURR_value))];
+        }
+        //-------------------------------------------------
+        else
+        {
+            testitem.value = [NSString stringWithFormat:@"%f",num];
+        }
+        
+        
+//        if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
+//        {
+//            testitem.value = [NSString stringWithFormat:@"%f",num];
+//        }
+//        if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
+//        {
+//            testitem.value = [NSString stringWithFormat:@"%f",num];
+//            testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
+//        }
+//        if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
+//        {
+//        //                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
+//        //                    {
+//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
+//        //                    }
+//        //                    else
+//        //                    {
+//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
+//        //                    }
+//        
+//        }
+//        
+//        if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
+//        {
+//            testitem.value = [NSString stringWithFormat:@"%f",num/1000];
+//        }
+        
+        if ([testitem.units containsString:@"uA"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
+        }
+        
         
         if([SonTestDevice isEqualToString:@"SW"])
         {
@@ -1465,8 +1722,8 @@ void handleReply( IP_API_Reply reply )
     if(!IP_success(reply))
     {
         NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//        exit(-1);
     }
+    
     IP_reply_destroy(reply);
     
     handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_STATIONSOFTWAREVERSION, [ [NSString stringWithFormat:@"%@",param.sw_ver] cStringUsingEncoding:1]  ));
@@ -1474,168 +1731,6 @@ void handleReply( IP_API_Reply reply )
     handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_STATIONLIMITSVERSION, [[NSString stringWithFormat:@"%@",param.sw_ver] cStringUsingEncoding:1]));
     
     handleReply(IP_addAttribute( UID, IP_ATTRIBUTE_SERIALNUMBER, [theSN cStringUsingEncoding:1] ));
-    
-    
-//------------------------------ nothing to change -----------------------------------------------------
-//    if ([PDCAInfo count])
-//    {
-//        for (id item in PDCAInfo)
-//        {
-//            if (![[PDCAInfo objectForKey:item] isEqualToString:@"N/A"])
-//            {
-//                
-//                handleReply(IP_addAttribute( UID, [item cStringUsingEncoding:1], [[PDCAInfo objectForKey:item] cStringUsingEncoding:1] ));
-//            }
-//        }
-//    }
-    
-    //
-//    handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_SPECIAL_BUILD, [[globalDic objectForKey:@"sbuild"] cStringUsingEncoding:1]));
-//    if ([SWName containsString:@"BCM"]) {
-//        handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_IOFLEXSERIALNUMBER, [[globalDic objectForKey:@"sensorflex"] cStringUsingEncoding:1]));
-//    }
-    //        handleReply(IP_addAttribute(UID, IP_ATTRIBUTE_IOFLEXSERIALNUMBER, [[globalDic objectForKey:@"sensorflex"] cStringUsingEncoding:1]));
-    //
-    
-//    NSString *tt=[SWName stringByAppendingString: @"_log"];
-//    IP_addBlob(UID,[tt cStringUsingEncoding:1],[logfilename cStringUsingEncoding:1]);
-//    
-//    //Upload csvlog to PDCA - fish
-//    IP_addBlob(UID, [[SWName stringByAppendingString:@"_csvlog"] cStringUsingEncoding:1], [csvlogName cStringUsingEncoding:1]);
-    
-    //raw_data_folder
-    //        if([swStation containsString:@"BCM"]){
-//    NSTask *task;
-//    task = [[NSTask alloc] init];
-//    [task setLaunchPath:@"/bin/sh"];
-//    NSString *fileName = [raw_data_folder stringByReplacingOccurrencesOfString:@"/vault/tmp/" withString:@""];
-//    NSString *thisCommand = [NSString stringWithFormat:@"cd /vault/tmp; zip -r %@.zip %@", fileName, raw_data_folder];
-//    NSArray *argument = [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", thisCommand], nil];
-//    [task setArguments: argument];
-//    
-//    NSPipe *pipe;
-//    pipe = [NSPipe pipe];
-//    [task setStandardOutput: pipe];
-    
-//    NSFileHandle *file;
-//    file = [pipe fileHandleForReading];
-//    
-//    [task launch];
-//    
-//    NSData *data;
-//    data = [file readDataToEndOfFile];
-//    IP_addBlob(UID, [[SWName stringByAppendingString:@"_logFolder"] cStringUsingEncoding:1], [[raw_data_folder stringByAppendingString:@".zip"] cStringUsingEncoding:1]);
-    //        }
-    //        /vault/tmp/F9W62570SGXH82J11_20160824185432
-//-------------------------------------------------------------------
-    
-//    for(int i=0;i<[testItemValueArr count];i++)
-//    {
-//        id thisPuddingItem=[testItemValueArr objectAtIndex:i];
-//        testSpec=IP_testSpec_create();
-//        NSString *Title=[thisPuddingItem objectForKey:@"NAME"];
-//        
-//        APIcheck=IP_testSpec_setTestName(testSpec, [Title cStringUsingEncoding:1], [Title length]);
-//        
-////        NSString *subTest=[thisPuddingItem objectForKey:@"SUBNAME"];
-////        if(subTest!=nil){
-////            APIcheck = IP_testSpec_setSubTestName( testSpec, [subTest cStringUsingEncoding:1],[subTest length]);
-////        }
-////        NSString *subsubTest=[thisPuddingItem objectForKey:@"SUBSUBNAME"];
-////        if(subsubTest!=nil){
-////            APIcheck = IP_testSpec_setSubSubTestName( testSpec, [subsubTest cStringUsingEncoding:1],[subsubTest length]);
-////        }
-//        
-//        
-////        NSString *theUpperLimit=[thisPuddingItem objectForKey:@"UpperLimit"];
-//        NSString *theUpperLimit = @"80";
-//        if(theUpperLimit==nil){
-//            theUpperLimit=@"";
-//        }
-//        
-////        NSString *theLowerLimit=[thisPuddingItem objectForKey:@"LowerLimit"];
-//        NSString *theLowerLimit = @"20";
-//        if(theLowerLimit==nil){
-//            theLowerLimit=@"";
-//        }
-//        /* Save dynamic limits: Doris*/
-//        
-////        if ([[dynamicLimits objectForKey:Title]count]>0) {
-////            theLowerLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"LowerLimit"];
-////            theUpperLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"UpperLimit"];
-////        }
-//        
-//        /* Save dynamic limits: Doris*/
-//        
-//        
-//        APIcheck=IP_testSpec_setLimits(testSpec, [theLowerLimit cStringUsingEncoding:1], [theLowerLimit length], [theUpperLimit cStringUsingEncoding:1], [theUpperLimit length]);
-////        NSString *theMeasurementUnit=[thisPuddingItem objectForKey:@"MeasurementUnit"];
-//        NSString *theMeasurementUnit = @"mV";
-//        if(theMeasurementUnit!=nil){
-//            APIcheck=IP_testSpec_setUnits(testSpec, [theMeasurementUnit cStringUsingEncoding:1], [theMeasurementUnit length]);
-//        }
-////        if ([[[testSet objectForKey:@"CASE"] objectForKey:@"PDCA_Priority"] isEqualToString:@"-2"])
-////            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
-////        else if(_GRR_Mode)
-////            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
-////        else
-//        
-//            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
-//        
-//        IP_TestResultHandle puddingResult=IP_testResult_create();
-//        NSString *valueStr=[cPuddingValues objectAtIndex:i];
-//        if(NSOrderedSame==[valueStr compare:@"Pass" options:NSCaseInsensitiveSearch] || NSOrderedSame==[valueStr compare:@"Fail" options:NSCaseInsensitiveSearch]){
-//            valueStr=@"";
-//        }
-//        const char *value=[valueStr cStringUsingEncoding:1];
-//        int valueLength=[valueStr length];
-//        int result=IP_FAIL;
-//        NSString *resultStr=[cPuddingResults objectAtIndex:i];
-//        if([resultStr isEqualToString:@"PASS"]){
-//            result=IP_PASS;
-//        }
-//        
-//        
-//        if (stringisnumber(valueStr)) {
-//            APIcheck=IP_testResult_setValue(puddingResult, value,valueLength);
-//        }
-//        APIcheck=IP_testResult_setResult(puddingResult, result);
-//        if(!result){
-//            NSString *failDes=@"";
-//            //==========errorcode@errormessage================
-//            if([[thisPuddingItem objectForKey:@"ErrorCode"] length]==0){
-//                
-//                failDes=[failDes stringByAppendingString:@"N/A" ];
-//            }else {
-//                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"ErrorCode"] ];
-//            }
-//            failDes=[failDes stringByAppendingString:@"@"];
-//            
-//            //If SF compare fail, upload error message
-////            if ([PDCAInfo count]>0 && [[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]length]>0) {
-////                
-////                failDes=[failDes stringByAppendingString:[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]];
-////                
-////            }else{
-////                
-////                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"NAME"]];
-////                
-////            }
-//            
-//            //================================================
-//            APIcheck=IP_testResult_setMessage(puddingResult, [failDes cStringUsingEncoding:1], [failDes length]);
-//        }
-//        reply=IP_addResult(UID, testSpec, puddingResult);
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//        }
-//        IP_reply_destroy(reply);
-//        IP_testResult_destroy(puddingResult);
-//        IP_testSpec_destroy(testSpec);
-//    }
-    
-
-
     
 //==========================================================================================
 //----------------------- change the loop 2017.5.25 _MK ------------------------------------
@@ -1648,61 +1743,28 @@ void handleReply( IP_API_Reply reply )
         //--------------------- title---------------------------
         NSString *Title = testItem.testName;
         APIcheck=IP_testSpec_setTestName(testSpec, [Title cStringUsingEncoding:1], [Title length]);
-    
-    //        NSString *subTest=[thisPuddingItem objectForKey:@"SUBNAME"];
-    //        if(subTest!=nil){
-    //            APIcheck = IP_testSpec_setSubTestName( testSpec, [subTest cStringUsingEncoding:1],[subTest length]);
-    //        }
-    //        NSString *subsubTest=[thisPuddingItem objectForKey:@"SUBSUBNAME"];
-    //        if(subsubTest!=nil){
-    //            APIcheck = IP_testSpec_setSubSubTestName( testSpec, [subsubTest cStringUsingEncoding:1],[subsubTest length]);
-    //        }
-    
-        //--------------------- upperlimit---------------------------
-//        NSString *theUpperLimit=[thisPuddingItem objectForKey:@"Max"];
         
         NSString *theUpperLimit = testItem.max;
-        if(theUpperLimit==nil)
+        if(theUpperLimit==nil || [theUpperLimit isEqualToString:@"--"])
         {
-            theUpperLimit=@"";
+            theUpperLimit=@"N/A";
         }
         
-        //--------------------- lowerlimit ---------------------------
-//        NSString *theLowerLimit=[thisPuddingItem objectForKey:@"Min"];
         NSString *theLowerLimit = testItem.min;
-        
-        if(theLowerLimit==nil)
+        if(theLowerLimit==nil || [theLowerLimit isEqualToString:@"--"])
         {
-            theLowerLimit=@"";
+            theLowerLimit=@"N/A";
         }
-        
-            /* Save dynamic limits: Doris*/
-    
-    //        if ([[dynamicLimits objectForKey:Title]count]>0) {
-    //            theLowerLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"LowerLimit"];
-    //            theUpperLimit=[[dynamicLimits objectForKey:Title] objectForKey:@"UpperLimit"];
-    //        }
-    
-            /* Save dynamic limits: Doris*/
-    
     
         //----------------- setLimits ------------------------------
         APIcheck=IP_testSpec_setLimits(testSpec, [theLowerLimit cStringUsingEncoding:1], [theLowerLimit length], [theUpperLimit cStringUsingEncoding:1], [theUpperLimit length]);
         
         //--------------------- unit -------------------------------------
-//        NSString *theMeasurementUnit=[thisPuddingItem objectForKey:@"Units"];
         NSString *theMeasurementUnit = testItem.units;
         if(theMeasurementUnit!=nil)
         {
             APIcheck=IP_testSpec_setUnits(testSpec, [theMeasurementUnit cStringUsingEncoding:1], [theMeasurementUnit length]);
         }
-        
-        
-    //        if ([[[testSet objectForKey:@"CASE"] objectForKey:@"PDCA_Priority"] isEqualToString:@"-2"])
-    //            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
-    //        else if(_GRR_Mode)
-    //            APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_STATION_CALIBRATION_AUDIT);
-    //        else
     
         APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
     
@@ -1752,17 +1814,6 @@ void handleReply( IP_API_Reply reply )
             }
             
             failDes=[failDes stringByAppendingString:@"@"];
-    
-                //If SF compare fail, upload error message
-    //            if ([PDCAInfo count]>0 && [[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]length]>0) {
-    //
-    //                failDes=[failDes stringByAppendingString:[PDCAInfo objectForKey:[thisPuddingItem objectForKey:@"NAME"]]];
-    //
-    //            }else{
-    //
-    //                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"NAME"]];
-    //
-    //            }
             
             APIcheck=IP_testResult_setMessage(puddingResult, [failDes cStringUsingEncoding:1], [failDes length]);
         }
@@ -1780,7 +1831,6 @@ void handleReply( IP_API_Reply reply )
         
         IP_testSpec_destroy(testSpec);
     }
-    
     
     
 //------------------------ nothing change --------------------------------------
@@ -1803,388 +1853,6 @@ void handleReply( IP_API_Reply reply )
     IP_reply_destroy(commitReply);
     IP_UID_destroy(UID);
 }
-
-
-//-(void)UploadPDCA_Feicui
-//{
-////      调用 方法解析 json 文档,取得对应的额sn参数,station 信息
-//    
-//        //------------ json ------------
-//        NSString *restoreinfoPath = @"/vault/data_collection/test_station_config/gh_station_info.json";
-//        if (![[NSFileManager defaultManager] fileExistsAtPath:restoreinfoPath])
-//        {
-//            NSLog(@"Can't find /vault/data_collection/test_station_config/gh_station_info.json !");
-//            //return;
-//        }
-//        else
-//        {
-//            NSData *filecontent=[[NSFileManager defaultManager] contentsAtPath:restoreinfoPath];
-//            NSString *info=[[NSString alloc]initWithData:filecontent encoding:1];
-//            NSArray * lineArray=[info componentsSeparatedByString:@"\n"];
-//    
-//            //NSString *productline;
-//            //NSString *unitline;
-//            for(int i=0;i<[lineArray count];i++)
-//            {
-//                NSString *linestring=[lineArray objectAtIndex:i];
-//                NSLog(@"json linestring is ============ %@ ==========", linestring);
-//    
-//                //ReStaName
-//                if ([linestring rangeOfString:@"\"STATION_TYPE\" :"].length>0)
-//                {
-//                    NSString *STATION_TYPE=@"";
-//                    STATION_TYPE=[self GetSpecStr:linestring thestartStr:@": \"" theendStr:@"\","];
-//                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@" " withString:@""];
-//                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//                    STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//                    ReStaName=[[NSString alloc] initWithString:STATION_TYPE];
-//                    NSLog(@"%@",ReStaName);
-//                }
-//            }
-//        }
-//        //-----------------------
-//    
-//    IP_UUTHandle UID;
-//    Boolean APIcheck;
-//    IP_TestSpecHandle testSpec;
-//    
-//    IP_API_Reply reply = IP_UUTStart(&UID);
-//    
-//    debug_skip_pudding_error = NO;
-//    
-//    if(!debug_skip_pudding_error)
-//    {
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//            if(reply) IP_UUTCancel(UID);
-//        }
-//    }
-//    IP_reply_destroy(reply);
-//    
-//    reply=IP_addAttribute( UID, IP_ATTRIBUTE_STATIONSOFTWAREVERSION, [param.sw_ver cStringUsingEncoding:1]  );
-//    
-//    if(!debug_skip_pudding_error)
-//    {
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//            IP_UUTCancel(UID);
-//            IP_UID_destroy(UID);
-//            IP_reply_destroy(reply);
-////            exit(-1);
-//        }
-//    }
-//    IP_reply_destroy(reply);
-//    
-//    
-//    reply=IP_addAttribute( UID, IP_ATTRIBUTE_STATIONSOFTWARENAME, [ReStaName cStringUsingEncoding:1]  );
-//    if(!debug_skip_pudding_error)
-//    {
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//            IP_UUTCancel(UID);
-//            IP_UID_destroy(UID);
-//            IP_reply_destroy(reply);
-////            exit(-1);
-//        }
-//    }
-//    IP_reply_destroy(reply);
-//    
-//    
-//    reply=IP_addAttribute( UID, IP_ATTRIBUTE_STATIONLIMITSVERSION, [param.sw_ver cStringUsingEncoding:1] );
-//    if(!debug_skip_pudding_error)
-//    {
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//            IP_UUTCancel(UID);
-//            IP_UID_destroy(UID);
-//            IP_reply_destroy(reply);
-////            exit(-1);
-//        }
-//    }
-//    IP_reply_destroy(reply);
-//    
-//    
-//    reply=IP_addAttribute( UID, IP_ATTRIBUTE_SERIALNUMBER, [importSN.stringValue cStringUsingEncoding:1] );
-//    
-//    if(!debug_skip_pudding_error)
-//    {
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//            IP_UUTCancel(UID);
-//            IP_UID_destroy(UID);
-//            IP_reply_destroy(reply);
-////            exit(-1);
-//        }
-//    }
-//    
-//    IP_reply_destroy(reply);
-//    
-//    //上传值
-//    reply=IP_addAttribute( UID, [@"item_1" cStringUsingEncoding:1], [@"01" cStringUsingEncoding:1]);
-//    reply=IP_addAttribute( UID, [@"item_2" cStringUsingEncoding:1], [@"02" cStringUsingEncoding:1]);
-//    reply=IP_addAttribute( UID, [@"item_3" cStringUsingEncoding:1], [@"03" cStringUsingEncoding:1]);
-//    reply=IP_addAttribute( UID, [@"item_4" cStringUsingEncoding:1], [@"04" cStringUsingEncoding:1]);
-//    reply=IP_addAttribute( UID, [@"item_5" cStringUsingEncoding:1], [@"05" cStringUsingEncoding:1]);
-//    
-//    /*
-//     reply=IP_addAttribute( UID, IP_ATTRIBUTE_BUILD_EVENT, [buildEvent cStringUsingEncoding:1] );
-//     if(!debug_skip_pudding_error)
-//     {
-//     if(!IP_success(reply)){
-//     NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//     IP_UUTCancel(UID);
-//     IP_UID_destroy(UID);
-//     IP_reply_destroy(reply);
-//     exit(-1);
-//     }
-//     }
-//     IP_reply_destroy(reply);
-//     */
-//    
-//    
-//    NSString *tt=[[NSString alloc] initWithFormat:@"%@_Log",ReStaName];
-////    IP_addBlob(UID,[tt cStringUsingEncoding:1],[@"MK_TestLog" cStringUsingEncoding:1]);
-////    [tt release];
-//    
-//    for(int i=0;i<[testItemTitleArr count];i++){
-//        
-////        id thisPuddingItem=[puddingItems objectAtIndex:i];
-//        
-//        testSpec=IP_testSpec_create();
-////        NSString *Title=[thisPuddingItem objectForKey:@"NAME"];
-//        NSString *Title = @"mk_test_name";
-//        APIcheck=IP_testSpec_setTestName(testSpec, [Title cStringUsingEncoding:1], [Title length]);
-//        
-////        NSString *subTest=[thisPuddingItem objectForKey:@"SUBNAME"];
-//        NSString *subTest = @"mk_test_subName";
-//        if(subTest!=nil){
-//            APIcheck = IP_testSpec_setSubTestName( testSpec, [subTest cStringUsingEncoding:1],[subTest length]);
-//            
-//        }
-//        
-////        NSString *theUpperLimit=[thisPuddingItem objectForKey:@"UpperLimit"];
-//        NSString *theUpperLimit = @"80";
-//        if(theUpperLimit==nil){
-//            theUpperLimit=@"N/A";
-//            
-//        }
-////        NSString *theLowerLimit=[thisPuddingItem objectForKey:@"LowerLimit"];
-//        NSString *theLowerLimit = @"20";
-//        if(theLowerLimit==nil){
-//            theLowerLimit=@"N/A";
-//            
-//        }
-//        APIcheck=IP_testSpec_setLimits(testSpec, [theLowerLimit cStringUsingEncoding:1], [theLowerLimit length], [theUpperLimit cStringUsingEncoding:1], [theUpperLimit length]);
-//        
-////        NSString *theMeasurementUnit=[thisPuddingItem objectForKey:@"MeasurementUnit"];
-//        NSString *theMeasurementUnit  = @"mV";
-//        if(theMeasurementUnit==nil){
-//            theMeasurementUnit=@"N/A";
-//            
-//        }
-//        APIcheck=IP_testSpec_setUnits(testSpec, [theMeasurementUnit cStringUsingEncoding:1], [theMeasurementUnit length]);
-//        APIcheck=IP_testSpec_setPriority(testSpec, IP_PRIORITY_REALTIME);
-//        
-//        
-//        IP_TestResultHandle puddingResult=IP_testResult_create();
-//        
-////        NSString *valueStr=[cPuddingValues objectAtIndex:i];
-//        NSString *valueStr = @"122";
-//        const char *value=[valueStr cStringUsingEncoding:1];
-//        int valueLength=[valueStr length];
-//        int result=IP_FAIL;
-////        NSString *resultStr=[cPuddingResults objectAtIndex:i];
-//        NSString *resultStr = @"PASS";
-//        if([resultStr isEqualToString:@"PASS"]){
-//            result=IP_PASS;
-//        }
-//        if (stringisnumber(valueStr)) {
-//            APIcheck=IP_testResult_setValue(puddingResult, value,valueLength);
-//        }
-//        
-//        APIcheck=IP_testResult_setResult(puddingResult, result);
-//        if(!result){
-//            
-//            //NSString *failDes=[cErrorMessages objectAtIndex:i];
-//            //APIcheck=IP_testResult_setMessage(puddingResult, [failDes cStringUsingEncoding:1], [failDes length]);
-//            NSString *failDes=@"error message";
-//            
-//            //==========errorcode@errormessage================
-////            if([[thisPuddingItem objectForKey:@"ErrorCode"] length]==0){
-////                
-////                failDes=[failDes stringByAppendingString:@"N/A" ];
-////            }else {
-////                failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"ErrorCode"] ];
-////            }
-////            failDes=[failDes stringByAppendingString:@"@"];
-////            failDes=[failDes stringByAppendingString:[thisPuddingItem objectForKey:@"NAME"]];
-//            
-//            APIcheck=IP_testResult_setMessage(puddingResult, [failDes cStringUsingEncoding:1], [failDes length]);
-//        }
-//        
-//        reply=IP_addResult(UID, testSpec, puddingResult);
-//        
-//        if(!IP_success(reply)){
-//            NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-////            exit(-1);
-//        }
-//        IP_reply_destroy(reply);
-//        IP_testResult_destroy(puddingResult);
-//        IP_testSpec_destroy(testSpec);
-//    }
-//    
-//    
-//    
-//    /*	NSLog(@"Start upload %@",theLog);
-//     reply=IP_addBlob( UID, "CurrentTest", [theLog cStringUsingEncoding:1]);
-//     NSLog(@"End upload %@",theLog);
-//     if(!IP_success(reply)){
-//     NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(reply) encoding:1], @"YES", nil,nil);
-//     
-//     
-//     
-//     IP_reply_destroy(reply);
-//     
-//     
-//     exit(-1);
-//     
-//     }
-//     
-//     IP_reply_destroy(reply);
-//     */
-//    
-//    
-//    IP_API_Reply doneReply=IP_UUTDone(UID);
-//    
-//    if(!IP_success(doneReply)){
-// 
-//        NSRunAlertPanel(@"Confirm", [NSString stringWithCString:IP_reply_getError(doneReply) encoding:1], @"YES", nil,nil);
-//        IP_API_Reply amiReply=IP_amIOkay( UID, [importSN.stringValue cStringUsingEncoding:1] );
-//        if (!IP_success(amiReply)) {
-//            
-//            //IP_sendStationFailureReport(UID,IP_reply_getError(amiReply), IP_reply_getError(amiReply));
-//            
-//            
-//            IP_reply_destroy(amiReply);
-//        }
-//        
-//        //exit(-1);
-//        
-//    }
-//    
-//    IP_reply_destroy(doneReply);
-//    
-//    
-//    IP_API_Reply commitReply;
-//    
-//    if([failItems count]>0){
-//        commitReply=IP_UUTCommit(UID, IP_FAIL);
-//    }
-//    else{
-//        commitReply=IP_UUTCommit(UID, IP_PASS);
-//    }
-//    if(!IP_success(commitReply)){};
-//    IP_reply_destroy(commitReply);
-//    IP_UID_destroy(UID);
-//}
-
-
-//-(void)UploadPDCA
-//{
-//    //调用 方法解析 json 文档,取得对应的额sn参数,station 信息
-//    
-//    NSLog(@"上传PDCA");
-//    BOOL PF = YES;    //所有测试项是否pass
-//    
-//    //------------ json ------------
-//    NSString *restoreinfoPath = @"/vault/data_collection/test_station_config/gh_station_info.json";
-//    if (![[NSFileManager defaultManager] fileExistsAtPath:restoreinfoPath])
-//    {
-//        NSLog(@"Can't find /vault/data_collection/test_station_config/gh_station_info.json !");
-//        //return;
-//    }
-//    else
-//    {
-//        NSData *filecontent=[[NSFileManager defaultManager] contentsAtPath:restoreinfoPath];
-//        NSString *info=[[NSString alloc]initWithData:filecontent encoding:1];
-//        NSArray * lineArray=[info componentsSeparatedByString:@"\n"];
-//        
-//        //NSString *productline;
-//        //NSString *unitline;
-//        for(int i=0;i<[lineArray count];i++)
-//        {
-//            NSString *linestring=[lineArray objectAtIndex:i];
-//            NSLog(@"json linestring is ============ %@ ==========", linestring);
-//            
-//            //ReStaName
-//            if ([linestring rangeOfString:@"\"STATION_TYPE\" :"].length>0)
-//            {
-//                NSString *STATION_TYPE=@"";
-//                STATION_TYPE=[self GetSpecStr:linestring thestartStr:@": \"" theendStr:@"\","];
-//                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@" " withString:@""];
-//                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-//                STATION_TYPE=[STATION_TYPE stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-//                ReStaName=[[NSString alloc] initWithString:STATION_TYPE];
-//                NSLog(@"%@",ReStaName);
-//            }
-//        }
-//    }
-//    //------------------------
-//    
-//    //SW_name  对应 json 的 STATION_TYPE
-//    NSString *json_STATION_TYPE =ReStaName;
-//    NSLog(@"json_STATION_TYPE is ============== %@ ==============", json_STATION_TYPE);
-//    
-//    [pdca PDCA_Init:importSN.stringValue SW_name:json_STATION_TYPE  SW_ver:param.sw_ver SL_ver:param.sw_ver];   //上传sn，sw_name,sw_ver, sl_ver
-//    [pdca PDCA_AddAttribute:param.s_build FixtureID:param.fixture_id];         //上传s_build，fixture_id
-//
-//    for(int i=0;i<[itemArr count];i++)
-//    {
-//        Item *testitem=itemArr[i];
-//        
-//        if(testitem.isTest)  //需要测试的才需要上传
-//        {
-//            Item *testitem = itemArr[i];
-//             BOOL pass_fail=YES;
-//            if( ![testitem.result isEqualToString:@"PASS"] )
-//            {
-//                pass_fail = NO;
-//                PF = NO;
-//            }
-//            
-//            [pdca PDCA_UploadValue:testitem.testName
-//                             Lower:testitem.min
-//                             Upper:testitem.max
-//                              Unit:testitem.units
-//                             Value:testitem.value
-//                         Pass_Fail:pass_fail
-//             ];
-//        }
-//        else //如果测试结果只有pass或fail
-//        {
-//            if([testitem.result isEqualToString:@"PASS"])
-//            {
-//                [pdca PDCA_UploadPass:testitem.testName];
-//            }
-//            else
-//            {
-//                [pdca PDCA_UploadFail:testitem.testName Message:testitem.messageError];
-//                 PF = NO;
-//            }
-//        }
-//    }
-//    
-//    [pdca PDCA_Upload:PF];     //上传测试项是否成功
-//}
-
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-
-    // Update the view, if already loaded.
-}
-
-
 
 //================================================
 // 开始刷新温度定时器
@@ -2271,6 +1939,13 @@ void handleReply( IP_API_Reply reply )
 //    {
 //        [NSMenu setMenuBarVisible:NO];
 //    }
+}
+
+
+- (void)setRepresentedObject:(id)representedObject {
+    [super setRepresentedObject:representedObject];
+    
+    // Update the view, if already loaded.
 }
 
 @end

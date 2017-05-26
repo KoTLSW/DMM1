@@ -6,15 +6,15 @@
 	<array>
 		<dict>
 			<key>TestName</key>
-			<string>SF-1a</string>
+			<string>POSFWDVOLTAGE</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>1.485</string>
+			<string>--</string>
 			<key>Max</key>
-			<string>1.515</string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -117,15 +117,54 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF-1b</string>
+			<string>POSFWDVOLTAGE_DIFF</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>-1.5</string>
+			<key>Max</key>
+			<string>1.5</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>CALCULATE</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>NEGFWDVOLTAGE</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
 			<string>V</string>
 			<key>Min</key>
-			<string>-1.515</string>
+			<string>--</string>
 			<key>Max</key>
-			<string>-1.485</string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -228,7 +267,46 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF-1c</string>
+			<string>NEGFWDVOLTAGE_DIFF</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>-1.5</string>
+			<key>Max</key>
+			<string>1.5</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>CALCULATE</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>DCINPUT_SUPPLYCURRENT</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
@@ -339,15 +417,15 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_2a</string>
+			<string>RIN_VOUT</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>GΩ</string>
+			<string>V</string>
 			<key>Min</key>
-			<string>20</string>
+			<string>--</string>
 			<key>Max</key>
-			<string></string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -450,15 +528,54 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_2b</string>
+			<string>RIN</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>GΩ</string>
+			<key>Min</key>
+			<string>5</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>CALCULATE</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>ZIN_VOUT</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
 			<string>MΩ</string>
 			<key>Min</key>
-			<string>8.2</string>
+			<string>--</string>
 			<key>Max</key>
-			<string>12</string>
+			<string>--</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -597,7 +714,46 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_5a_1000</string>
+			<string>ZIN</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>MΩ</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>CALCULATE</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>DCIN1V_CURR</string>
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
@@ -708,7 +864,7 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_5a_1500</string>
+			<string>DCIN1P5V_CURR</string>
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
@@ -819,7 +975,7 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_5a_2000</string>
+			<string>DCIN2V_CURR</string>
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
@@ -930,7 +1086,7 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_5a_2500</string>
+			<string>DCIN2P5V_CURR</string>
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
@@ -1041,7 +1197,7 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SF_5a_3000</string>
+			<string>DCIN3V_CURR</string>
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
@@ -1147,6 +1303,45 @@
 					<string></string>
 					<key>TestBackValueRegex</key>
 					<string>PASS</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>SAFETYR</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>KΩ</string>
+			<key>Min</key>
+			<string>54</string>
+			<key>Max</key>
+			<string>70</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>CALCULATE</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
 				</dict>
 			</array>
 		</dict>
