@@ -601,7 +601,7 @@
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
@@ -712,7 +712,7 @@
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
@@ -823,7 +823,7 @@
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
@@ -934,7 +934,7 @@
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
@@ -1045,7 +1045,7 @@
 			<key>RetryTimes</key>
 			<integer>3</integer>
 			<key>Units</key>
-			<string>V</string>
+			<string>uA</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
