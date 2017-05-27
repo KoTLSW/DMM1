@@ -674,6 +674,7 @@ NSString  *param_path=@"Param";
                 NSLog(@"sn 正确!");
                 [currentStateMsg setTextColor:[NSColor blueColor]];
                 testResult.stringValue = @"Running";
+                testResult.backgroundColor = [NSColor greenColor];
             });
             
             //========定时器开始========
@@ -744,16 +745,16 @@ NSString  *param_path=@"Param";
                     //遍历测试结果,输出总测试结果
                     for (int i = 0; i< testResultArr.count; i++)
                     {
-                        if ([testResultArr[i] isEqualToString:@"FAIL"])
+                        if ([testResultArr[i] containsString:@"FAIL"])
                         {
-                            testResult.backgroundColor = [NSColor redColor];
                             [testResult setStringValue:@"FAIL"];
+                            testResult.backgroundColor = [NSColor redColor];
                             break;
                         }
                         else
                         {
-                            testResult.backgroundColor = [NSColor greenColor];
                             [testResult setStringValue:@"PASS"];
+                            testResult.backgroundColor = [NSColor greenColor];
                         }
                     }
                     
@@ -865,13 +866,14 @@ NSString  *param_path=@"Param";
                 [[MK_FileTXT shareInstance] createOrFlowTXTFileWithFolderPath:[MK_FileFolder shareInstance].folderPath Sn:currentSN TestItemStartTime:start_time TestItemEndTime:end_time TestItemContent:csvContent TestResult:testResultStr];
             }
             
-            //上传PDCA和SFC
+#pragma mark ------ 上传 PDCA
             if (isUpLoadPDCA)
             {
                 NSLog(@"开始上传pdca");
                 [self uploadPDCA_Feicui_2];
             }
             
+#pragma mark ------ 上传 SFC
             if (isUpLoadSFC)
             {
                 if ( ![[TestStep Instance]StepSFC_CheckUploadResult:isUpLoadSFC andIsTestPass: [testResult.stringValue isEqualToString:@"FAIL"]?NO:YES  andFailMessage:nil])
@@ -903,6 +905,7 @@ NSString  *param_path=@"Param";
             item_index=0;
             testItemTitleArr = nil;
             testItemValueArr = nil;
+            testResultArr = nil;
             
             //每次结束测试都刷新主界面
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -923,15 +926,16 @@ NSString  *param_path=@"Param";
                 NSString *str1 = [NSString stringWithFormat:@"%@___%@__%@",importSN.stringValue,testResultStr,[[GetTimeDay shareInstance] getCurrentTime]];
                 NSString *str2 = SN_Collector.string;
                 SN_Collector.string = [str2 stringByAppendingString:[NSString stringWithFormat:@"%@\n",str1]];
+                [SN_Collector setTextColor:[NSColor blueColor]];
                 
-                if ([testResult.stringValue isEqualToString:@"PASS"])
-                {
-                    [SN_Collector setTextColor:[NSColor greenColor]];
-                }
-                else
-                {
-                    [SN_Collector setTextColor:[NSColor redColor]];
-                }
+//                if ([testResult.stringValue isEqualToString:@"PASS"])
+//                {
+//                    [SN_Collector setTextColor:[NSColor greenColor]];
+//                }
+//                else
+//                {
+//                    [SN_Collector setTextColor:[NSColor redColor]];
+//                }
                 
                 //是否需要写入本地缓存
                 importSN.stringValue = @"";
@@ -1073,7 +1077,7 @@ NSString  *param_path=@"Param";
         testItemTitleArr = [NSMutableArray arrayWithCapacity:0];
     }
     
-    
+#pragma mark--------具体测试指令执行流程
     for (int i=0; i<[testitem.testAllCommand count]; i++)
     {
         //治具===================Fixture
@@ -1086,21 +1090,8 @@ NSString  *param_path=@"Param";
         SonTestName=dic[@"TestName"];
         delayTime = [dic[@"TestDelayTime"] intValue]/1000;
         
-        
-        
-//        if ([[testitem.testAllCommand[i] objectForKey:@"TestCommand"] isEqualToString:@"CALCULATE"])
-//        {
-////            CALCULATE(testitem.testName));
-//            
-//            [self CALCULATE:testitem.testName];
-//        }
-        
         //**************************治具=Fixture
-//        if ([SonTestDevice isEqualToString:@"CALCULATE"])
-//        {
-//            [self CALCULATE:testItem.testName];
-//        }
-        
+
         if ([SonTestDevice isEqualToString:@"Fixture"])
         {
             NSLog(@"治具发送指令%@========%@",SonTestDevice,SonTestCommand);
@@ -1197,13 +1188,12 @@ NSString  *param_path=@"Param";
                     while (YES)
                     {
                         [agilent3458A WriteLine:@"END"];
-                        
                         agilentReadString=[agilent3458A ReadData:16];
                         
                         if (param.isDebug)
                         {
                             //测试代码
-                            agilentReadString = @"0.576";
+                            agilentReadString = @"3000";
                         }
                         
                         //大于1，直接跳出，并发送reset指令
@@ -1226,16 +1216,16 @@ NSString  *param_path=@"Param";
                                 if (param.isDebug)
                                 {
                                     //测试代码
-                                    agilentReadString = @"0.485";
+                                    agilentReadString = @"3000";
                                 }
                                 
                                 break;
                             }
                         }
                     }
-                    
-                    testitem.value = agilentReadString;
+                    num = [agilentReadString floatValue];
                 }
+                
                 //其它正常读取情况
                 else
                 {
@@ -1245,211 +1235,109 @@ NSString  *param_path=@"Param";
                     if (param.isDebug)
                     {
                         //测试代码
-                        agilentReadString = @"0.386";
+                        agilentReadString = @"2000";
                     }
                 }
                 
                 num = [agilentReadString floatValue];
-                testitem.value = [NSString stringWithFormat:@"%f",num];
-                
-                
-//                if ([str isEqualToString:@"POSFWDVOLTAGE_DIFF"])
-//                {
-//                    dic = [self getItemBytes:itemArr WithTestName:@"POSFWDVOLTAGE"];
-//                    
-//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
-//                    double FW_value = [FW_valuestr doubleValue];
-//                    return (FW_value-1.5);
-//                }
-//                else if ([str isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
-//                {
-//                    dic = [self getItemBytes:itemArr WithTestName:@"NEGFWDVOLTAGE"];
-//                    
-//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
-//                    double FW_value = [FW_valuestr doubleValue];
-//                    return (FW_value+1.5);
-//                }
-//                else if ([str isEqualToString:@"RIN"])
-//                {
-//                    dic = [self getItemBytes:itemArr WithTestName:@"RIN_VOUT"];
-//                    
-//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
-//                    double FW_value = [FW_valuestr doubleValue];
-//                    return (10.0*FW_value/(0.8-FW_value));
-//                }
-//                else if ([str isEqualToString:@"ZIN"])
-//                {
-//                    dic = [self getItemBytes:itemArr WithTestName:@"ZIN_VOUT"];
-//                    
-//                    NSString *FW_valuestr = [dic objectForKey:@"Value"];
-//                    double FW_value = [FW_valuestr doubleValue];
-//                    return (10*FW_value/(0.565-FW_value));
-//                }
-//                else if ([str isEqualToString:@"SAFETYR"])
-//                {
-//                    dic = [self getItemBytes:itemArr WithTestName:@"DCIN2V_CURR"];
-//                    NSString *FW_valuestr1 = [dic objectForKey:@"Value"];
-//                    double FW_value1 = [FW_valuestr1 doubleValue];
-//                    
-//                    dic = [self getItemBytes:itemArr WithTestName:@"DCIN3V_CURR"];
-//                    NSString *FW_valuestr2 = [dic objectForKey:@"Value"];
-//                    double FW_value2 = [FW_valuestr2 doubleValue];
-//                    
-//                    return 1.0/(1000.0*(FW_value2-FW_value1));
-//                }
-//                
-//                else
-//                {
-//                    [self getItemBytes:itemArr WithTestName:@""];
-//                    return 0;
-//                }
-                
-              //                if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
-//                {
-//                    testitem.value = [NSString stringWithFormat:@"%f",num];
-//                }
-//                if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
-//                {
-//                    testitem.value = [NSString stringWithFormat:@"%f",num];
-//                    testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
-//                }
-//                if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
-//                {
-////                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
-////                    {
-////                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
-////                    }
-////                    else
-////                    {
-////                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
-////                    }
-//                    
-//                }
-//                if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
-//                {
-//                    testitem.value = [NSString stringWithFormat:@"%f",num/1000];
-//                }
-//                if ([testitem.units containsString:@"uA"])
-//                {
-//                    testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
-//                }
-                
             }
-        }
-        
-        //-------------------------------------------------------
-        
-        if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE_DIFF"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value-1.5];
-        }
-        else if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE"])
-        {
-            POSFWDVOLTAGE_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value];
-        }
-        
-        else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value+1.5];
-        }
-        else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE"])
-        {
-            NEGFWDVOLTAGE_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value];
-        }
-        
-        else if ([testItem.testName isEqualToString:@"RIN"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",(10.0*RIN_VOUT_value/(0.8-RIN_VOUT_value))];
-        }
-        else if ([testItem.testName isEqualToString:@"RIN_VOUT"])
-        {
-            RIN_VOUT_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",RIN_VOUT_value];
-        }
-        
-        else if ([testItem.testName isEqualToString:@"ZIN"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value))];
-        }
-        else if ([testItem.testName isEqualToString:@"ZIN_VOUT"])
-        {
-            ZIN_VOUT_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",ZIN_VOUT_value];
-        }
-        
-        else if ([testItem.testName isEqualToString:@"DCIN2V_CURR"])
-        {
-            DCIN2V_CURR_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",DCIN2V_CURR_value];
-        }
-        
-        else if ([testItem.testName isEqualToString:@"DCIN3V_CURR"])
-        {
-            DCIN3V_CURR_value = num;
-            testitem.value = [NSString stringWithFormat:@"%f",DCIN3V_CURR_value];
-        }
-        
-        
-        else if ([testItem.testName isEqualToString:@"SAFETYR"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",1.0/(1000.0*(DCIN3V_CURR_value - DCIN2V_CURR_value))];
-        }
-        //-------------------------------------------------
-        else
-        {
-            testitem.value = [NSString stringWithFormat:@"%f",num];
-        }
-        
-        
-//        if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
-//        {
-//            testitem.value = [NSString stringWithFormat:@"%f",num];
-//        }
-//        if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
-//        {
-//            testitem.value = [NSString stringWithFormat:@"%f",num];
-//            testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
-//        }
-//        if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
-//        {
-//        //                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
-//        //                    {
-//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
-//        //                    }
-//        //                    else
-//        //                    {
-//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
-//        //                    }
-//        
-//        }
-//        
-//        if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
-//        {
-//            testitem.value = [NSString stringWithFormat:@"%f",num/1000];
-//        }
-        
-        if ([testitem.units containsString:@"uA"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
-        }
-        
-        
-        if([SonTestDevice isEqualToString:@"SW"])
-        {
-            //延迟时间
-            NSLog(@"延迟时间**************%@",SonTestDevice);
-            sleep(delayTime);
         }
     }
     
-//    if ([testitem.max isEqualToString:@"--"]&&[testitem.value floatValue]>=[testitem.min floatValue])
-//    {
-//        testitem.result = @"PASS";
-//        ispass = YES;
-//    }
-    //获取万用表最终的值
+#pragma mark--------最终显示在 table 的测试项值
+    
+    //-------------------------------------------------------
+    
+    if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE_DIFF"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%f",(POSFWDVOLTAGE_value-1.2)];
+    }
+    else if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE"])
+    {
+        POSFWDVOLTAGE_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value+1.2];
+    }
+    else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE"])
+    {
+        NEGFWDVOLTAGE_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"RIN"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%f",(10.0*RIN_VOUT_value/(0.8-RIN_VOUT_value))];
+    }
+    else if ([testItem.testName isEqualToString:@"RIN_VOUT"])
+    {
+        RIN_VOUT_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",RIN_VOUT_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"ZIN"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%f",(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value))];
+    }
+    else if ([testItem.testName isEqualToString:@"ZIN_VOUT"])
+    {
+        ZIN_VOUT_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",ZIN_VOUT_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"DCIN2V_CURR"])
+    {
+        DCIN2V_CURR_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",DCIN2V_CURR_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"DCIN3V_CURR"])
+    {
+        DCIN3V_CURR_value = num;
+        testitem.value = [NSString stringWithFormat:@"%f",DCIN3V_CURR_value];
+    }
+    
+    else if ([testItem.testName isEqualToString:@"SAFETYR"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%f",1.0/(1000.0*(DCIN3V_CURR_value - DCIN2V_CURR_value))];
+    }
+    //-------------------------------------------------
+    else
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+    }
+    
+ 
+    //单位换算
+    if ([testitem.units isEqualToString: @"mV"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",[testitem.value floatValue]*1000];
+    }
+    
+    if ([testitem.units isEqualToString:@"uA"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
+    }
+    
+    if ([testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"Ω"])
+    {
+        testitem.value = [NSString stringWithFormat:@"%.3f",num];
+    }
+    
+    
+    if([SonTestDevice isEqualToString:@"SW"])
+    {
+        //延迟时间
+        NSLog(@"延迟时间**************%@",SonTestDevice);
+        sleep(delayTime);
+    }
+
+    
+    
+    //上下限值对比
     if (([testitem.value floatValue]>=[testitem.min floatValue]&&[testitem.value floatValue]<=[testitem.max floatValue]) || ([testitem.max isEqualToString:@"--"]&&[testitem.value floatValue]>=[testitem.min floatValue]) || ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])  || ([testitem.min isEqualToString:@"--"]&&[testitem.value floatValue]<=[testitem.max floatValue]) )
     {
         testitem.result = @"PASS";
@@ -1465,13 +1353,6 @@ NSString  *param_path=@"Param";
         ispass = NO;
     }
     
-//    //code 2017.5.23
-//    if ([testitem.max isEqualToString:@"--"] && [testitem.min isEqualToString:@"--"])
-//    {
-//        testitem.result = @"PASS";
-//        ispass = YES;
-//    }
-    
     NSLog(@"%@",testitem.value);
     
     //每次的测试项与测试标题存入可变数组中
@@ -1480,7 +1361,6 @@ NSString  *param_path=@"Param";
     
 //    [cfailItems addObject:[NSNumber numberWithBool:ispass]];
    
-    
     return ispass;
 }
 
@@ -1499,7 +1379,7 @@ NSString  *param_path=@"Param";
     });
 }
 
-#pragma mark-Button action
+#pragma mark-----Button action
 - (IBAction)clickToRefreshInfoBox:(NSButton *)sender
 {
     [self refreshTheInfoBox];
@@ -1605,7 +1485,7 @@ NSString  *param_path=@"Param";
     });
 }
 
-#pragma mark----上传 PDCA
+#pragma mark----PDCA相关
 //================================================
 //上传pdca
 //================================================
@@ -1854,6 +1734,8 @@ void handleReply( IP_API_Reply reply )
     IP_UID_destroy(UID);
 }
 
+
+#pragma mark--------------温湿度窗口
 //================================================
 // 开始刷新温度定时器
 //================================================
@@ -1882,8 +1764,6 @@ void handleReply( IP_API_Reply reply )
     });
 }
 
-
-#pragma mark--------------更新温湿度窗口
 //更新温度窗体
 -(void)TimerUpdateWindow
 {
