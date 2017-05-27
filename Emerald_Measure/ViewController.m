@@ -1341,7 +1341,7 @@ NSString  *param_path=@"Param";
         
         if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE_DIFF"])
         {
-            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value-1.2];
+            testitem.value = [NSString stringWithFormat:@"%f",POSFWDVOLTAGE_value-1.5];
         }
         else if ([testItem.testName isEqualToString:@"POSFWDVOLTAGE"])
         {
@@ -1351,7 +1351,7 @@ NSString  *param_path=@"Param";
         
         else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
         {
-            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value+1.2];
+            testitem.value = [NSString stringWithFormat:@"%f",NEGFWDVOLTAGE_value+1.5];
         }
         else if ([testItem.testName isEqualToString:@"NEGFWDVOLTAGE"])
         {
@@ -1402,20 +1402,39 @@ NSString  *param_path=@"Param";
             testitem.value = [NSString stringWithFormat:@"%f",num];
         }
         
-    
-//        if ([testitem.units isEqualToString: @"mV"])
+        
+//        if ([testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"Ω"])
 //        {
-//            testitem.value = [NSString stringWithFormat:@"%.3f",num*1000];
+//            testitem.value = [NSString stringWithFormat:@"%f",num];
+//        }
+//        if ([testitem.units isEqualToString:@"GΩ"])//GΩ的情况计算
+//        {
+//            testitem.value = [NSString stringWithFormat:@"%f",num];
+//            testitem.value = [NSString stringWithFormat:@"%f", num/((0.8 - num)/10)];
+//        }
+//        if ([testitem.units isEqualToString:@"MΩ"])//MΩ的情况计算
+//        {
+//        //                    if ([testitem.testName isEqualToString:@"Sensor_Flex SF-1b"]||[testitem.testName isEqualToString:@"Crown Rotation SF-1b"])
+//        //                    {
+//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/5)];
+//        //                    }
+//        //                    else
+//        //                    {
+//        //                        testitem.value = [NSString stringWithFormat:@"%f", num/((0.565 - num)/10)];
+//        //                    }
+//        
+//        }
+//        
+//        if ([testitem.units isEqualToString:@"KΩ"])//KΩ的情况计算
+//        {
+//            testitem.value = [NSString stringWithFormat:@"%f",num/1000];
 //        }
         
-        if ([testitem.units isEqualToString:@"uA"])
+        if ([testitem.units containsString:@"uA"])
         {
             testitem.value = [NSString stringWithFormat:@"%.3f",num*1000000];
         }
-        if ([testitem.units isEqualToString:@"A"] || [testitem.units isEqualToString:@"V"] || [testitem.units isEqualToString:@"Ω"])
-        {
-            testitem.value = [NSString stringWithFormat:@"%.3f",num];
-        }
+        
         
         if([SonTestDevice isEqualToString:@"SW"])
         {
