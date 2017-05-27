@@ -123,9 +123,9 @@
 			<key>Units</key>
 			<string>mV</string>
 			<key>Min</key>
-			<string>-1.5</string>
+			<string>-12</string>
 			<key>Max</key>
-			<string>1.5</string>
+			<string>12</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -273,9 +273,9 @@
 			<key>Units</key>
 			<string>mV</string>
 			<key>Min</key>
-			<string>-1.5</string>
+			<string>-12</string>
 			<key>Max</key>
-			<string>1.5</string>
+			<string>12</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -314,7 +314,7 @@
 			<key>Min</key>
 			<string>6</string>
 			<key>Max</key>
-			<string>10</string>
+			<string>15</string>
 			<key>Value</key>
 			<string>--</string>
 			<key>Result</key>
@@ -440,7 +440,7 @@
 					<key>TestDevice</key>
 					<string>Fixture</string>
 					<key>TestCommand</key>
-					<string>U_SF-2a</string>
+					<string>U_SF_2a</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
 					<key>TestResultIsDigital</key>
@@ -496,7 +496,7 @@
 					<key>TestCommand</key>
 					<string></string>
 					<key>TestDelayTime</key>
-					<string>10000</string>
+					<string>15000</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -534,7 +534,7 @@
 			<key>Units</key>
 			<string>GΩ</string>
 			<key>Min</key>
-			<string>5</string>
+			<string>20</string>
 			<key>Max</key>
 			<string>--</string>
 			<key>Value</key>
@@ -571,7 +571,7 @@
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>MΩ</string>
+			<string>V</string>
 			<key>Min</key>
 			<string>--</string>
 			<key>Max</key>
