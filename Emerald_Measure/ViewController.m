@@ -305,10 +305,10 @@ NSString  *param_path=@"Param";
 //================================================
 -(void)Working
 {
-//    if ([NSMenu menuBarVisible] == YES)
-//    {
-//        [NSMenu setMenuBarVisible:NO];
-//    }
+    if ([NSMenu menuBarVisible] == YES)
+    {
+        [NSMenu setMenuBarVisible:NO];
+    }
    
     if (testItem == nil)
     {
@@ -985,80 +985,80 @@ NSString  *param_path=@"Param";
 }
 //==================== 冲定向log ============================
 
-
--(double)CALCULATE:(NSString *)str
-{
-    NSDictionary *dice = [NSDictionary dictionary];
-    
-    if ([str isEqualToString:@"POSFWDVOLTAGE_DIFF"])
-    {
-       dic = [self getItemBytes:itemArr WithTestName:@"POSFWDVOLTAGE"];
-        
-        NSString *FW_valuestr = [dic objectForKey:@"Value"];
-        double FW_value = [FW_valuestr doubleValue];
-        return (FW_value-1.5);
-    }
-    else if ([str isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
-    {
-        dic = [self getItemBytes:itemArr WithTestName:@"NEGFWDVOLTAGE"];
-        
-        NSString *FW_valuestr = [dic objectForKey:@"Value"];
-        double FW_value = [FW_valuestr doubleValue];
-        return (FW_value+1.5);
-    }
-    else if ([str isEqualToString:@"RIN"])
-    {
-        dic = [self getItemBytes:itemArr WithTestName:@"RIN_VOUT"];
-        
-        NSString *FW_valuestr = [dic objectForKey:@"Value"];
-        double FW_value = [FW_valuestr doubleValue];
-        return (10.0*FW_value/(0.8-FW_value));
-    }
-    else if ([str isEqualToString:@"ZIN"])
-    {
-        dic = [self getItemBytes:itemArr WithTestName:@"ZIN_VOUT"];
-        
-        NSString *FW_valuestr = [dic objectForKey:@"Value"];
-        double FW_value = [FW_valuestr doubleValue];
-        return (10*FW_value/(0.565-FW_value));
-    }
-    else if ([str isEqualToString:@"SAFETYR"])
-    {
-        dic = [self getItemBytes:itemArr WithTestName:@"DCIN2V_CURR"];
-        NSString *FW_valuestr1 = [dic objectForKey:@"Value"];
-        double FW_value1 = [FW_valuestr1 doubleValue];
-        
-        dic = [self getItemBytes:itemArr WithTestName:@"DCIN3V_CURR"];
-        NSString *FW_valuestr2 = [dic objectForKey:@"Value"];
-        double FW_value2 = [FW_valuestr2 doubleValue];
-        
-        return 1.0/(1000.0*(FW_value2-FW_value1));
-    }
-    
-    else
-    {
-        [self getItemBytes:itemArr WithTestName:@""];
-        return 0;
-    }
-}
-
-
-
-//calculate
--(NSDictionary *)getItemBytes:(NSArray *)testNameArr WithTestName:(NSString *)testName
-{
-    NSDictionary *dic = [NSDictionary dictionary];
-    
-    for(int count = 0; count < testNameArr.count; count++)
-    {
-        dic = testNameArr[count];
-        if ([[dic objectForKey:@"POSFWDVOLTAGE"] isEqualToString: testName])
-        {
-            return dic;
-        }
-    }
-    return nil;
-}
+//
+//-(double)CALCULATE:(NSString *)str
+//{
+//    NSDictionary *dice = [NSDictionary dictionary];
+//    
+//    if ([str isEqualToString:@"POSFWDVOLTAGE_DIFF"])
+//    {
+//       dic = [self getItemBytes:itemArr WithTestName:@"POSFWDVOLTAGE"];
+//        
+//        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//        double FW_value = [FW_valuestr doubleValue];
+//        return (FW_value-1.5);
+//    }
+//    else if ([str isEqualToString:@"NEGFWDVOLTAGE_DIFF"])
+//    {
+//        dic = [self getItemBytes:itemArr WithTestName:@"NEGFWDVOLTAGE"];
+//        
+//        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//        double FW_value = [FW_valuestr doubleValue];
+//        return (FW_value+1.5);
+//    }
+//    else if ([str isEqualToString:@"RIN"])
+//    {
+//        dic = [self getItemBytes:itemArr WithTestName:@"RIN_VOUT"];
+//        
+//        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//        double FW_value = [FW_valuestr doubleValue];
+//        return (10.0*FW_value/(0.8-FW_value));
+//    }
+//    else if ([str isEqualToString:@"ZIN"])
+//    {
+//        dic = [self getItemBytes:itemArr WithTestName:@"ZIN_VOUT"];
+//        
+//        NSString *FW_valuestr = [dic objectForKey:@"Value"];
+//        double FW_value = [FW_valuestr doubleValue];
+//        return (10*FW_value/(0.565-FW_value));
+//    }
+//    else if ([str isEqualToString:@"SAFETYR"])
+//    {
+//        dic = [self getItemBytes:itemArr WithTestName:@"DCIN2V_CURR"];
+//        NSString *FW_valuestr1 = [dic objectForKey:@"Value"];
+//        double FW_value1 = [FW_valuestr1 doubleValue];
+//        
+//        dic = [self getItemBytes:itemArr WithTestName:@"DCIN3V_CURR"];
+//        NSString *FW_valuestr2 = [dic objectForKey:@"Value"];
+//        double FW_value2 = [FW_valuestr2 doubleValue];
+//        
+//        return 1.0/(1000.0*(FW_value2-FW_value1));
+//    }
+//    
+//    else
+//    {
+//        [self getItemBytes:itemArr WithTestName:@""];
+//        return 0;
+//    }
+//}
+//
+//
+//
+////calculate
+//-(NSDictionary *)getItemBytes:(NSArray *)testNameArr WithTestName:(NSString *)testName
+//{
+//    NSDictionary *dic = [NSDictionary dictionary];
+//    
+//    for(int count = 0; count < testNameArr.count; count++)
+//    {
+//        dic = testNameArr[count];
+//        if ([[dic objectForKey:@"POSFWDVOLTAGE"] isEqualToString: testName])
+//        {
+//            return dic;
+//        }
+//    }
+//    return nil;
+//}
 
 
 //================================================
@@ -1408,10 +1408,10 @@ NSString  *param_path=@"Param";
         testItemTitleArr = nil;
     }
     
-//    if ([NSMenu menuBarVisible]==NO)
-//    {
-//        [NSMenu setMenuBarVisible:YES];
-//    }
+    if ([NSMenu menuBarVisible]==NO)
+    {
+        [NSMenu setMenuBarVisible:YES];
+    }
     
     [_startBtn setEnabled:YES];
     [_startBtn setTitle:@"Start"];
@@ -1473,6 +1473,8 @@ NSString  *param_path=@"Param";
     
     //主动释放掉
     [self closeAllDevice];
+    
+    exit(0);
 }
 
 
@@ -1815,10 +1817,10 @@ void handleReply( IP_API_Reply reply )
     [agilent33210A CloseDevice];
     [agilent3458A CloseDevice];
     
-//    if ([NSMenu menuBarVisible] == YES)
-//    {
-//        [NSMenu setMenuBarVisible:NO];
-//    }
+    if ([NSMenu menuBarVisible] == YES)
+    {
+        [NSMenu setMenuBarVisible:NO];
+    }
 }
 
 
