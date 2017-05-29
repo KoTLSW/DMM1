@@ -320,6 +320,8 @@ NSString  *param_path=@"Param";
         testResultArr  = [NSMutableArray arrayWithCapacity:0];
     }
     
+    [testResultArr removeAllObjects];
+    
     while ([[NSThread currentThread] isCancelled]==NO) //线程未结束一直处于循环状态
     {
         
@@ -653,13 +655,22 @@ NSString  *param_path=@"Param";
 //------------------------------------------------------------
         if (index == 6)
         {
-            sleep(1);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _startBtn.enabled = YES;
-                currentStateMsg.stringValue = @"请点击 Testing 按钮";
-                NSLog(@"wait to start button...");
-                [currentStateMsg setTextColor:[NSColor redColor]];
+//            sleep(1);
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                _startBtn.enabled = YES;
+//                currentStateMsg.stringValue = @"请点击 Testing 按钮";
+//                NSLog(@"wait to start button...");
+//                [currentStateMsg setTextColor:[NSColor redColor]];
+//            });
+            
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                _startBtn.enabled = NO;
+                currentStateMsg.stringValue = @"index=6 sn 正确!";
+                NSLog(@"sn 正确!");
+                [currentStateMsg setTextColor:[NSColor blueColor]];
             });
+            
+            index = 7;
         }
         
 #pragma mark index=7  开始产品测试
@@ -670,8 +681,8 @@ NSString  *param_path=@"Param";
         {
             dispatch_sync(dispatch_get_main_queue(), ^{
                 _startBtn.enabled = NO;
-                currentStateMsg.stringValue = @"index=6 sn 正确!";
-                NSLog(@"sn 正确!");
+                currentStateMsg.stringValue = @"index=7 正在测试...";
+                NSLog(@"正在测试...");
                 [currentStateMsg setTextColor:[NSColor blueColor]];
                 testResult.stringValue = @"Running";
                 testResult.backgroundColor = [NSColor greenColor];
@@ -1193,7 +1204,7 @@ NSString  *param_path=@"Param";
                         if (param.isDebug)
                         {
                             //测试代码
-                            agilentReadString = @"3000";
+                            agilentReadString = @"30.838383";
                         }
                         
                         //大于1，直接跳出，并发送reset指令
@@ -1216,7 +1227,7 @@ NSString  *param_path=@"Param";
                                 if (param.isDebug)
                                 {
                                     //测试代码
-                                    agilentReadString = @"3000";
+                                    agilentReadString = @"30.9939393";
                                 }
                                 
                                 break;
@@ -1235,7 +1246,7 @@ NSString  *param_path=@"Param";
                     if (param.isDebug)
                     {
                         //测试代码
-                        agilentReadString = @"2000";
+                        agilentReadString = @"20.848484";
                     }
                 }
                 
@@ -1270,7 +1281,7 @@ NSString  *param_path=@"Param";
     
     else if ([testItem.testName isEqualToString:@"RIN"])
     {
-        testitem.value = [NSString stringWithFormat:@"%f",(10.0*RIN_VOUT_value/(0.8-RIN_VOUT_value))];
+        testitem.value = [NSString stringWithFormat:@"%.3f",(10.0*RIN_VOUT_value/(0.8-RIN_VOUT_value))];
     }
     else if ([testItem.testName isEqualToString:@"RIN_VOUT"])
     {
@@ -1280,7 +1291,7 @@ NSString  *param_path=@"Param";
     
     else if ([testItem.testName isEqualToString:@"ZIN"])
     {
-        testitem.value = [NSString stringWithFormat:@"%f",(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value))];
+        testitem.value = [NSString stringWithFormat:@"%.3f",(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value))];
     }
     else if ([testItem.testName isEqualToString:@"ZIN_VOUT"])
     {
@@ -1300,9 +1311,16 @@ NSString  *param_path=@"Param";
         testitem.value = [NSString stringWithFormat:@"%f",DCIN3V_CURR_value];
     }
     
-    else if ([testItem.testName isEqualToString:@"SAFETYR"])
+    else if ([testItem.testName containsString:@"SAFETYR"])
     {
-        testitem.value = [NSString stringWithFormat:@"%f",1.0/(1000.0*(DCIN3V_CURR_value - DCIN2V_CURR_value))];
+        if ([testItem.testName isEqualToString:@"SIGELEC_SAFETYR"])
+        {
+            testitem.value = [NSString stringWithFormat:@"%.3f",1.0/(1000.0*(DCIN3V_CURR_value - DCIN2V_CURR_value))];
+        }
+        else
+        {
+            testitem.value = [NSString stringWithFormat:@"%.3f",num/1000];
+        }
     }
     //-------------------------------------------------
     else
@@ -1421,10 +1439,11 @@ NSString  *param_path=@"Param";
 //开始按钮
 - (IBAction)start_Button_Action:(NSButton *)sender
 {
-    if ([sender.title isEqualToString:@"Start"]) {
-        
-        [sender setTitle:@"Testing"];
-        
+//    if ([sender.title isEqualToString:@"Start"])
+//    {
+//        
+//        [sender setTitle:@"Testing"];
+    
         NSLog(@"start the action!!");
         if (myThrad==nil)
         {
@@ -1435,18 +1454,19 @@ NSString  *param_path=@"Param";
             row_index = 0;
             testItemValueArr = nil;
             testItemTitleArr = nil;
+            testResultArr  = nil;
             [myThrad start];
         }
         [sender setEnabled:NO];
-    }
+//    }
     
-    else
-    {
-        [sender setEnabled:NO];
-        [sender setTitle:@"Start"];
-        NSLog(@"Start again");
-        index = 7;
-    }
+//    else
+//    {
+//        [sender setEnabled:NO];
+//        [sender setTitle:@"Start"];
+//        NSLog(@"Start again");
+//        index = 7;
+//    }
 }
 
 

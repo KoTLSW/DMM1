@@ -534,7 +534,7 @@
 			<key>Units</key>
 			<string>GΩ</string>
 			<key>Min</key>
-			<string>20</string>
+			<string>30</string>
 			<key>Max</key>
 			<string>--</string>
 			<key>Value</key>
@@ -720,7 +720,7 @@
 			<key>Units</key>
 			<string>MΩ</string>
 			<key>Min</key>
-			<string>--</string>
+			<string>3.33</string>
 			<key>Max</key>
 			<string>--</string>
 			<key>Value</key>
@@ -755,7 +755,7 @@
 			<key>TestName</key>
 			<string>DCIN1V_CURR</string>
 			<key>RetryTimes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -866,7 +866,7 @@
 			<key>TestName</key>
 			<string>DCIN1P5V_CURR</string>
 			<key>RetryTimes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -977,7 +977,7 @@
 			<key>TestName</key>
 			<string>DCIN2V_CURR</string>
 			<key>RetryTimes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -1088,7 +1088,7 @@
 			<key>TestName</key>
 			<string>DCIN2P5V_CURR</string>
 			<key>RetryTimes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -1199,7 +1199,7 @@
 			<key>TestName</key>
 			<string>DCIN3V_CURR</string>
 			<key>RetryTimes</key>
-			<integer>3</integer>
+			<integer>2</integer>
 			<key>Units</key>
 			<string>uA</string>
 			<key>Min</key>
@@ -1308,7 +1308,7 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>SAFETYR</string>
+			<string>SIGELEC_SAFETYR</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
@@ -1342,6 +1342,117 @@
 					<string></string>
 					<key>TestBackValueRegex</key>
 					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>REFELEC_SAFETYR</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>KΩ</string>
+			<key>Min</key>
+			<string>54</string>
+			<key>Max</key>
+			<string>70</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>Send U_SF_3b</string>
+					<key>TestDevice</key>
+					<string>Fixture</string>
+					<key>TestCommand</key>
+					<string>U_SF_3b</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>Delay Time</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string></string>
+					<key>TestDelayTime</key>
+					<string>500</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>Send SF-3b RES</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>RES</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>PASS</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>Delay Time</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string></string>
+					<key>TestDelayTime</key>
+					<string>5000</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>Read SF-3b RES</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>PASS</string>
 				</dict>
 			</array>
 		</dict>
