@@ -305,10 +305,10 @@ NSString  *param_path=@"Param";
 //================================================
 -(void)Working
 {
-    if ([NSMenu menuBarVisible] == YES)
-    {
-        [NSMenu setMenuBarVisible:NO];
-    }
+//    if ([NSMenu menuBarVisible] == YES)
+//    {
+//        [NSMenu setMenuBarVisible:NO];
+//    }
    
     if (testItem == nil)
     {
@@ -1408,10 +1408,10 @@ NSString  *param_path=@"Param";
         testItemTitleArr = nil;
     }
     
-    if ([NSMenu menuBarVisible]==NO)
-    {
-        [NSMenu setMenuBarVisible:YES];
-    }
+//    if ([NSMenu menuBarVisible]==NO)
+//    {
+//        [NSMenu setMenuBarVisible:YES];
+//    }
     
     [_startBtn setEnabled:YES];
     [_startBtn setTitle:@"Start"];
@@ -1817,10 +1817,10 @@ void handleReply( IP_API_Reply reply )
     [agilent33210A CloseDevice];
     [agilent3458A CloseDevice];
     
-    if ([NSMenu menuBarVisible] == YES)
-    {
-        [NSMenu setMenuBarVisible:NO];
-    }
+//    if ([NSMenu menuBarVisible] == YES)
+//    {
+//        [NSMenu setMenuBarVisible:NO];
+//    }
 }
 
 
