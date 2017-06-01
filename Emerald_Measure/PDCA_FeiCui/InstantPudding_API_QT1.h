@@ -309,7 +309,7 @@ extern "C" {
 		
 	///use this to delete the UID after you have committed its results
 	///@param UUTHandle : the handle originally returned from IP_UUTStart()
-	void IP_UID_destroy( IP_UUTHandle UUTHandle );
+	void IP_UID_destroy( IP_UUTHandle UUTHandle);
 
 	
 		

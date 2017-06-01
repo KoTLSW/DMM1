@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C02FAB61EDEE567007D1121 /* libCBAuth.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C02FAB11EDEE567007D1121 /* libCBAuth.dylib */; };
+		4C02FAB71EDEE567007D1121 /* libInstantPudding.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C02FAB21EDEE567007D1121 /* libInstantPudding.dylib */; };
+		4C02FAB81EDEE567007D1121 /* libIPSFCPost.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C02FAB31EDEE567007D1121 /* libIPSFCPost.dylib */; };
+		4C02FAB91EDEE567007D1121 /* PDCA.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C02FAB51EDEE567007D1121 /* PDCA.m */; };
 		4C0A586E1ED682320009F6F6 /* libInstantPudding.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A586D1ED682320009F6F6 /* libInstantPudding.dylib */; };
 		4C0A58701ED6834F0009F6F6 /* libIPSFCPost.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A586F1ED6834F0009F6F6 /* libIPSFCPost.dylib */; };
 		4C0A58721ED683580009F6F6 /* libCBAuth.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C0A58711ED683580009F6F6 /* libCBAuth.dylib */; };
@@ -102,6 +106,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C02FAAE1EDEE567007D1121 /* CBAuth_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAuth_API.h; sourceTree = "<group>"; };
+		4C02FAAF1EDEE567007D1121 /* InstantPudding_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPudding_API.h; sourceTree = "<group>"; };
+		4C02FAB01EDEE567007D1121 /* IPSFCPost_API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPSFCPost_API.h; sourceTree = "<group>"; };
+		4C02FAB11EDEE567007D1121 /* libCBAuth.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libCBAuth.dylib; sourceTree = "<group>"; };
+		4C02FAB21EDEE567007D1121 /* libInstantPudding.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libInstantPudding.dylib; sourceTree = "<group>"; };
+		4C02FAB31EDEE567007D1121 /* libIPSFCPost.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libIPSFCPost.dylib; sourceTree = "<group>"; };
+		4C02FAB41EDEE567007D1121 /* PDCA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDCA.h; sourceTree = "<group>"; };
+		4C02FAB51EDEE567007D1121 /* PDCA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDCA.m; sourceTree = "<group>"; };
 		4C0A586C1ED682320009F6F6 /* InstantPudding_API_QT1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstantPudding_API_QT1.h; sourceTree = "<group>"; };
 		4C0A586D1ED682320009F6F6 /* libInstantPudding.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libInstantPudding.dylib; sourceTree = "<group>"; };
 		4C0A586F1ED6834F0009F6F6 /* libIPSFCPost.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libIPSFCPost.dylib; sourceTree = "<group>"; };
@@ -254,11 +266,14 @@
 			files = (
 				4C0A58701ED6834F0009F6F6 /* libIPSFCPost.dylib in Frameworks */,
 				4CB1F8451ED0500C00DDFCC8 /* Regex.framework in Frameworks */,
+				4C02FAB61EDEE567007D1121 /* libCBAuth.dylib in Frameworks */,
+				4C02FAB81EDEE567007D1121 /* libIPSFCPost.dylib in Frameworks */,
 				4C9EE82E1EADE69400B9089E /* VISA.framework in Frameworks */,
 				4CFEFB651EBF0B0700353ABF /* libftd2xx.1.2.2.dylib in Frameworks */,
 				4C0A587B1ED69E880009F6F6 /* libInstantPudding_1.1.31.dylib in Frameworks */,
 				4C0A58721ED683580009F6F6 /* libCBAuth.dylib in Frameworks */,
 				4C0A586E1ED682320009F6F6 /* libInstantPudding.dylib in Frameworks */,
+				4C02FAB71EDEE567007D1121 /* libInstantPudding.dylib in Frameworks */,
 				4CFEFB7A1EBF151600353ABF /* GPIBDevice.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,6 +295,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C02FAAD1EDEE567007D1121 /* PDCA_Start */ = {
+			isa = PBXGroup;
+			children = (
+				4C02FAAE1EDEE567007D1121 /* CBAuth_API.h */,
+				4C02FAAF1EDEE567007D1121 /* InstantPudding_API.h */,
+				4C02FAB01EDEE567007D1121 /* IPSFCPost_API.h */,
+				4C02FAB11EDEE567007D1121 /* libCBAuth.dylib */,
+				4C02FAB21EDEE567007D1121 /* libInstantPudding.dylib */,
+				4C02FAB31EDEE567007D1121 /* libIPSFCPost.dylib */,
+				4C02FAB41EDEE567007D1121 /* PDCA.h */,
+				4C02FAB51EDEE567007D1121 /* PDCA.m */,
+			);
+			path = PDCA_Start;
+			sourceTree = "<group>";
+		};
 		4C0A586B1ED682320009F6F6 /* PDCA_FeiCui */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +400,7 @@
 				4C82EE221EB04D4B00BAA7A3 /* SerialPort */,
 				4CFEFB701EBF0C4900353ABF /* SFC */,
 				4C0A586B1ED682320009F6F6 /* PDCA_FeiCui */,
+				4C02FAAD1EDEE567007D1121 /* PDCA_Start */,
 				4C9EE7EF1EADE69400B9089E /* MK_Alert */,
 				4C9EE7F41EADE69400B9089E /* MK_File */,
 				4C9EE7FD1EADE69400B9089E /* MK_Table */,
@@ -784,6 +815,7 @@
 				C67112B91EC50B1C006975BF /* Param.m in Sources */,
 				4CFEFB661EBF0B0700353ABF /* main.c in Sources */,
 				4CFEFB641EBF0B0700353ABF /* FTUART.m in Sources */,
+				4C02FAB91EDEE567007D1121 /* PDCA.m in Sources */,
 				4CFEFB841EBF1BEF00353ABF /* AlertView.m in Sources */,
 				C6C611A31EC0ED5000E0099D /* TestStep.m in Sources */,
 				C67112BC1EC534E5006975BF /* Agilent33210A.m in Sources */,
@@ -936,6 +968,7 @@
 					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
 					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui",
 					"$(PROJECT_DIR)/Emerald_Measure/SFC",
+					"$(PROJECT_DIR)/Emerald_Measure/PDCA_Start",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
@@ -962,6 +995,7 @@
 					"$(PROJECT_DIR)/Emerald_Measure/FTDI",
 					"$(PROJECT_DIR)/Emerald_Measure/PDCA_FeiCui",
 					"$(PROJECT_DIR)/Emerald_Measure/SFC",
+					"$(PROJECT_DIR)/Emerald_Measure/PDCA_Start",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;

@@ -43,24 +43,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string></string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>SF-1a Volt</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -182,24 +164,6 @@
 					<string>U_SF_1b</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string></string>
-				</dict>
-				<dict>
-					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -343,24 +307,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string></string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>SF_1c Current</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -454,24 +400,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string></string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>SF-2a RES</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -496,7 +424,7 @@
 					<key>TestCommand</key>
 					<string></string>
 					<key>TestDelayTime</key>
-					<string>15000</string>
+					<string>20000</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -640,24 +568,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string></string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>SF-2b Volt</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -714,13 +624,13 @@
 		</dict>
 		<dict>
 			<key>TestName</key>
-			<string>ZIN</string>
+			<string>ZIN_SB</string>
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
 			<string>MΩ</string>
 			<key>Min</key>
-			<string>3.33</string>
+			<string>12.3</string>
 			<key>Max</key>
 			<string>--</string>
 			<key>Value</key>
@@ -779,24 +689,6 @@
 					<string>U_SF_5a_1000</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -901,24 +793,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>Send SF-5a-1500</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -1001,24 +875,6 @@
 					<string>U_SF_5a_2000</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -1123,24 +979,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>Send SF-5a-2500</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -1223,24 +1061,6 @@
 					<string>U_SF_5a_3000</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
 					<key>TestResultIsDigital</key>
 					<false/>
 					<key>TestResultDisplay</key>
@@ -1384,24 +1204,6 @@
 				</dict>
 				<dict>
 					<key>TestName</key>
-					<string>Delay Time</string>
-					<key>TestDevice</key>
-					<string>SW</string>
-					<key>TestCommand</key>
-					<string></string>
-					<key>TestDelayTime</key>
-					<string>500</string>
-					<key>TestResultIsDigital</key>
-					<false/>
-					<key>TestResultDisplay</key>
-					<false/>
-					<key>TestBackValueSign</key>
-					<string></string>
-					<key>TestBackValueRegex</key>
-					<string>OK</string>
-				</dict>
-				<dict>
-					<key>TestName</key>
 					<string>Send SF-3b RES</string>
 					<key>TestDevice</key>
 					<string>Agilent</string>
@@ -1453,6 +1255,84 @@
 					<string></string>
 					<key>TestBackValueRegex</key>
 					<string>PASS</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>TEMP</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>℃</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>HIMU</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>HUMID</string>
+			<key>RetryTimes</key>
+			<integer>0</integer>
+			<key>Units</key>
+			<string>%</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>--</string>
+					<key>TestDevice</key>
+					<string>HIMU</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+					<key>TestResultIsDigital</key>
+					<false/>
+					<key>TestResultDisplay</key>
+					<false/>
+					<key>TestBackValueSign</key>
+					<string></string>
+					<key>TestBackValueRegex</key>
+					<string>OK</string>
 				</dict>
 			</array>
 		</dict>

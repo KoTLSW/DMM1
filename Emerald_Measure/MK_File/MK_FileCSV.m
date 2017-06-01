@@ -102,7 +102,7 @@
     
     //=============== 创建csv文件 =====================
     //创建文件管理对象
-    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@_Item.csv", folderPath,folderDateStr];
+    NSString *defaultFileName = [NSString stringWithFormat:@"%@/%@.csv", folderPath,sn];
     
     //************** 2017.5.13  加入温湿度的CSV文件 ***********
     if ([testItemTitle containsString:@"HumitureValue"])

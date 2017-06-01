@@ -15,7 +15,7 @@
 	<key>fixture_uart_port_name-0</key>
 	<string>/dev/cu.usbserial-A103PRKA</string>
 	<key>fixture_uart_port_name</key>
-	<string>/dev/cu.usbserial-A103PRKD</string>
+	<string>/dev/cu.usbserial-A103PRK6</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
 	<key>fixture_uart_parity</key>
@@ -35,7 +35,7 @@
 	<key>sw_name</key>
 	<string>Emerald_Testing</string>
 	<key>sw_ver</key>
-	<string>V1.0145</string>
+	<string>V1.0146_3</string>
 	<key>s_build</key>
 	<string>Emerald_MK</string>
 	<key>thdn</key>
