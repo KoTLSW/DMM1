@@ -1346,17 +1346,28 @@ NSString  *param_path=@"Param";
             testitem.value = [NSString stringWithFormat:@"%f",ZIN_VOUT_value];
             
             //CF  0.153-----0.152
-            
             //SB    0.222---0.218
+            
         }
 
         if ([testItem.testName isEqualToString:@"ZIN_SB"])
         {
-            testitem.value = [NSString stringWithFormat:@"%.3f",1/(1/(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value)) - 1/4.57)];
+            if (param.isDebug)
+            {
+                ZIN_VOUT_value = 0.222;
+            }
+
+//            testitem.value = [NSString stringWithFormat:@"%.3f",1/(1/(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value)) - 1/4.57)];
+            
         }
         
         if ([testItem.testName isEqualToString:@"ZIN_CF"])
         {
+            if (param.isDebug)
+            {
+                ZIN_VOUT_value = 0.152;
+            }
+
             testitem.value = [NSString stringWithFormat:@"%.3f",1/(1/(10*ZIN_VOUT_value/(0.565-ZIN_VOUT_value)) - 1/5.09)];
         }
 
