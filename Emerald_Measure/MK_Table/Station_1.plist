@@ -460,7 +460,7 @@
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>GΩ</string>
+			<string>GOHM</string>
 			<key>Min</key>
 			<string>20</string>
 			<key>Max</key>
@@ -628,7 +628,7 @@
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>MΩ</string>
+			<string>MOHM</string>
 			<key>Min</key>
 			<string>8.2</string>
 			<key>Max</key>
@@ -1132,7 +1132,7 @@
 			<key>RetryTimes</key>
 			<integer>0</integer>
 			<key>Units</key>
-			<string>KΩ</string>
+			<string>KOHM</string>
 			<key>Min</key>
 			<string>54</string>
 			<key>Max</key>

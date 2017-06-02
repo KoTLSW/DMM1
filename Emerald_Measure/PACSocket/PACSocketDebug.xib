@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="16D32" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
     </dependencies>
@@ -255,17 +254,17 @@
                                 <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nY8-fi-IJw">
                                     <rect key="frame" x="9" y="64" width="553" height="170"/>
                                     <clipView key="contentView" ambiguous="YES" id="MV8-Q8-Z0e">
-                                        <rect key="frame" x="1" y="1" width="536" height="168"/>
+                                        <rect key="frame" x="1" y="1" width="551" height="168"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <subviews>
                                             <textView ambiguous="YES" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="e5Q-2c-LKX">
-                                                <rect key="frame" x="0.0" y="0.0" width="536" height="168"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="551" height="168"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <size key="minSize" width="536" height="168"/>
+                                                <size key="minSize" width="551" height="168"/>
                                                 <size key="maxSize" width="553" height="10000000"/>
                                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                <size key="minSize" width="536" height="168"/>
+                                                <size key="minSize" width="551" height="168"/>
                                                 <size key="maxSize" width="553" height="10000000"/>
                                             </textView>
                                         </subviews>
@@ -276,7 +275,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                     <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="PIq-sv-bb8">
-                                        <rect key="frame" x="537" y="1" width="15" height="168"/>
+                                        <rect key="frame" x="536" y="1" width="16" height="168"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                     </scroller>
                                 </scrollView>
