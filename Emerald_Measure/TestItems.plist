@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AllItems</key>
+	<array>
+		<dict>
+			<key>TestName</key>
+			<string>S2 ON</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>SMBV</string>
+					<key>TestCommand</key>
+					<string>OUTP ON</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>AC Volt</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>Fixture</string>
+					<key>TestCommand</key>
+					<string>OPEN S2</string>
+					<key>TestDelayTime</key>
+					<string>500</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>S2 ON  Frequency</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>Hz</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>FRE</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>S2 OFF</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S2 OFF</string>
+					<key>TestDevice</key>
+					<string>SMBV</string>
+					<key>TestCommand</key>
+					<string>OUTP OFF</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 OFF</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>AC Volt</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 OFF</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S2 OFF</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>S3 ON</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>SMBV</string>
+					<key>TestCommand</key>
+					<string>OUTP ON</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>AC volt</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>Fixture</string>
+					<key>TestCommand</key>
+					<string>OPEN S3</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>S3 ON  Frequency</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>Hz</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>FRE</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 ON</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>S3 OFF</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>mV</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>S3 OFF</string>
+					<key>TestDevice</key>
+					<string>SMBV</string>
+					<key>TestCommand</key>
+					<string>OUTP OFF</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 OFF</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>AC volt</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 OFF</string>
+					<key>TestDevice</key>
+					<string>SW</string>
+					<key>TestCommand</key>
+					<string>--</string>
+					<key>TestDelayTime</key>
+					<string>1000</string>
+				</dict>
+				<dict>
+					<key>TestName</key>
+					<string>S3 OFF</string>
+					<key>TestDevice</key>
+					<string>Agilent</string>
+					<key>TestCommand</key>
+					<string>Read command</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>Level</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>dBm</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>Level</string>
+					<key>TestDevice</key>
+					<string>SMBV:READ</string>
+					<key>TestCommand</key>
+					<string>level?</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>TestName</key>
+			<string>LFGen Freq</string>
+			<key>RetryTimes</key>
+			<integer>2</integer>
+			<key>Units</key>
+			<string>Hz</string>
+			<key>Min</key>
+			<string>--</string>
+			<key>Max</key>
+			<string>--</string>
+			<key>Value</key>
+			<string>--</string>
+			<key>Result</key>
+			<string>--</string>
+			<key>IsTest</key>
+			<true/>
+			<key>IsShow</key>
+			<true/>
+			<key>AllNeedCommands</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>LFGen Freq</string>
+					<key>TestDevice</key>
+					<string>SMBV:READ</string>
+					<key>TestCommand</key>
+					<string>LFOutput:FREQuency?</string>
+					<key>TestDelayTime</key>
+					<string>--</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

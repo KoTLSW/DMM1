@@ -21,12 +21,35 @@
     return getTimeDay;
 }
 
+-(NSString*)getLogTime
+{
+    NSDate* date = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
+    NSString* currentTime = [formatter stringFromDate:date];
+    
+    //    [formatter release];
+    return currentTime;
+}
+
+-(NSString*)getDiretoryTime
+{
+    NSDate* date = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH_mm_ss"];
+    //[formatter setDateFormat:@"mm:ss:SSS"];
+    NSString* currentTime = [formatter stringFromDate:date];
+    //    [formatter release];
+    return currentTime;
+}
+
 
 -(NSString*)getCurrentTime
 {
     NSDate* date = [NSDate date];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"_HH:mm:ss"];
+    //[formatter setDateFormat:@"mm:ss:SSS"];
     NSString* currentTime = [formatter stringFromDate:date];
 //    [formatter release];
     return currentTime;
@@ -70,7 +93,7 @@
 {
     NSDate* date = [NSDate date];
     NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd(HH``mm``ss)"];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString* currentTime = [formatter stringFromDate:date];
     
 //    [formatter release];
@@ -86,5 +109,15 @@
 //    [formatter release];
     return currentDay;
 }
+
+-(NSString *)getCurrentMinuteAndSecond
+{
+    NSDate* date = [NSDate date];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"mm:ss:SSS"];
+    NSString* currentTime = [formatter stringFromDate:date];
+    return currentTime;
+}
+
 
 @end

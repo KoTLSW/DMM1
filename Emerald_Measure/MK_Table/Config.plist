@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PCB_201707041915405003</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704191540.5003</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707041856115002</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704185611.5002</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707041859125001</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704185912.5001</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707041918354003</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704191835.4003</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707041908314002</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704190831.4002</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707041903204001</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170704190320.4001</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707061523525003</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170706152352.5003</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707101134015002</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170710113401.5002</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707101241014002</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170710124101.4002</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707101525014001</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170710152501.4001</string>
+		<key>Zout_1000</key>
+		<string>20</string>
+		<key>Zout_20</key>
+		<string>10</string>
+		<key>Zout_0</key>
+		<string>5</string>
+	</dict>
+	<key>PCB_201707101743015001</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>20170710174301.5001</string>
+		<key>Zout_1000</key>
+		<string>8</string>
+		<key>Zout_20</key>
+		<string>5</string>
+		<key>Zout_0</key>
+		<string>4</string>
+	</dict>
+	<key>PCB_17080819401001</key>
+	<dict>
+		<key>Fixture ID</key>
+		<string>1708081940.1001</string>
+		<key>Zout_1000</key>
+		<string>20.0</string>
+		<key>Zout_20</key>
+		<string>2820</string>
+	</dict>
+</dict>
+</plist>

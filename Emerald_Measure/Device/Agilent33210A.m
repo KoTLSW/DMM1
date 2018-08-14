@@ -41,7 +41,10 @@
             status = viFindRsrc (deRM, "TCPIP0::192.168.1.10::?*", &findLt, &numInstr, instrDes);
             break;
         case Agilent33210A_USB_Type:
-            status = viFindRsrc (deRM, "USB0::0x0957::?*", &findLt, &numInstr, instrDes);
+            //status = viFindRsrc (deRM, "USB0::0x0957::0x1507::?*", &findLt, &numInstr, instrDes);
+            
+            status = viFindRsrc (deRM, "USB0::?*", &findLt, &numInstr, instrDes);
+            
             break;
             
         default:
@@ -68,9 +71,6 @@
     if (_isOpen) return YES;
     
        // status = viOpen (defaultRM, "TCPIP0::169.254.4.10::5025::SOCKET", VI_NULL, VI_NULL, &instr);
-    
-    
-    
     
     switch (communicateType) {
         case Agilent33210A_LAN_Type:

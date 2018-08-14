@@ -40,11 +40,18 @@
 @property(readwrite,copy) NSString *units;
 @property(readwrite,copy) NSString *min;
 @property(readwrite,copy) NSString *max;
-@property(readwrite,copy) NSString *value;
+@property(nonatomic,strong)NSString * value;
+
 @property(readwrite,copy) NSString *result;
 @property(readwrite)      BOOL     isTest;
+@property(readwrite)      BOOL     isShow;
 @property(nonatomic,strong)NSString *messageError;
 
+@property(nonatomic,strong)NSString  * testFailItems;
+
 @property(readwrite,copy)NSArray  * testAllCommand;
+
+@property(readwrite,copy)NSArray  * testAllCommand_d;
+
 
 @end

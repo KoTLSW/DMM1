@@ -7,15 +7,19 @@
 	<key>isWaveNeed</key>
 	<true/>
 	<key>isDebug</key>
-	<true/>
+	<false/>
+	<key>number</key>
+	<string>10</string>
+	<key>sleepTime</key>
+	<string>0.2</string>
 	<key>fixture_id</key>
 	<string>000001</string>
 	<key>fixture_uart_baud</key>
 	<integer>115200</integer>
-	<key>fixture_uart_port_name-0</key>
-	<string>/dev/cu.usbserial-A103PRKA</string>
+	<key>fixture_uart_port_name1</key>
+	<string>/dev/cu.usbserial-A9M91FZ3</string>
 	<key>fixture_uart_port_name</key>
-	<string>/dev/cu.usbserial-A103PRKD</string>
+	<string>/dev/cu.usbserial-EW-FIX</string>
 	<key>fixture_uart_dataBit</key>
 	<string>8</string>
 	<key>fixture_uart_parity</key>
@@ -25,121 +29,43 @@
 	<key>humiture_uart_baud</key>
 	<string>9600</string>
 	<key>humiture_uart_port_name</key>
-	<string>/dev/cu.SLAB_USBtoUART</string>
+	<string>/dev/cu.usbserial-EW-DMM</string>
 	<key>humiture_uart_dataBit</key>
 	<string>8</string>
 	<key>humiture_uart_parity</key>
-	<string>none</string>
+	<string>115200</string>
 	<key>humiture_uart_stopBit</key>
 	<string>1</string>
 	<key>sw_name</key>
-	<string>Emerald_Testing</string>
+	<string>Emerald_DMM1</string>
 	<key>sw_ver</key>
-	<string>V1.0150</string>
+	<string>V1.0.3DMM1</string>
 	<key>s_build</key>
-	<string>Emerald_MK</string>
+	<string>--</string>
 	<key>thdn</key>
 	<integer>5</integer>
-	<key>ui_title</key>
-	<string>software test</string>
-	<key>ui_versiom</key>
-	<string>--</string>
 	<key>station</key>
-	<string>1</string>
+	<string>--</string>
 	<key>stationID</key>
-	<string>123</string>
+	<string>--</string>
 	<key>fixtureID</key>
-	<string>11111111</string>
+	<string>--</string>
 	<key>lineNO</key>
-	<string>99999</string>
+	<string>--</string>
 	<key>waveFrequence</key>
 	<string>1000</string>
 	<key>waveOffset</key>
 	<string>0</string>
 	<key>waveVolt</key>
 	<string>0.8</string>
-	<key>SocketConfig</key>
-	<dict>
-		<key>Port</key>
-		<string>8888</string>
-		<key>IP</key>
-		<string>127.0.0.1</string>
-	</dict>
-	<key>ServerFC_0</key>
-	<dict>
-		<key>Server_IP</key>
-		<string>10.12.5.70</string>
-		<key>BDAServer_IP</key>
-		<string>10.12.5.70</string>
-		<key>Net_Port</key>
-		<string>80</string>
-		<key>C</key>
-		<string>ADD_RECORD</string>
-		<key>Station_Name</key>
-		<string>Sensor-Board-EME</string>
-		<key>Front_StationName</key>
-		<string>Sensor-Before-EME</string>
-		<key>Next_StationName</key>
-		<string>Crown-Flex-EME</string>
-		<key>Product</key>
-		<string>A211</string>
-	</dict>
-	<key>ServerFC_1</key>
-	<dict>
-		<key>Server_IP</key>
-		<string>10.12.5.70</string>
-		<key>BDAServer_IP</key>
-		<string>10.12.5.70</string>
-		<key>Net_Port</key>
-		<string>80</string>
-		<key>C</key>
-		<string>ADD_RECORD</string>
-		<key>Station_Name</key>
-		<string>Crown-Flex-EME</string>
-		<key>Front_StationName</key>
-		<string>Sensor-Board-EME</string>
-		<key>Next_StationName</key>
-		<string>Sensor-FlexSub-EME</string>
-		<key>Product</key>
-		<string>A211</string>
-	</dict>
-	<key>ServerFC_2</key>
-	<dict>
-		<key>Server_IP</key>
-		<string>10.12.5.70</string>
-		<key>BDAServer_IP</key>
-		<string>10.12.5.70</string>
-		<key>Net_Port</key>
-		<string>80</string>
-		<key>C</key>
-		<string>ADD_RECORD</string>
-		<key>Station_Name</key>
-		<string>Sensor-FlexSub-EME</string>
-		<key>Front_StationName</key>
-		<string>Crown-FIex-EME</string>
-		<key>Next_StationName</key>
-		<string>Crown-RotationSub-EME</string>
-		<key>Product</key>
-		<string>A211</string>
-	</dict>
-	<key>ServerFC_3</key>
-	<dict>
-		<key>Server_IP</key>
-		<string>10.12.5.70</string>
-		<key>BDAServer_IP</key>
-		<string>10.12.5.70</string>
-		<key>Net_Port</key>
-		<string>80</string>
-		<key>C</key>
-		<string>ADD_RECORD</string>
-		<key>Station_Name</key>
-		<string>Crown-RotationSub-EME</string>
-		<key>Front_StationName</key>
-		<string>Sensor-FlexSub-EME</string>
-		<key>Next_StationName</key>
-		<string>Crown-RotationSub-Before</string>
-		<key>Product</key>
-		<string>A211</string>
-	</dict>
+	<key>zin_Offset</key>
+	<string>0</string>
+	<key>Er_Zin_RES</key>
+	<string>5</string>
+	<key>differentSNArray</key>
+	<array>
+		<string>J8M7</string>
+		<string>J5P1</string>
+	</array>
 </dict>
 </plist>

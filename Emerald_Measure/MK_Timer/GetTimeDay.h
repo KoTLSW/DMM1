@@ -16,11 +16,13 @@
 
 +(GetTimeDay *)shareInstance; 
 
+-(NSString*)getLogTime;
+-(NSString*)getDiretoryTime;
 -(NSString*)getCurrentDay;  //get current date ,time format:yyyy-MM-dd               年月日
 -(NSString*)getCurrentTime; //get current time ,time format:HH:mm:ss                 时分秒
 -(NSString*)getFileTime;  //get current time ,time format:yyyy-MM-dd(HH``mm``ss)   年月日,时分秒(该格式用于文件命名)
 -(NSString*)getCurrentSecond; //get current time ,time format:yyyy/MM/dd HH:mm:ss    年月日,时分秒
-
+-(NSString*)getCurrentMinuteAndSecond;//获取分和秒
 @end
 
 

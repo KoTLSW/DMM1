@@ -46,6 +46,8 @@
     NSInteger _out_rate;
     NSInteger _in_rate;
     
+    
+    
     NSString* _micl_calibration_time;
     CGFloat   _micl_calibration_db;
     CGFloat   _micl_calibration_v_pa;
@@ -74,6 +76,18 @@
     NSString * _waveFrequence;
     NSString * _waveVolt;
     
+    NSString  * _firstSN;
+    NSString  * _secondSN;
+    NSArray   * _differentSNArray;
+    
+    //2017.6.24
+    NSString  * _zin_Offset;
+    NSString  * _Er_Zin_RES;
+    //number
+    //sleepTime
+    
+    NSString * _number;
+    NSString * _sleepTime;
 }
 @end
 //=============================================
@@ -95,9 +109,6 @@
 @synthesize humiture_uart_baud      = _humiture_uart_baud;
 @synthesize pcb_uart_port_name     = _pcb_uart_port_name;
 @synthesize pcb_uart_baud          = _pcb_uart_baud;
-@synthesize pcb_spi_port_name      = _pcb_spi_port_name;
-@synthesize pcb_spi_baud           = _pcb_spi_baud;
-@synthesize fixture_id             = _fixture_id;
 @synthesize file_path              = _file_path;
 @synthesize isWaveNeed             = _isWaveNeed;
 @synthesize isDebug                = _isDebug;
@@ -106,30 +117,8 @@
 @synthesize waveOffset             = _waveOffset;
 @synthesize waveFrequence          = _waveFrequence;
 
-
-
-
-
-@synthesize thdn                   = _thdn;
-@synthesize spkvol                 = _spkvol;
-@synthesize spkscale               = _spkscale;
-@synthesize out_rate               = _out_rate;
-@synthesize in_rate                = _in_rate;
-@synthesize micl_calibration_time  = _micl_calibration_time;
-@synthesize micl_calibration_db    = _micl_calibration_db;
-@synthesize micl_calibration_v_pa  = _micl_calibration_v_pa;
-@synthesize micr_calibration_time  = _micr_calibration_time;
-@synthesize micr_calibration_db    = _micr_calibration_db;
-@synthesize micr_calibration_v_pa  = _micr_calibration_v_pa;
-@synthesize mics_calibration_time  = _mics_calibration_time;
-@synthesize mics_calibration_db    = _mics_calibration_db;
-@synthesize mics_calibration_v_pa  = _mics_calibration_v_pa;
-@synthesize spk_calibration_time   = _spk_calibration_time;
-@synthesize spk_calibration_db1    = _spk_calibration_db1;
-@synthesize spk_calibration_db1_v  = _spk_calibration_db1_v;
-@synthesize spk_calibration_db2    = _spk_calibration_db2;
-@synthesize spk_calibration_db2_v  = _spk_calibration_db2_v;
-@synthesize pdca_is_upload         = _pdca_is_upload;
+@synthesize number                 = _number;
+@synthesize sleepTime              = _sleepTime;
 //=============================================
 - (void)ParamRead:(NSString*)filename
 {
@@ -170,47 +159,22 @@
     self.waveOffset            =[dictionary objectForKey:@"waveOffset"];
     self.waveVolt              =[dictionary objectForKey:@"waveVolt"];
     
+
+
     
-    
-    
+    //特别规则的SN
+    self.differentSNArray      =[dictionary objectForKey:@"differentSNArray"];
     //s_build
     self.s_build               =[dictionary objectForKey:@"s_build"];
     
     self.pcb_uart_port_name     = [dictionary objectForKey:@"pcb_uart_port_name"];
     self.pcb_uart_baud          = [[dictionary objectForKey:@"pcb_uart_baud"]integerValue];
     
-    self.pcb_spi_port_name      = [dictionary objectForKey:@"pcb_spi_port_name"];
-    self.pcb_spi_baud           = [[dictionary objectForKey:@"pcb_spi_baud"]integerValue];
-    
-    self.fixture_id             = [dictionary objectForKey:@"fixture_id"];
-    
-    self.thdn                   = [[dictionary objectForKey:@"thdn"]integerValue];
-    
-    self.spkvol                 = [[dictionary objectForKey:@"spkvol"]integerValue];
-    self.spkscale               = [[dictionary objectForKey:@"spkscale"]integerValue];
-    
-    self.out_rate               = [[dictionary objectForKey:@"out_rate"]integerValue];
-    self.in_rate                = [[dictionary objectForKey:@"in_rate"]integerValue];
-    
-    self.micl_calibration_time  = [dictionary objectForKey:@"micl_calibration_time"];
-    self.micl_calibration_db    = [[dictionary objectForKey:@"micl_calibration_db"]floatValue];
-    self.micl_calibration_v_pa  = [[dictionary objectForKey:@"micl_calibration_v_pa"]floatValue];
-    
-    self.micr_calibration_time  = [dictionary objectForKey:@"micr_calibration_time"];
-    self.micr_calibration_db    = [[dictionary objectForKey:@"micr_calibration_db"]floatValue];
-    self.micr_calibration_v_pa  = [[dictionary objectForKey:@"micr_calibration_v_pa"]floatValue];
-    
-    self.mics_calibration_time  = [dictionary objectForKey:@"mics_calibration_time"];
-    self.mics_calibration_db    = [[dictionary objectForKey:@"mics_calibration_db"]floatValue];
-    self.mics_calibration_v_pa  = [[dictionary objectForKey:@"mics_calibration_v_pa"]floatValue];
-    
-    self.spk_calibration_time   = [dictionary objectForKey:@"spk_calibration_time"];
-    self.spk_calibration_db1    = [[dictionary objectForKey:@"spk_calibration_db1"]floatValue];
-    self.spk_calibration_db1_v  = [[dictionary objectForKey:@"spk_calibration_db1_v"]floatValue];
-    self.spk_calibration_db2    = [[dictionary objectForKey:@"spk_calibration_db2"]floatValue];
-    self.spk_calibration_db2_v  = [[dictionary objectForKey:@"spk_calibration_db2_v"]floatValue];
-    
     self.pdca_is_upload         = [[dictionary objectForKey:@"pdca_is_upload"]boolValue];
+    
+    self.number                 = [dictionary objectForKey:@"number"];
+    self.sleepTime              = [dictionary objectForKey:@"sleepTime"];
+    
     
 }
 //=============================================
@@ -243,6 +207,8 @@
     [dictionary setObject:@"s_build" forKey:@"s_build"];
     
     
+    //特别规则的SN
+    
     
     
 
@@ -259,7 +225,6 @@
     [dictionary setObject:[NSNumber numberWithInteger:_thdn]                   forKey:@"thdn"];
     
     [dictionary setObject:[NSNumber numberWithInteger:_spkvol]                 forKey:@"spkvol"];
-    [dictionary setObject:[NSNumber numberWithInteger:_spkscale]               forKey:@"spkscale"];
     
     [dictionary setObject:[NSNumber numberWithInteger:_out_rate]               forKey:@"out_rate"];
     [dictionary setObject:[NSNumber numberWithInteger:_in_rate]                forKey:@"in_rate"];

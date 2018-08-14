@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>username</key>
-	<string>123</string>
+	<string>engineer</string>
 	<key>password</key>
-	<string>123</string>
+	<string>engineer</string>
 	<key>isShow</key>
 	<true/>
 </dict>

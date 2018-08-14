@@ -96,6 +96,7 @@
     
     NSLog(@"aaa");
 }
+
 //=============================================
 -(void)InitTableView:(NSArray*)arrayData
 {
@@ -108,7 +109,7 @@
             //解析数组下标,取值
             Item* item=[arrayData objectAtIndex:i];
             
-            if(item.isTest == YES)
+            if((item.isTest == YES)&&(item.isShow == YES))
             {
                 NSMutableDictionary* dic=[[NSMutableDictionary alloc] init];
                 
@@ -155,16 +156,14 @@
     
     NSDictionary* color = [NSDictionary dictionaryWithObjectsAndKeys:ispass?[NSColor greenColor]:[NSColor redColor],NSForegroundColorAttributeName, nil];
     
+    
     NSAttributedString* result = [[NSAttributedString alloc] initWithString:ispass?@"          PASS":@"          FAIL" attributes:color];
-    
+
     //给模型对应的 key 值赋值
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.testName   forKey:TABLE_COLUMN_TESTNAME];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.units    forKey:TABLE_COLUMN_UNITS];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.min    forKey:TABLE_COLUMN_MIN];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.max forKey:TABLE_COLUMN_MAX];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:result      forKey:TABLE_COLUMN_RESULT];
-    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.value  forKey:TABLE_COLUMN_VALUE];
-    
+    NSLog(@"%ld======%@",(long)rowIndex,item.value);
+    [[_arrayDataSource objectAtIndex:rowIndex] setValue:item.value   forKey:TABLE_COLUMN_VALUE];
+    [[_arrayDataSource objectAtIndex:rowIndex] setValue:result           forKey:TABLE_COLUMN_RESULT];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSIndexSet* indexSet = [[NSIndexSet alloc] initWithIndex:rowIndex];
@@ -173,6 +172,7 @@
         [self.table reloadData];
         [self.table needsDisplay];
     });
+    
     
 }
 //=============================================

@@ -11,6 +11,13 @@
 @interface LoginWindow ()
 {
     NSMutableDictionary *m_Dic;
+    
+    __weak IBOutlet NSButton *SB_Button;
+    
+    __weak IBOutlet NSButton *CF_Button;
+    
+    __weak IBOutlet NSButton *ER_Button;
+    
 }
 @end
 
@@ -38,7 +45,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             _messageLab.stringValue = @"enter !";
             _messageLab.textColor = [NSColor blueColor];
-            
+        
         });
         
         [self.window orderOut:self];
@@ -50,7 +57,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CloseStationControlWindow_Notificcation" object:nil];
     }
     
-    if ([_userName.stringValue isEqualToString:@"admin"] && [_passWord.stringValue isEqualToString:@"michael"])
+    if ([_userName.stringValue isEqualToString:@"admin"] && [_passWord.stringValue isEqualToString:@"admin123"])
     {
          [self.window orderOut:self];
         
@@ -69,6 +76,21 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"CancellButtonlimit_Notification" object:nil];
         
     }
+    //新增无限循环测试
+    else if([_userName.stringValue isEqualToString:@"unlimit"]&&[_passWord.stringValue isEqualToString:@"unlimit"])
+    {
+        
+        [self.window orderOut:self];
+        
+        
+       
+        //发送通知, 激活无限循环测试功能
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"TestUnLimit_Notification" object:nil];
+        //发送通知, 激活 PDCA 按钮功能
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PDCAButtonLimit_Notification" object:nil];
+        
+    
+    }
     
     else
     {
@@ -84,6 +106,8 @@
 {
     // 4.关闭当前的登录窗口
     [self.window orderOut:self];
+    
 }
+
 
 @end

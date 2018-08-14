@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Emerald_Measure/ViewController.m"
-            timestampString = "518099692.026029"
+            filePath = "Emerald_Measure/Device/Agilent33210A.m"
+            timestampString = "519147887.025253"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1407"
-            endingLineNumber = "1407"
-            landmarkName = "-TestItem:"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
+            landmarkName = "-OpenDevice:andCommunicateType:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
