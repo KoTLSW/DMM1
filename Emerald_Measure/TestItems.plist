@@ -230,7 +230,7 @@
 					<key>TestDevice</key>
 					<string>Agilent</string>
 					<key>TestCommand</key>
-					<string>AC volt</string>
+					<string>AC Volt</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
 				</dict>
@@ -356,7 +356,7 @@
 					<key>TestDevice</key>
 					<string>Agilent</string>
 					<key>TestCommand</key>
-					<string>AC volt</string>
+					<string>AC Volt</string>
 					<key>TestDelayTime</key>
 					<string>--</string>
 				</dict>

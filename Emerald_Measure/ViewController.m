@@ -286,8 +286,8 @@ static ViewController * selfClass=nil;
     
 
     
-    [self redirectSTD:STDOUT_FILENO];  //冲定向log
-    [self redirectSTD:STDERR_FILENO];
+//    [self redirectSTD:STDOUT_FILENO];  //冲定向log
+//    [self redirectSTD:STDERR_FILENO];
 
     if (param.isDebug)
     {
@@ -480,7 +480,7 @@ static ViewController * selfClass=nil;
                     currentStateMsg.stringValue=@"index=1,Instrument connect success!";
                     NSLog(@"index=1,Aglient and SMBV connect success!");
                     [currentStateMsg setTextColor:[NSColor redColor]];
-                    _startBtn.enabled = YES;
+                    _startBtn.enabled = NO;
                 });
                 
                 index = 2;
@@ -500,7 +500,7 @@ static ViewController * selfClass=nil;
                         currentStateMsg.stringValue=@"index=1,Instrument connect success!";
                         NSLog(@"index=1,Aglient and SMBV connect success!");
                         [currentStateMsg setTextColor:[NSColor redColor]];
-                        _startBtn.enabled = YES;
+                        _startBtn.enabled = NO;
                     });
                     
                 }
@@ -511,8 +511,6 @@ static ViewController * selfClass=nil;
                         NSLog(@"index=1,Aglient or SMBV connect fail!");
                         [currentStateMsg setTextColor:[NSColor redColor]];
                     });
-                    
-                    index = 1000;
                     
                     [logGlobalArray addObject:[NSString stringWithFormat: @"%@: index=1,Aglient connect fail!\n", [[GetTimeDay shareInstance] getLogTime]]];
                 }
@@ -567,14 +565,16 @@ static ViewController * selfClass=nil;
                           mk_table = [mk_table init:tab_View DisplayData:itemArr];
                           [[NSUserDefaults standardUserDefaults] setObject:@"AllItems" forKey:@"currentPlistKey"];
                           NSLog(@"打印当前的数值===============%lu",(unsigned long)[itemArr count]);
-                      }
-                    
-                    [logGlobalArray addObject:[NSString stringWithFormat: @"%@: index=3,SN ok! \n", [[GetTimeDay shareInstance] getLogTime]]];
-                    
-                    index= 1000;//进入正常测试中
-                    currentStateMsg.stringValue = @"index=3,SN ok!";
-                    [currentStateMsg setTextColor:[NSColor blueColor]];
+                        
+                          _startBtn.enabled = YES;
+                        
+                        
+                        [logGlobalArray addObject:[NSString stringWithFormat: @"%@: index=2,SN ok! \n", [[GetTimeDay shareInstance] getLogTime]]];
+                        currentStateMsg.stringValue = @"index=2,SN OK,Click Start!";
+                        [currentStateMsg setTextColor:[NSColor blueColor]];
 
+                    }
+                   
                 }
                 else
                 {
@@ -619,7 +619,7 @@ static ViewController * selfClass=nil;
                     [currentStateMsg setTextColor:[NSColor redColor]];
                 });
                 
-            }
+            }            
         }
         
         
@@ -630,6 +630,8 @@ static ViewController * selfClass=nil;
         //------------------------------------------------------------
         if (index == 4)
         {
+            
+            NSLog(@"index = %d-----------------1----------------------",index);
             [logGlobalArray addObject:[NSString stringWithFormat: @"%@: index=4 before time %@\n", [[GetTimeDay shareInstance] getLogTime], [[GetTimeDay shareInstance] getCurrentTime]]];
             dispatch_sync(dispatch_get_main_queue(), ^{
                 _startBtn.enabled = NO;
@@ -662,6 +664,8 @@ static ViewController * selfClass=nil;
                 start_time = [[GetTimeDay shareInstance] getFileTime];    //启动测试的时间,csv里面用
             }
             
+            
+            NSLog(@"index = %d-----------------2----------------------",index);
             testItem = itemArr[item_index];
             NSLog(@"%@=========%@========%@",testItem.testName, testItem.value, itemArr[item_index]);
             [logGlobalArray addObject:[NSString stringWithFormat:@"%@: %@=========%@========%@\n",[[GetTimeDay shareInstance] getLogTime], testItem.testName, testItem.value, itemArr[item_index]]];
@@ -672,6 +676,9 @@ static ViewController * selfClass=nil;
             
             //加载测试项
             BOOL boolResult = [self TestItem:testItem];
+            
+            
+            NSLog(@"index = %d-----------------3----------------------",index);
             
             
             //测试结果转为字符串格式
@@ -707,6 +714,8 @@ static ViewController * selfClass=nil;
             item_index++;
             
             
+            NSLog(@"index = %d-----------------4----------------------",index);
+            
             //走完测试流程,进入下一步
             if (item_index == itemArr.count)
             {
@@ -733,6 +742,8 @@ static ViewController * selfClass=nil;
                 });
                 index = 5;
             }
+            
+            NSLog(@"index = %d-----------------5----------------------",index);
         }
         
 #pragma mark index = 5  上传pdca，生成本地数据报表
@@ -938,6 +949,7 @@ static ViewController * selfClass=nil;
                 passNum++;
             }
             
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 testCount.stringValue = [NSString stringWithFormat:@"%d/%d",passNum,testNum];
@@ -975,16 +987,11 @@ static ViewController * selfClass=nil;
             
             [NSThread sleepForTimeInterval:0.5];
             
-            dispatch_sync(dispatch_get_main_queue(), ^{
-            
-                _startBtn.enabled =YES;
-            });
-            
             item_index = 0;
             row_index=0;
             if (param.isDebug)
             {
-                index = 1000;
+//                index = 1000;
             }
             else
             {
@@ -1004,8 +1011,6 @@ static ViewController * selfClass=nil;
                 [logGlobalArray removeAllObjects];
                 
                 [[backStr uppercaseString ]containsString:@"OK"];
-                
-            
             }
         
             
@@ -1034,9 +1039,7 @@ static ViewController * selfClass=nil;
             NSLog(@"tt");
 
             dispatch_sync(dispatch_get_main_queue(), ^{
-                _startBtn.enabled=YES;
                 currentStateMsg.stringValue=@"index=3,Please Enter SN!";
-
                 [currentStateMsg setTextColor:[NSColor redColor]];
                 index=2;
                 
@@ -1155,6 +1158,10 @@ static ViewController * selfClass=nil;
         //**************************万用表==Agilent
         else if ([SonTestDevice isEqualToString:@"Agilent"])
         {
+            NSLog(@"SonTestDevice = %@,SonTestCommand=%@",SonTestDevice,SonTestCommand);
+            
+            
+            
             //万用表发送指令
             if ([SonTestCommand isEqualToString:@"FRE"]) {
                 //直流电压测试
@@ -1174,7 +1181,6 @@ static ViewController * selfClass=nil;
                     [agilent34461A WriteLine:@":SENS:VOLT:DC:RANG 100" andCommunicateType:Agilent34461A_MODE_USB_Type];
                     
                 }
-                
             }
             else if([SonTestCommand isEqualToString:@"AC Volt"])
             {
@@ -1271,7 +1277,6 @@ static ViewController * selfClass=nil;
         {
             [smbv SetMessureCommunicateType:SMBV100A_USB_Type andFREQuency:@"700MHz" andLevel:@"23.97dBm" andDEPT:@"100" andLFO:@"SHAP SQU" andLFOutput:@"10"];
             [smbv WriteLine:SonTestCommand andCommunicateType:SMBV100A_USB_Type];
-            
             
             if ([SonTestDevice containsString:@"READ"]) {
                 
@@ -1422,9 +1427,12 @@ static ViewController * selfClass=nil;
 {
     //
     
-    if (index == 1000)
+    
+    
+    
+    if (index == 1000||index == 2)
     {
-        NSLog(@"start the action!!");
+        NSLog(@"start the action!!index=%d",index);
         
         _startBtn.enabled =NO;
         
@@ -1438,6 +1446,8 @@ static ViewController * selfClass=nil;
         [testResultArr removeAllObjects];
         
         index = 3;
+        
+         NSLog(@"start the action!!index=%d",index);
     }
     else
     {
